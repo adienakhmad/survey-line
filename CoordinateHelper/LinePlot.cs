@@ -15,13 +15,22 @@ namespace CoordinateHelper
     {
         private GraphPane myPane;
 
-        public LinePlot()
+        public LinePlot(bool multiMode,string title, int stations, DataTable dtTable, double xMin, double xMax, double yMin, double yMax)
         {
             InitializeComponent();
             myPane = zedGraphControl1.GraphPane;
-
             // activate this if you need equal scaling of axis x and y
             myPane.AxisChangeEvent += new GraphPane.AxisChangeEventHandler(graphPane_AxisChangeEvent);
+
+            if (multiMode)
+            {
+                CreateMultiChart(title,stations,dtTable,xMin,xMax,yMin,yMax);
+            }
+            else
+            {
+                CreateSingleChart(title, dtTable, xMin, xMax, yMin, yMax);
+            }
+            
             
         }
 

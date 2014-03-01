@@ -156,6 +156,11 @@ namespace CoordinateHelper
                 MessageBox.Show("Interval cannot be zero!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 return;
             }
+            if (cboxMultiMode.Checked && numMultiLineSpacing.Value == 0)
+            {
+                MessageBox.Show("Spacing cannot be zero!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                return;
+            }
             StartMainMethod();
             
         }
@@ -290,46 +295,21 @@ namespace CoordinateHelper
            
         }
 
-        
         private void NumOnFocus(object sender, EventArgs e)
         {
             var numControl = (NumericUpDown)sender;
             numControl.Select(0, numControl.Text.Length);
         }
 
-        private void txtLineName_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Shift && e.KeyCode == Keys.Up)
-            {
-                SelectNextControl((Control)sender, false, true, true, true);
-            }
-            else if (e.KeyCode == Keys.Shift && e.KeyCode == Keys.Down)
-            {
-                SelectNextControl((Control)sender, true, true, true, true);
-            }
-
-            e.SuppressKeyPress = true;
-        }
-
         private void plotCurrentTableToolStripMenuItem_Click(object sender, EventArgs e)
         {
             
-            var plot1 = new LinePlot();
             var xMin = dTable.AsEnumerable().Min(r => r.Field<Double>(dTable.Columns[1])) - line1.Interval;
             var xMax = dTable.AsEnumerable().Max(r => r.Field<Double>(dTable.Columns[1])) + line1.Interval;
             var yMin = dTable.AsEnumerable().Min(r => r.Field<Double>(dTable.Columns[2])) - line1.Interval;
             var yMax = dTable.AsEnumerable().Max(r => r.Field<Double>(dTable.Columns[2])) + line1.Interval;
 
-            if (line1.Type == "Multi")
-            {
-                plot1.CreateMultiChart(line1.Name, line1.Station, dTable, xMin, xMax, yMin, yMax);
-            }
-                
-            else
-            {
-                plot1.CreateSingleChart(line1.Name, dTable, xMin, xMax, yMin, yMax);
-            }
-            
+            var plot1 = new LinePlot(cboxMultiMode.Checked,line1.Name,line1.Station,dTable,xMin,xMax,yMin,yMax);
             
             plot1.Show();
         }
