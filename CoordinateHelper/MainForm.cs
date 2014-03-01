@@ -1,12 +1,4 @@
-﻿/*
- * Created by SharpDevelop.
- * User: SamsungNC108
- * Date: 2/13/2014
- * Time: 10:39
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -17,137 +9,133 @@ using CoordinateHelper.Properties;
 using DotNetPerls;
 using RavSoft;
 
-
 namespace CoordinateHelper
 {
-	/// <summary>
-	/// Description of MainForm.
-	/// </summary>
-	public partial class MainForm : Form
-	{
-        Linemaker line1 = new Linemaker();
-        DataTable dTable = new DataTable();
-		public MainForm()
-		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
-			InitializeComponent();
-			
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
-		}
+    /// <summary>
+    ///     Description of MainForm.
+    /// </summary>
+    public partial class MainForm : Form
+    {
+        private readonly LineMaker line1 = new LineMaker();
+        private bool _alreadyFocused;
+        private DataTable dTable = new DataTable();
 
-	    private void GrabAllInputs(Linemaker line)
-	    {
-	        line.Xstart = (double) numEasting.Value;
-	        line.Ystart = (double) numNorthing.Value;
-	        line.Bearing = (double) numBearing.Value;
-	        line.Station = (int) numStation.Value;
-	        line.Interval = (double) numInterval.Value;
-	        line.Type = cboxMultiMode.Checked ? "Multi" : "Single line";
+        public MainForm()
+        {
+            //
+            // The InitializeComponent() call is required for Windows Forms designer support.
+            //
+            InitializeComponent();
+
+            //
+            // TODO: Add constructor code after the InitializeComponent() call.
+            //
+        }
+
+        private void GrabAllInputs(LineMaker line)
+        {
+            line.XStart = (double) numEasting.Value;
+            line.YStart = (double) numNorthing.Value;
+            line.Bearing = (double) numBearing.Value;
+            line.Station = (int) numStation.Value;
+            line.Interval = (double) numInterval.Value;
+            line.Type = cboxMultiMode.Checked ? "Multi" : "Single line";
 
             if (!string.IsNullOrEmpty(txtLineName.Text))
             {
                 line1.Name = txtLineName.Text;
             }
-	        
-	        line.LineSpacing = (double) numMultiLineSpacing.Value;
-	        line.Linecount = (int) numMultiLineCount.Value;
-	        line.PlusBearing = dropDownDirection.SelectedIndex == 0 ? 90 : -90;
 
-	    }
+            line.LineSpacing = (double) numMultiLineSpacing.Value;
+            line.LineCount = (int) numMultiLineCount.Value;
+            line.PlusBearing = dropDownDirection.SelectedIndex == 0 ? 90 : -90;
+        }
 
         private void SetMultiLineControlState(bool isCboxChecked)
         {
-
             numMultiLineCount.Enabled = isCboxChecked;
             numMultiLineSpacing.Enabled = isCboxChecked;
             dropDownDirection.Enabled = isCboxChecked;
-
         }
 
-	    private void SetLineStatus(Linemaker line, bool multimode)
-	    {
-	        if (multimode)
-	        {
+        private void SetLineStatus(LineMaker line, bool multimode)
+        {
+            if (multimode)
+            {
                 lblName.Text = line.Name;
-                lblType.Text = string.Format("{0} ({1} lines)",line.Type,line.Linecount);
+                lblType.Text = string.Format("{0} ({1} lines)", line.Type, line.LineCount);
                 lblBearing.Text = string.Format("N {0}° E", line.Bearing);
-                lblSpacing.Text = string.Format("{0} m / {1} m", line.Interval,line.LineSpacing);
-	            lblStations.Text = string.Format("{0} points ({1} x {2})", line.Station*line.Linecount, line.Station,line.Linecount);
-	            
-                
+                lblSpacing.Text = string.Format("{0} m / {1} m", line.Interval, line.LineSpacing);
+                lblStations.Text = string.Format("{0} points ({1} x {2})", line.Station*line.LineCount, line.Station,
+                    line.LineCount);
+
+
                 lblDistanceName.Text = "Area";
 
-                var length = ((line.Station - 1) * line.Interval);
-	            var height = ((line.Linecount - 1)*line.LineSpacing);
-                var lengthunit = length > 999 ? "Km" : "m";
-	            var heightunit = height > 999 ? "Km" : "m";
-	            length = lengthunit == "Km" ? length/1000 : length;
-	            height = heightunit == "Km" ? height/1000 : height;
+                double length = ((line.Station - 1)*line.Interval);
+                double height = ((line.LineCount - 1)*line.LineSpacing);
+                string lengthunit = length > 999 ? "Km" : "m";
+                string heightunit = height > 999 ? "Km" : "m";
+                length = lengthunit == "Km" ? length/1000 : length;
+                height = heightunit == "Km" ? height/1000 : height;
 
-	            lblDistance.Text = string.Format("{0} {1} x {2} {3}", length, lengthunit, height, heightunit);
-	        }
+                lblDistance.Text = string.Format("{0} {1} x {2} {3}", length, lengthunit, height, heightunit);
+            }
 
-	        else
-	        {
-	            lblName.Text = line.Name;
-	            lblType.Text = line.Type;
-	            lblBearing.Text = string.Format("N {0}° E", line.Bearing);
-	            lblSpacing.Text = string.Format("{0} m", line.Interval);
-	            lblStations.Text = string.Format("{0} points", line.Station);
-                
+            else
+            {
+                lblName.Text = line.Name;
+                lblType.Text = line.Type;
+                lblBearing.Text = string.Format("N {0}° E", line.Bearing);
+                lblSpacing.Text = string.Format("{0} m", line.Interval);
+                lblStations.Text = string.Format("{0} points", line.Station);
+
                 lblDistanceName.Text = "Distance";
-	            var distance = ((line.Station - 1)*line.Interval);
-	            var unit = distance > 999 ? "Km" : "m";
-                distance = distance > 999 ? distance / 1000 : distance;
-	            lblDistance.Text = string.Format("{0} {1}", distance, unit);
-	        }
+                double distance = ((line.Station - 1)*line.Interval);
+                string unit = distance > 999 ? "Km" : "m";
+                distance = distance > 999 ? distance/1000 : distance;
+                lblDistance.Text = string.Format("{0} {1}", distance, unit);
+            }
+        }
 
-	        
+        private void SetLineStatus(string str)
+        {
+            lblName.Text = str;
+            lblType.Text = str;
+            lblBearing.Text = str;
+            lblSpacing.Text = str;
+            lblStations.Text = str;
+            lblDistance.Text = str;
+        }
 
-	    }
-
-	    private void SetLineStatus(string str)
-	    {
-	        lblName.Text = str;
-	        lblType.Text = str;
-	        lblBearing.Text = str;
-	        lblSpacing.Text = str;
-	        lblStations.Text = str;
-	        lblDistance.Text = str;
-	    }
-
-	    private void SetStatusBarText(string message)
-	    {
-	        toolStripStatusLabel1.Text = message;
+        private void SetStatusBarText(string message)
+        {
+            toolStripStatusLabel1.Text = message;
             statusStrip1.Refresh();
-	    }
+        }
 
-	    private void DisableButtonOnWork(bool disable)
-	    {
-	        btnCreate.Enabled = !disable;
-	        btnMoreSetup.Enabled = !disable;
-	        saveToolStripMenuItem.Enabled = !disable;
-	    }
+        private void DisableButtonOnWork(bool disable)
+        {
+            btnCreate.Enabled = !disable;
+            btnMoreSetup.Enabled = !disable;
+            saveToolStripMenuItem.Enabled = !disable;
+        }
 
-	    private void DisableButtonOnLoad(bool disable)
-	    {
-	        saveToolStripMenuItem.Enabled = !disable;
-	        plotCurrentTableToolStripMenuItem.Enabled = !disable;
-	    }
+        private void DisableButtonOnLoad(bool disable)
+        {
+            saveToolStripMenuItem.Enabled = !disable;
+            plotCurrentTableToolStripMenuItem.Enabled = !disable;
+        }
 
-	    private void StartMainMethod()
-	    {
+        private void StartMainMethod()
+        {
             GrabAllInputs(line1);
             SetStatusBarText("Working.. Please wait..");
             toolStripProgressBar1.Visible = true;
             DisableButtonOnWork(true);
 
             backgroundWorker1.RunWorkerAsync();
-	    }
+        }
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
@@ -162,9 +150,8 @@ namespace CoordinateHelper
                 return;
             }
             StartMainMethod();
-            
         }
-	   
+
         private void dgvCoordinates_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             dgvCoordinates.Columns[1].DefaultCellStyle.Format = "f2";
@@ -174,12 +161,11 @@ namespace CoordinateHelper
         private void cboxMultiMode_CheckedChanged(object sender, EventArgs e)
         {
             SetMultiLineControlState(cboxMultiMode.Checked);
-
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            CueProvider.SetCue(txtLineName,"Enter a name here..");
+            CueProvider.SetCue(txtLineName, "Enter a name here..");
             DisableButtonOnLoad(true);
             SetMultiLineControlState(cboxMultiMode.Checked);
             dropDownDirection.SelectedIndex = 0;
@@ -196,20 +182,19 @@ namespace CoordinateHelper
                 line1.Name = txtLineName.Text;
             }
 
-            settings1.ReadSettings(line1,cboxMultiMode.Checked);
+            settings1.ReadSettings(line1, cboxMultiMode.Checked);
 
             settings1.ShowDialog();
 
             if (!settings1.ButtonSavePressed) return;
 
-            var somethingChanged = settings1.IsSomethingChanged(line1);
+            bool somethingChanged = settings1.IsSomethingChanged(line1);
             settings1.SaveSettings(line1);
 
             if (dgvCoordinates.DataSource != null && somethingChanged)
             {
                 StartMainMethod();
             }
-                
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -221,8 +206,7 @@ namespace CoordinateHelper
         {
             using (var writer = new StreamWriter(saveFileDialog1.FileName))
             {
-                
-                Utilities.WriteDataTable(dTable,writer,true,line1.Delimiter,line1.NumericFormat);
+                Utilities.WriteDataTable(dTable, writer, true, line1.Delimiter, line1.NumericFormat);
 
                 //myline.WriteDataTable(myline.CoordTable, writer, true, dlm);
             }
@@ -266,7 +250,6 @@ namespace CoordinateHelper
                 (Image) Resources.ResourceManager.GetObject("aboutIco"));
         }
 
-        bool _alreadyFocused;
         private void txtLineName_Enter(object sender, EventArgs e)
         {
             if (MouseButtons != MouseButtons.None) return;
@@ -290,31 +273,26 @@ namespace CoordinateHelper
         {
             if ((e.KeyCode == Keys.Enter) || (e.KeyCode == Keys.Return))
             {
-                SelectNextControl((Control)sender, true, true, true, true);
+                SelectNextControl((Control) sender, true, true, true, true);
             }
-           
         }
 
         private void NumOnFocus(object sender, EventArgs e)
         {
-            var numControl = (NumericUpDown)sender;
+            var numControl = (NumericUpDown) sender;
             numControl.Select(0, numControl.Text.Length);
         }
 
         private void plotCurrentTableToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
-            var xMin = dTable.AsEnumerable().Min(r => r.Field<Double>(dTable.Columns[1])) - line1.Interval;
-            var xMax = dTable.AsEnumerable().Max(r => r.Field<Double>(dTable.Columns[1])) + line1.Interval;
-            var yMin = dTable.AsEnumerable().Min(r => r.Field<Double>(dTable.Columns[2])) - line1.Interval;
-            var yMax = dTable.AsEnumerable().Max(r => r.Field<Double>(dTable.Columns[2])) + line1.Interval;
+            double xMin = dTable.AsEnumerable().Min(r => r.Field<Double>(dTable.Columns[1])) - line1.Interval;
+            double xMax = dTable.AsEnumerable().Max(r => r.Field<Double>(dTable.Columns[1])) + line1.Interval;
+            double yMin = dTable.AsEnumerable().Min(r => r.Field<Double>(dTable.Columns[2])) - line1.Interval;
+            double yMax = dTable.AsEnumerable().Max(r => r.Field<Double>(dTable.Columns[2])) + line1.Interval;
 
-            var plot1 = new LinePlot(cboxMultiMode.Checked,line1.Name,line1.Station,dTable,xMin,xMax,yMin,yMax);
-            
+            var plot1 = new LinePlot(cboxMultiMode.Checked, line1.Name, line1.Station, dTable, xMin, xMax, yMin, yMax);
+
             plot1.Show();
         }
-
-        
-		
-	}
+    }
 }

@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows.Forms;
 using ZedGraph;
 
@@ -13,22 +9,19 @@ namespace CoordinateHelper
 {
     public partial class LinePlot : Form
     {
-        
-
-        public LinePlot(bool multiMode,string title, int stations, DataTable dtTable, double xMin, double xMax, double yMin, double yMax)
+        public LinePlot(bool multiMode, string title, int stations, DataTable dtTable, double xMin, double xMax,
+            double yMin, double yMax)
         {
             InitializeComponent();
 
             if (multiMode)
             {
-                CreateMultiChart(title,stations,dtTable,xMin,xMax,yMin,yMax);
+                CreateMultiChart(title, stations, dtTable, xMin, xMax, yMin, yMax);
             }
             else
             {
                 CreateSingleChart(title, dtTable, xMin, xMax, yMin, yMax);
             }
-            
-            
         }
 
         public void SetSize()
@@ -36,103 +29,103 @@ namespace CoordinateHelper
             zedGraphControl1.Location = new Point(10, 10);
             // Leave a small margin around the outside of the control
             zedGraphControl1.Size = new Size(ClientRectangle.Width - 20,
-                                    ClientRectangle.Height - 20);
+                ClientRectangle.Height - 20);
         }
 
-        public void CreateSingleChart(string title, DataTable dtTable,double xmin, double xmax, double ymin, double ymax)
+        public void CreateSingleChart(string title, DataTable dtTable, double xMin, double xMax, double yMin,
+            double yMax)
         {
             GraphPane myPane = zedGraphControl1.GraphPane;
             // activate this if you need equal scaling of axis x and y
-            myPane.AxisChangeEvent += new GraphPane.AxisChangeEventHandler(graphPane_AxisChangeEvent);
+            myPane.AxisChangeEvent += graphPane_AxisChangeEvent;
 
             // Set the title and axis labels
             myPane.Title.Text = title;
-            
-            SetChartDisplay(myPane,xmin,xmax,ymin,ymax);
-            SetChartFont(myPane,"Tahoma",false);
-            
-          
-            PointPairList list1 = new PointPairList();
+
+            SetChartDisplay(myPane, xMin, xMax, yMin, yMax);
+            SetChartFont(myPane, "Tahoma", false);
+
+
+            var list1 = new PointPairList();
 
             foreach (DataRow drow in dtTable.Rows)
             {
-                list1.Add((double)drow[1],(double)drow[2]);
+                list1.Add((double) drow[1], (double) drow[2]);
             }
 
-            LineItem myCurve = myPane.AddCurve(title,list1, Color.SlateBlue, SymbolType.Diamond);
+            LineItem myCurve = myPane.AddCurve(title, list1, Color.SlateBlue, SymbolType.Diamond);
             myCurve.Symbol.Fill = new Fill(Color.OrangeRed);
             myCurve.Symbol.Border.IsVisible = false;
-            
-            
+
 
             // Calculate the Axis Scale Ranges
             zedGraphControl1.AxisChange();
-
         }
 
-        public void CreateMultiChart(string title, int stations,DataTable dtTable, double xmin, double xmax, double ymin, double ymax)
+        public void CreateMultiChart(string title, int stations, DataTable dtTable, double xMin, double xMax,
+            double yMin, double yMax)
         {
             GraphPane myPane = zedGraphControl1.GraphPane;
 
             // activate this if you need equal scaling of axis x and y
-            myPane.AxisChangeEvent += new GraphPane.AxisChangeEventHandler(graphPane_AxisChangeEvent);
+            myPane.AxisChangeEvent += graphPane_AxisChangeEvent;
 
             // Set the title and axis labels
             myPane.Title.Text = title;
             myPane.Legend.IsVisible = false;
 
-            SetChartDisplay(myPane, xmin, xmax, ymin, ymax);
+            SetChartDisplay(myPane, xMin, xMax, yMin, yMax);
             SetChartFont(myPane, "Tahoma", false);
 
 
-            List <PointPairList> myLineList = new List <PointPairList>();
-            
-            var countTracker = 0;
+            var myLineList = new List<PointPairList>();
+
+            int countTracker = 0;
 
             var point = new PointPairList();
             foreach (DataRow dRow in dtTable.Rows)
             {
                 countTracker++;
-                point.Add((double)dRow[1], (double)dRow[2]);
+                point.Add((double) dRow[1], (double) dRow[2]);
 
                 if (countTracker%stations != 0) continue;
                 myLineList.Add(point);
                 point = new PointPairList();
             }
 
-            foreach (var pointList in myLineList)
+            foreach (PointPairList pointList in myLineList)
             {
                 LineItem myCurve = myPane.AddCurve(title, pointList, Color.SlateBlue, SymbolType.Diamond);
                 myCurve.Symbol.Fill = new Fill(Color.OrangeRed);
                 myCurve.Symbol.Border.IsVisible = false;
             }
 
-            
+
             // Calculate the Axis Scale Ranges
             zedGraphControl1.AxisChange();
         }
-        
+
         private void graphPane_AxisChangeEvent(GraphPane target)
         {
             SetSize();
             GraphPane graphPane = zedGraphControl1.GraphPane;
 
             // Correct the scale so that the two axes are 1:1 aspect ratio
-            double scalex2 = (graphPane.XAxis.Scale.Max - graphPane.XAxis.Scale.Min) / graphPane.Rect.Width;
-            double scaley2 = (graphPane.YAxis.Scale.Max - graphPane.YAxis.Scale.Min) / graphPane.Rect.Height;
-            if (scalex2 > scaley2)
+            double scaleX2 = (graphPane.XAxis.Scale.Max - graphPane.XAxis.Scale.Min)/graphPane.Rect.Width;
+            double scaleY2 = (graphPane.YAxis.Scale.Max - graphPane.YAxis.Scale.Min)/graphPane.Rect.Height;
+            if (scaleX2 > scaleY2)
             {
                 double diff = graphPane.YAxis.Scale.Max - graphPane.YAxis.Scale.Min;
-                double new_diff = graphPane.Rect.Height * scalex2;
-                graphPane.YAxis.Scale.Min -= (new_diff - diff) / 2.0;
-                graphPane.YAxis.Scale.Max += (new_diff - diff) / 2.0;
+                double newDiff = graphPane.Rect.Height*scaleX2;
+                graphPane.YAxis.Scale.Min -= (newDiff - diff)/2.0;
+                graphPane.YAxis.Scale.Max += (newDiff - diff)/2.0;
             }
-            else if (scaley2 > scalex2)
+            else if (scaleY2 > scaleX2)
             {
                 double diff = graphPane.XAxis.Scale.Max - graphPane.XAxis.Scale.Min;
-                double new_diff = graphPane.Rect.Width * scaley2;
-                graphPane.XAxis.Scale.Min -= (new_diff - diff) / 2.0;
-                graphPane.XAxis.Scale.Max += (new_diff - diff) / 2.0;
+                double new_diff = graphPane.Rect.Width*scaleY2;
+                graphPane.XAxis.Scale.Min -= (new_diff - diff)/2.0;
+                graphPane.XAxis.Scale.Max += (new_diff - diff)/2.0;
             }
 
             // Recompute the grid lines
@@ -147,7 +140,7 @@ namespace CoordinateHelper
             zedGraphControl1.AxisChange();
         }
 
-        private void SetChartFont(GraphPane myPane,string fontFamily, bool isBold)
+        private void SetChartFont(GraphPane myPane, string fontFamily, bool isBold)
         {
             myPane.Title.FontSpec.Size = 14;
             myPane.Title.FontSpec.Family = fontFamily;
@@ -168,7 +161,7 @@ namespace CoordinateHelper
             myPane.XAxis.Scale.MinAuto = false;
             myPane.XAxis.Scale.Min = xMin;
             myPane.XAxis.MajorGrid.IsVisible = true;
-
+            
             myPane.YAxis.Title.Text = "Northing";
             myPane.YAxis.Scale.MagAuto = false;
             myPane.YAxis.Scale.MaxAuto = false;

@@ -16,7 +16,7 @@ namespace CoordinateHelper
 
         public bool ButtonSavePressed { get; private set; }
 
-        public void ReadSettings(Linemaker line, bool @checked)
+        public void ReadSettings(LineMaker line, bool @checked)
         {
             this._multimode = @checked;
             this.numLineIndex.Enabled = this._multimode;
@@ -24,9 +24,9 @@ namespace CoordinateHelper
 
             this.linename = line.Name;
             this.numLineIndex.Value = line.LineIndex;
-            this.txtLineSeparator.Text = line.Lineseparator;
+            this.txtLineSeparator.Text = line.LineSeparator;
             this.numStationsIndex.Value = line.StaIndex;
-            this.txtStationsSeparator.Text = line.Pointseparator;
+            this.txtStationsSeparator.Text = line.PointsSeparator;
             this.numDecimalPlaces.Value = line.DecimalPlaces;
 
             switch (line.Delimiter)
@@ -45,17 +45,17 @@ namespace CoordinateHelper
             UpdatePreview(this._multimode);
         }
 
-        public bool IsSomethingChanged(Linemaker line)
+        public bool IsSomethingChanged(LineMaker line)
         {
-            return this.linename != line.Name || this.numLineIndex.Value != line.LineIndex || this.txtLineSeparator.Text != line.Lineseparator || this.numStationsIndex.Value != line.StaIndex || this.txtStationsSeparator.Text != line.Pointseparator || this.numDecimalPlaces.Value != line.DecimalPlaces;
+            return this.linename != line.Name || this.numLineIndex.Value != line.LineIndex || this.txtLineSeparator.Text != line.LineSeparator || this.numStationsIndex.Value != line.StaIndex || this.txtStationsSeparator.Text != line.PointsSeparator || this.numDecimalPlaces.Value != line.DecimalPlaces;
         }
 
-        public void SaveSettings(Linemaker line)
+        public void SaveSettings(LineMaker line)
         {
             line.LineIndex = (int) this.numLineIndex.Value;
-            line.Lineseparator = this.txtLineSeparator.Text;
+            line.LineSeparator = this.txtLineSeparator.Text;
             line.StaIndex = (int) this.numStationsIndex.Value;
-            line.Pointseparator = this.txtStationsSeparator.Text;
+            line.PointsSeparator = this.txtStationsSeparator.Text;
             line.DecimalPlaces = (int) this.numDecimalPlaces.Value;
 
             switch (cboxDelimiter.SelectedIndex)
