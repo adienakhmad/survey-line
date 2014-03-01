@@ -74,12 +74,12 @@ namespace CoordinateHelper
 
                 double length = ((line.Station - 1)*line.Interval);
                 double height = ((line.LineCount - 1)*line.LineSpacing);
-                string lengthunit = length > 999 ? "Km" : "m";
-                string heightunit = height > 999 ? "Km" : "m";
-                length = lengthunit == "Km" ? length/1000 : length;
-                height = heightunit == "Km" ? height/1000 : height;
+                string lengthUnit = length > 999 ? "Km" : "m";
+                string heightUnit = height > 999 ? "Km" : "m";
+                length = lengthUnit == "Km" ? length/1000 : length;
+                height = heightUnit == "Km" ? height/1000 : height;
 
-                lblDistance.Text = string.Format("{0} {1} x {2} {3}", length, lengthunit, height, heightunit);
+                lblDistance.Text = string.Format("{0} {1} x {2} {3}", length, lengthUnit, height, heightUnit);
             }
 
             else
@@ -207,8 +207,6 @@ namespace CoordinateHelper
             using (var writer = new StreamWriter(saveFileDialog1.FileName))
             {
                 Utilities.WriteDataTable(dTable, writer, true, line1.Delimiter, line1.NumericFormat);
-
-                //myline.WriteDataTable(myline.CoordTable, writer, true, dlm);
             }
 
             saveFileDialog1.FileName = string.Empty;

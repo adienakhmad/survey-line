@@ -9,19 +9,28 @@ namespace CoordinateHelper
 {
     public partial class LinePlot : Form
     {
-        public LinePlot(bool multiMode, string title, int stations, DataTable dtTable, double xMin, double xMax,
-            double yMin, double yMax)
+        private double _xMin;
+        private double _xMax;
+        private double _yMin;
+        private double _yMax;
+        public LinePlot(bool multiMode, string title, int stations, DataTable dtTable, double xMin, double xMax, double yMin, double yMax)
         {
+            
+            this._xMin = xMin;
+            this._xMax = xMax;
+            this._yMin = yMin;
+            this._yMax = yMax;
             InitializeComponent();
 
             if (multiMode)
             {
-                CreateMultiChart(title, stations, dtTable, xMin, xMax, yMin, yMax);
+                CreateMultiChart(title, stations, dtTable);
             }
             else
             {
-                CreateSingleChart(title, dtTable, xMin, xMax, yMin, yMax);
+                CreateSingleChart(title, dtTable);
             }
+            zedGraphControl1.MasterPane[0].IsFontsScaled = false;
         }
 
         public void SetSize()
@@ -32,18 +41,18 @@ namespace CoordinateHelper
                 ClientRectangle.Height - 20);
         }
 
-        public void CreateSingleChart(string title, DataTable dtTable, double xMin, double xMax, double yMin,
-            double yMax)
+        public void CreateSingleChart(string title, DataTable dtTable)
         {
             GraphPane myPane = zedGraphControl1.GraphPane;
             // activate this if you need equal scaling of axis x and y
             myPane.AxisChangeEvent += graphPane_AxisChangeEvent;
 
             // Set the title and axis labels
-            myPane.Title.Text = title;
+            myPane.Title.Text = string.Format("{0} Plot", title);
 
-            SetChartDisplay(myPane, xMin, xMax, yMin, yMax);
-            SetChartFont(myPane, "Tahoma", false);
+            SetChartDisplay(myPane);
+            SetChartFont(myPane);
+            SetAxisLimit(myPane);
 
 
             var list1 = new PointPairList();
@@ -62,8 +71,7 @@ namespace CoordinateHelper
             zedGraphControl1.AxisChange();
         }
 
-        public void CreateMultiChart(string title, int stations, DataTable dtTable, double xMin, double xMax,
-            double yMin, double yMax)
+        public void CreateMultiChart(string title, int stations, DataTable dtTable)
         {
             GraphPane myPane = zedGraphControl1.GraphPane;
 
@@ -71,12 +79,12 @@ namespace CoordinateHelper
             myPane.AxisChangeEvent += graphPane_AxisChangeEvent;
 
             // Set the title and axis labels
-            myPane.Title.Text = title;
+            myPane.Title.Text = string.Format("{0} Plot",title);
             myPane.Legend.IsVisible = false;
 
-            SetChartDisplay(myPane, xMin, xMax, yMin, yMax);
-            SetChartFont(myPane, "Tahoma", false);
-
+            SetChartDisplay(myPane);
+            SetChartFont(myPane);
+            SetAxisLimit(myPane);
 
             var myLineList = new List<PointPairList>();
 
@@ -99,7 +107,6 @@ namespace CoordinateHelper
                 myCurve.Symbol.Fill = new Fill(Color.OrangeRed);
                 myCurve.Symbol.Border.IsVisible = false;
             }
-
 
             // Calculate the Axis Scale Ranges
             zedGraphControl1.AxisChange();
@@ -137,38 +144,52 @@ namespace CoordinateHelper
 
         private void zedGraphControl1_Resize(object sender, EventArgs e)
         {
+            SetAxisLimit(zedGraphControl1.GraphPane);
             zedGraphControl1.AxisChange();
         }
 
-        private void SetChartFont(GraphPane myPane, string fontFamily, bool isBold)
+        private void SetChartFont(GraphPane myPane)
         {
+            const string fontFamily = "Tahoma";
             myPane.Title.FontSpec.Size = 14;
+            myPane.Title.FontSpec.IsBold = true;
             myPane.Title.FontSpec.Family = fontFamily;
 
             myPane.XAxis.Title.FontSpec.Family = fontFamily;
-            myPane.XAxis.Title.FontSpec.IsBold = isBold;
+            myPane.XAxis.Title.FontSpec.IsBold = true;
+            myPane.XAxis.Title.FontSpec.Size = 12.0f;
+            myPane.XAxis.Scale.FontSpec.Family = fontFamily;
+            myPane.XAxis.Scale.FontSpec.Size = 12.0f;
 
             myPane.YAxis.Title.FontSpec.Family = fontFamily;
-            myPane.YAxis.Title.FontSpec.IsBold = isBold;
+            myPane.YAxis.Title.FontSpec.IsBold = true;
+            myPane.YAxis.Title.FontSpec.Size = 12.0f;
+            myPane.YAxis.Scale.FontSpec.Family = fontFamily;
+            myPane.YAxis.Scale.FontSpec.Size = 12.0f;
         }
 
-        private void SetChartDisplay(GraphPane myPane, double xMin, double xMax, double yMin, double yMax)
+        private void SetChartDisplay(GraphPane myPane)
         {
             myPane.XAxis.Title.Text = "Easting";
-            myPane.XAxis.Scale.MagAuto = false;
-            myPane.XAxis.Scale.MaxAuto = false;
-            myPane.XAxis.Scale.Max = xMax;
-            myPane.XAxis.Scale.MinAuto = false;
-            myPane.XAxis.Scale.Min = xMin;
+            myPane.XAxis.Scale.MagAuto = false;    
             myPane.XAxis.MajorGrid.IsVisible = true;
             
             myPane.YAxis.Title.Text = "Northing";
             myPane.YAxis.Scale.MagAuto = false;
-            myPane.YAxis.Scale.MaxAuto = false;
-            myPane.YAxis.Scale.Max = yMax;
-            myPane.YAxis.Scale.MinAuto = false;
-            myPane.YAxis.Scale.Min = yMin;
             myPane.YAxis.MajorGrid.IsVisible = true;
+        }
+
+        private void SetAxisLimit(GraphPane myPane)
+        {
+            myPane.XAxis.Scale.MinAuto = false;
+            myPane.XAxis.Scale.Min = _xMin;
+            myPane.XAxis.Scale.MaxAuto = false;
+            myPane.XAxis.Scale.Max = _xMax;
+
+            myPane.YAxis.Scale.MaxAuto = false;
+            myPane.YAxis.Scale.Max = _yMax;
+            myPane.YAxis.Scale.MinAuto = false;
+            myPane.YAxis.Scale.Min = _yMin;
         }
     }
 }

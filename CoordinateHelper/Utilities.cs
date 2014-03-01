@@ -62,7 +62,7 @@ namespace CoordinateHelper
         public static void FeatureUnavailable()
         {
             BetterDialog.ShowDialog("Sorry", "Feature Unavailable", "I am sorry to tell you that this feature is currently still under development.",
-                null, "Close", (Image)Resources.ResourceManager.GetObject("Information_6227_32x_cyan"));
+                null, "Close", (Image)Resources.ResourceManager.GetObject("InfoblueIcon"));
         }
     }
 }
