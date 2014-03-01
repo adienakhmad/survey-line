@@ -13,14 +13,11 @@ namespace CoordinateHelper
 {
     public partial class LinePlot : Form
     {
-        private GraphPane myPane;
+        
 
         public LinePlot(bool multiMode,string title, int stations, DataTable dtTable, double xMin, double xMax, double yMin, double yMax)
         {
             InitializeComponent();
-            myPane = zedGraphControl1.GraphPane;
-            // activate this if you need equal scaling of axis x and y
-            myPane.AxisChangeEvent += new GraphPane.AxisChangeEventHandler(graphPane_AxisChangeEvent);
 
             if (multiMode)
             {
@@ -44,29 +41,17 @@ namespace CoordinateHelper
 
         public void CreateSingleChart(string title, DataTable dtTable,double xmin, double xmax, double ymin, double ymax)
         {
+            GraphPane myPane = zedGraphControl1.GraphPane;
+            // activate this if you need equal scaling of axis x and y
+            myPane.AxisChangeEvent += new GraphPane.AxisChangeEventHandler(graphPane_AxisChangeEvent);
 
             // Set the title and axis labels
             myPane.Title.Text = title;
-
-            myPane.XAxis.Title.Text = "Easting";
-            myPane.XAxis.Scale.MagAuto = false;
-            myPane.XAxis.Scale.MaxAuto = false;
-            myPane.XAxis.Scale.Max = xmax;
-            myPane.XAxis.Scale.MinAuto = false;
-            myPane.XAxis.Scale.Min = xmin;
-            myPane.XAxis.MajorGrid.IsVisible = true;
-
-            myPane.YAxis.Title.Text = "Northing";
-            myPane.YAxis.Scale.MagAuto = false;
-            myPane.YAxis.Scale.MaxAuto = false;
-            myPane.YAxis.Scale.Max = ymax;
-            myPane.YAxis.Scale.MinAuto = false;
-            myPane.YAxis.Scale.Min = ymin;
-            myPane.YAxis.MajorGrid.IsVisible = true;
-
-
-
-            // Make up some data arrays based on the Sine function
+            
+            SetChartDisplay(myPane,xmin,xmax,ymin,ymax);
+            SetChartFont(myPane,"Tahoma",false);
+            
+          
             PointPairList list1 = new PointPairList();
 
             foreach (DataRow drow in dtTable.Rows)
@@ -74,10 +59,9 @@ namespace CoordinateHelper
                 list1.Add((double)drow[1],(double)drow[2]);
             }
 
-            // Generate a red curve with diamond
-            // symbols, and "Porsche" in the legend
-            
-                LineItem myCurve = myPane.AddCurve(title,list1, Color.Red, SymbolType.Diamond);
+            LineItem myCurve = myPane.AddCurve(title,list1, Color.SlateBlue, SymbolType.Diamond);
+            myCurve.Symbol.Fill = new Fill(Color.OrangeRed);
+            myCurve.Symbol.Border.IsVisible = false;
             
             
 
@@ -88,32 +72,21 @@ namespace CoordinateHelper
 
         public void CreateMultiChart(string title, int stations,DataTable dtTable, double xmin, double xmax, double ymin, double ymax)
         {
+            GraphPane myPane = zedGraphControl1.GraphPane;
+
+            // activate this if you need equal scaling of axis x and y
+            myPane.AxisChangeEvent += new GraphPane.AxisChangeEventHandler(graphPane_AxisChangeEvent);
+
             // Set the title and axis labels
             myPane.Title.Text = title;
             myPane.Legend.IsVisible = false;
 
-            myPane.XAxis.Title.Text = "Easting";
-            myPane.XAxis.Scale.MagAuto = false;
-            myPane.XAxis.Scale.MaxAuto = false;
-            myPane.XAxis.Scale.Max = xmax;
-            myPane.XAxis.Scale.MinAuto = false;
-            myPane.XAxis.Scale.Min = xmin;
-            myPane.XAxis.MajorGrid.IsVisible = true;
-
-            myPane.YAxis.Title.Text = "Northing";
-            myPane.YAxis.Scale.MagAuto = false;
-            myPane.YAxis.Scale.MaxAuto = false;
-            myPane.YAxis.Scale.Max = ymax;
-            myPane.YAxis.Scale.MinAuto = false;
-            myPane.YAxis.Scale.Min = ymin;
-            myPane.YAxis.MajorGrid.IsVisible = true;
+            SetChartDisplay(myPane, xmin, xmax, ymin, ymax);
+            SetChartFont(myPane, "Tahoma", false);
 
 
-
-            // Make up some data arrays based on the Sine function
             List <PointPairList> myLineList = new List <PointPairList>();
             
-         
             var countTracker = 0;
 
             var point = new PointPairList();
@@ -122,22 +95,23 @@ namespace CoordinateHelper
                 countTracker++;
                 point.Add((double)dRow[1], (double)dRow[2]);
 
-                if (countTracker % stations == 0)
-                {
-                    myLineList.Add(point);
-                    point = new PointPairList();
-                }
+                if (countTracker%stations != 0) continue;
+                myLineList.Add(point);
+                point = new PointPairList();
             }
 
             foreach (var pointList in myLineList)
             {
-                LineItem myCurve = myPane.AddCurve(title, pointList, Color.Red, SymbolType.Diamond);
+                LineItem myCurve = myPane.AddCurve(title, pointList, Color.SlateBlue, SymbolType.Diamond);
+                myCurve.Symbol.Fill = new Fill(Color.OrangeRed);
+                myCurve.Symbol.Border.IsVisible = false;
             }
 
             
             // Calculate the Axis Scale Ranges
             zedGraphControl1.AxisChange();
         }
+        
         private void graphPane_AxisChangeEvent(GraphPane target)
         {
             SetSize();
@@ -171,6 +145,37 @@ namespace CoordinateHelper
         private void zedGraphControl1_Resize(object sender, EventArgs e)
         {
             zedGraphControl1.AxisChange();
+        }
+
+        private void SetChartFont(GraphPane myPane,string fontFamily, bool isBold)
+        {
+            myPane.Title.FontSpec.Size = 14;
+            myPane.Title.FontSpec.Family = fontFamily;
+
+            myPane.XAxis.Title.FontSpec.Family = fontFamily;
+            myPane.XAxis.Title.FontSpec.IsBold = isBold;
+
+            myPane.YAxis.Title.FontSpec.Family = fontFamily;
+            myPane.YAxis.Title.FontSpec.IsBold = isBold;
+        }
+
+        private void SetChartDisplay(GraphPane myPane, double xMin, double xMax, double yMin, double yMax)
+        {
+            myPane.XAxis.Title.Text = "Easting";
+            myPane.XAxis.Scale.MagAuto = false;
+            myPane.XAxis.Scale.MaxAuto = false;
+            myPane.XAxis.Scale.Max = xMax;
+            myPane.XAxis.Scale.MinAuto = false;
+            myPane.XAxis.Scale.Min = xMin;
+            myPane.XAxis.MajorGrid.IsVisible = true;
+
+            myPane.YAxis.Title.Text = "Northing";
+            myPane.YAxis.Scale.MagAuto = false;
+            myPane.YAxis.Scale.MaxAuto = false;
+            myPane.YAxis.Scale.Max = yMax;
+            myPane.YAxis.Scale.MinAuto = false;
+            myPane.YAxis.Scale.Min = yMin;
+            myPane.YAxis.MajorGrid.IsVisible = true;
         }
     }
 }
