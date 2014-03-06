@@ -39,6 +39,7 @@ namespace CoordinateHelper
 		/// </summary>
 		private void InitializeComponent()
 		{
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -80,6 +81,9 @@ namespace CoordinateHelper
             this.btnMoreSetup = new System.Windows.Forms.Button();
             this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
             this.dgvCoordinates = new System.Windows.Forms.DataGridView();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemCopyAll = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel8 = new System.Windows.Forms.FlowLayoutPanel();
             this.label20 = new System.Windows.Forms.Label();
@@ -102,14 +106,15 @@ namespace CoordinateHelper
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.latLongToUTMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.plotCurrentTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.latLongToUTMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.shortcutsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.shortcutsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.statusStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -129,12 +134,14 @@ namespace CoordinateHelper
             this.flowLayoutPanel4.SuspendLayout();
             this.flowLayoutPanel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCoordinates)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.flowLayoutPanel8.SuspendLayout();
             this.flowLayoutPanel7.SuspendLayout();
             this.flowLayoutPanel6.SuspendLayout();
             this.flowLayoutPanel9.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -466,6 +473,7 @@ namespace CoordinateHelper
             this.flowLayoutPanel3.Controls.Add(this.label16);
             this.flowLayoutPanel3.Controls.Add(this.label11);
             this.flowLayoutPanel3.Controls.Add(this.dropDownDirection);
+            this.flowLayoutPanel3.Controls.Add(this.pictureBox1);
             this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel3.Location = new System.Drawing.Point(10, 19);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
@@ -629,6 +637,7 @@ namespace CoordinateHelper
             this.dgvCoordinates.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dgvCoordinates.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvCoordinates.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCoordinates.ContextMenuStrip = this.contextMenuStrip1;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -642,7 +651,30 @@ namespace CoordinateHelper
             this.dgvCoordinates.ReadOnly = true;
             this.dgvCoordinates.Size = new System.Drawing.Size(361, 327);
             this.dgvCoordinates.TabIndex = 1;
+            this.dgvCoordinates.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvCoordinates_CellMouseDown);
             this.dgvCoordinates.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvCoordinates_DataBindingComplete);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemCopy,
+            this.toolStripMenuItemCopyAll});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(120, 48);
+            // 
+            // toolStripMenuItemCopy
+            // 
+            this.toolStripMenuItemCopy.Name = "toolStripMenuItemCopy";
+            this.toolStripMenuItemCopy.Size = new System.Drawing.Size(119, 22);
+            this.toolStripMenuItemCopy.Text = "Copy";
+            this.toolStripMenuItemCopy.Click += new System.EventHandler(this.toolStripMenuItemCopy_Click);
+            // 
+            // toolStripMenuItemCopyAll
+            // 
+            this.toolStripMenuItemCopyAll.Name = "toolStripMenuItemCopyAll";
+            this.toolStripMenuItemCopyAll.Size = new System.Drawing.Size(119, 22);
+            this.toolStripMenuItemCopyAll.Text = "Copy All";
+            this.toolStripMenuItemCopyAll.Click += new System.EventHandler(this.toolStripMenuItemCopyAll_Click);
             // 
             // groupBox3
             // 
@@ -857,19 +889,19 @@ namespace CoordinateHelper
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Text = "&Tools";
             // 
-            // latLongToUTMToolStripMenuItem
-            // 
-            this.latLongToUTMToolStripMenuItem.Name = "latLongToUTMToolStripMenuItem";
-            this.latLongToUTMToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.latLongToUTMToolStripMenuItem.Text = "Lat/Long to UTM";
-            this.latLongToUTMToolStripMenuItem.Click += new System.EventHandler(this.latLongToUTMToolStripMenuItem_Click);
-            // 
             // plotCurrentTableToolStripMenuItem
             // 
             this.plotCurrentTableToolStripMenuItem.Name = "plotCurrentTableToolStripMenuItem";
             this.plotCurrentTableToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.plotCurrentTableToolStripMenuItem.Text = "Plot Current Table";
             this.plotCurrentTableToolStripMenuItem.Click += new System.EventHandler(this.plotCurrentTableToolStripMenuItem_Click);
+            // 
+            // latLongToUTMToolStripMenuItem
+            // 
+            this.latLongToUTMToolStripMenuItem.Name = "latLongToUTMToolStripMenuItem";
+            this.latLongToUTMToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.latLongToUTMToolStripMenuItem.Text = "Lat/Long to UTM";
+            this.latLongToUTMToolStripMenuItem.Click += new System.EventHandler(this.latLongToUTMToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -880,10 +912,17 @@ namespace CoordinateHelper
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "&Help";
             // 
+            // shortcutsToolStripMenuItem
+            // 
+            this.shortcutsToolStripMenuItem.Name = "shortcutsToolStripMenuItem";
+            this.shortcutsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.shortcutsToolStripMenuItem.Text = "Help...";
+            this.shortcutsToolStripMenuItem.Click += new System.EventHandler(this.shortcutsToolStripMenuItem_Click);
+            // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.aboutToolStripMenuItem.Text = "&About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -911,11 +950,17 @@ namespace CoordinateHelper
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
-            // shortcutsToolStripMenuItem
+            // pictureBox1
             // 
-            this.shortcutsToolStripMenuItem.Name = "shortcutsToolStripMenuItem";
-            this.shortcutsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.shortcutsToolStripMenuItem.Text = "Shortcuts";
+            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Help;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(139, 87);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Padding = new System.Windows.Forms.Padding(3, 2, 0, 0);
+            this.pictureBox1.Size = new System.Drawing.Size(27, 21);
+            this.pictureBox1.TabIndex = 15;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // MainForm
             // 
@@ -929,7 +974,7 @@ namespace CoordinateHelper
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MainForm";
-            this.Text = "SurveyLine 1.0 BETA 2";
+            this.Text = "SurveyLine";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
@@ -952,6 +997,7 @@ namespace CoordinateHelper
             this.flowLayoutPanel4.ResumeLayout(false);
             this.flowLayoutPanel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCoordinates)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.flowLayoutPanel8.ResumeLayout(false);
             this.flowLayoutPanel8.PerformLayout();
@@ -961,6 +1007,7 @@ namespace CoordinateHelper
             this.flowLayoutPanel9.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1034,5 +1081,9 @@ namespace CoordinateHelper
         private ToolStripMenuItem plotCurrentTableToolStripMenuItem;
         private Label label16;
         private ToolStripMenuItem shortcutsToolStripMenuItem;
+        private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem toolStripMenuItemCopy;
+        private ToolStripMenuItem toolStripMenuItemCopyAll;
+        private PictureBox pictureBox1;
 	}
 }

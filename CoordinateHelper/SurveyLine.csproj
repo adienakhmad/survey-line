@@ -144,6 +144,9 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\save_16xLG.png" />
+    <None Include="SurveyLineHelp.chm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AddTable_5632.png" />

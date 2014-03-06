@@ -9,10 +9,10 @@ namespace CoordinateHelper
 {
     public partial class LinePlot : Form
     {
-        private double _xMin;
-        private double _xMax;
-        private double _yMin;
-        private double _yMax;
+        private readonly double _xMin;
+        private readonly double _xMax;
+        private readonly double _yMin;
+        private readonly double _yMax;
         public LinePlot(bool multiMode, string title, int stations, DataTable dtTable, double xMin, double xMax, double yMin, double yMax)
         {
             

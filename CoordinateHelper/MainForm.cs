@@ -292,5 +292,66 @@ namespace CoordinateHelper
 
             plot1.Show();
         }
+
+        private void toolStripMenuItemCopy_Click(object sender, EventArgs e)
+        {
+            var dataObj = dgvCoordinates.GetClipboardContent();
+            if (dataObj == null) return;
+            Clipboard.SetDataObject(dataObj);
+        }
+
+        private void toolStripMenuItemCopyAll_Click(object sender, EventArgs e)
+        {
+            // set the columns to be able to be selected
+            dgvCoordinates.ClearSelection();
+            foreach (DataGridViewColumn c in dgvCoordinates.Columns)
+            {
+                c.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
+            dgvCoordinates.SelectionMode = DataGridViewSelectionMode.FullColumnSelect;
+
+            // select all columns
+            dgvCoordinates.RowHeadersVisible = false;
+            
+            foreach (DataGridViewColumn c in dgvCoordinates.Columns)
+            {
+                c.Selected = true;
+            }
+
+            // copy to clipboard
+            var dataObj = dgvCoordinates.GetClipboardContent();
+            if (dataObj == null) return;
+            Clipboard.SetDataObject(dataObj);
+
+            dgvCoordinates.RowHeadersVisible = true;
+
+            // restore table behavior
+            dgvCoordinates.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;
+            foreach (DataGridViewColumn c in dgvCoordinates.Columns)
+            {
+                c.SortMode = DataGridViewColumnSortMode.Automatic;
+            }
+            
+            // Finally a message.
+            MessageBox.Show("Copied to clipboard.");
+        }
+
+        private void dgvCoordinates_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right) return;
+            if (e.ColumnIndex >= 0 && e.RowIndex >= 0 && dgvCoordinates.SelectedCells.Count == 1)
+                dgvCoordinates.CurrentCell = dgvCoordinates[e.ColumnIndex, e.RowIndex];
+        }
+
+        private void shortcutsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Help.ShowHelp(this,"SurveyLineHelp.chm");
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            Help.ShowHelp(this, "SurveyLineHelp.chm","Direction.htm");
+        }
     }
 }
