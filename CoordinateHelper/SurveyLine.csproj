@@ -52,8 +52,7 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>Fatcow-Farm-Fresh-Map.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -176,6 +175,7 @@
     <EmbeddedResource Include="ZedGraph.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Fatcow-Farm-Fresh-Map.ico" />
     <Content Include="License-LGPL.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

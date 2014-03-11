@@ -242,7 +242,7 @@ namespace CoordinateHelper
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            BetterDialog.ShowDialog("About SurveyLine", "SurveyLine v1.0 BETA 2",
+            BetterDialog.ShowDialog("About SurveyLine", "SurveyLine v1.0",
                 "This simple tool was developed in purpose to help designing a survey for Geophysical measurement or any other field measurement which requires a set of coordinates.\n\n" +
                 "© 2014 Adien Akhmad. All rights reserved.", null, "Close",
                 (Image) Resources.ResourceManager.GetObject("aboutIco"));
