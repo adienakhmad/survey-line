@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
-using CoordinateHelper.Properties;
-using DotNetPerls;
+using SurveyLine.Properties;
 
-namespace CoordinateHelper
+namespace SurveyLine
 {
     class Utilities
     {

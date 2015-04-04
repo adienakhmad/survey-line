@@ -6,11 +6,13 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+
 using System;
 using System.Reflection;
 using System.Windows.Forms;
+using SurveyLine.util;
 
-namespace CoordinateHelper
+namespace SurveyLine
 {
 	/// <summary>
 	/// Class with program entry point.
@@ -23,14 +25,14 @@ namespace CoordinateHelper
 		[STAThread]
 		private static void Main(string[] args)
 		{
-		    var resource1 = "CoordinateHelper.ZedGraph.dll";
+		    var resource1 = "SurveyLine.ZedGraph.dll";
 		    EmbeddedAssembly.Load(resource1, "ZedGraph.dll");
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
 
 
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new MainForm());
+			Application.Run(new MainUI());
 		}
 
 	    private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)

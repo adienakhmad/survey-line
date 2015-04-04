@@ -10,7 +10,7 @@
 using System;
 using System.Data;
 
-namespace CoordinateHelper
+namespace SurveyLine
 {
     /// <summary>
     ///     Description of Line.

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace CoordinateHelper
+namespace SurveyLine
 {
     public partial class SettingsForm : Form
     {

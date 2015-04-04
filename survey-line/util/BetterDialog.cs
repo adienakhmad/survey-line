@@ -29,9 +29,8 @@
 
 using System.Drawing;
 using System.Windows.Forms;
-using System.Diagnostics;
 
-namespace DotNetPerls
+namespace SurveyLine
 {
     /// <summary>
     /// An improved dialog, with OS styling, an icon, a large header, and smaller explanation text.

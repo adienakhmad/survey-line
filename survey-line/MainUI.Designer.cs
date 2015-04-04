@@ -6,12 +6,12 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-using System;
+
 using System.Windows.Forms;
 
-namespace CoordinateHelper
+namespace SurveyLine
 {
-	partial class MainForm
+	partial class MainUI
 	{
 		/// <summary>
 		/// Designer variable used to keep track of non-visual components.
@@ -41,7 +41,7 @@ namespace CoordinateHelper
 		{
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainUI));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -594,7 +594,7 @@ namespace CoordinateHelper
             // btnCreate
             // 
             this.btnCreate.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCreate.Image = global::CoordinateHelper.Properties.Resources.CreateTableIco;
+            this.btnCreate.Image = global::SurveyLine.Properties.Resources.CreateTableIco;
             this.btnCreate.Location = new System.Drawing.Point(3, 3);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(75, 31);
@@ -607,7 +607,7 @@ namespace CoordinateHelper
             // btnMoreSetup
             // 
             this.btnMoreSetup.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMoreSetup.Image = global::CoordinateHelper.Properties.Resources.MoreSetupIco;
+            this.btnMoreSetup.Image = global::SurveyLine.Properties.Resources.MoreSetupIco;
             this.btnMoreSetup.Location = new System.Drawing.Point(84, 3);
             this.btnMoreSetup.Name = "btnMoreSetup";
             this.btnMoreSetup.Size = new System.Drawing.Size(92, 31);
@@ -860,7 +860,7 @@ namespace CoordinateHelper
             // 
             // saveToolStripMenuItem
             // 
-            this.saveToolStripMenuItem.Image = global::CoordinateHelper.Properties.Resources.saveIco;
+            this.saveToolStripMenuItem.Image = global::SurveyLine.Properties.Resources.saveIco;
             this.saveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));

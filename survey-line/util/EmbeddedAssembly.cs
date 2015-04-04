@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
 
-namespace CoordinateHelper
+namespace SurveyLine.util
 {
     public class EmbeddedAssembly
     {

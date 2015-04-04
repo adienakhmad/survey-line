@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>CoordinateHelper</RootNamespace>
+    <RootNamespace>SurveyLine</RootNamespace>
     <AssemblyName>SurveyLine</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
@@ -74,14 +74,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BetterDialog.cs">
+    <Compile Include="util\BetterDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BetterDialog.designer.cs">
+    <Compile Include="util\BetterDialog.designer.cs">
       <DependentUpon>BetterDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="CueProvider.cs" />
-    <Compile Include="EmbeddedAssembly.cs" />
+    <Compile Include="util\CueProvider.cs" />
+    <Compile Include="util\EmbeddedAssembly.cs" />
     <Compile Include="Linemaker.cs" />
     <Compile Include="LinePlot.cs">
       <SubType>Form</SubType>
@@ -89,11 +89,11 @@
     <Compile Include="LinePlot.Designer.cs">
       <DependentUpon>LinePlot.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="MainUI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Include="MainUI.Designer.cs">
+      <DependentUpon>MainUI.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -108,17 +108,20 @@
     <Compile Include="SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="core\SurveyLineDesign.cs" />
+    <Compile Include="core\SurveyPoint.cs" />
+    <Compile Include="core\SurveyPointOperation.cs" />
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="BetterDialog.resx">
+    <EmbeddedResource Include="util\BetterDialog.resx">
       <DependentUpon>BetterDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LinePlot.resx">
       <DependentUpon>LinePlot.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <EmbeddedResource Include="MainUI.resx">
+      <DependentUpon>MainUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

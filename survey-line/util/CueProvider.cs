@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace RavSoft
+namespace SurveyLine.util
 {
     /// <summary>
     /// Provides textual cues to a text box.

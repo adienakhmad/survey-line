@@ -1,4 +1,4 @@
-﻿namespace CoordinateHelper
+﻿namespace SurveyLine
 {
     partial class SettingsForm
     {
@@ -323,7 +323,7 @@
             // btnCancel
             // 
             this.btnCancel.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Image = global::CoordinateHelper.Properties.Resources.cancelIco;
+            this.btnCancel.Image = global::SurveyLine.Properties.Resources.cancelIco;
             this.btnCancel.Location = new System.Drawing.Point(256, 3);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 32);
@@ -336,7 +336,7 @@
             // btnSave
             // 
             this.btnSave.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Image = global::CoordinateHelper.Properties.Resources.acceptIco;
+            this.btnSave.Image = global::SurveyLine.Properties.Resources.acceptIco;
             this.btnSave.Location = new System.Drawing.Point(175, 3);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 32);

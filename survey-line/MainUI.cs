@@ -5,22 +5,21 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using CoordinateHelper.Properties;
-using DotNetPerls;
-using RavSoft;
+using SurveyLine.Properties;
+using SurveyLine.util;
 
-namespace CoordinateHelper
+namespace SurveyLine
 {
     /// <summary>
     ///     Description of MainForm.
     /// </summary>
-    public partial class MainForm : Form
+    public partial class MainUI : Form
     {
         private readonly LineMaker line1 = new LineMaker();
         private bool _alreadyFocused;
         private DataTable dTable = new DataTable();
 
-        public MainForm()
+        public MainUI()
         {
             //
             // The InitializeComponent() call is required for Windows Forms designer support.
@@ -127,6 +126,9 @@ namespace CoordinateHelper
             plotCurrentTableToolStripMenuItem.Enabled = !disable;
         }
 
+        /// <summary>
+        /// Main method
+        /// </summary>
         private void StartMainMethod()
         {
             GrabAllInputs(line1);
@@ -137,6 +139,11 @@ namespace CoordinateHelper
             backgroundWorker1.RunWorkerAsync();
         }
 
+        /// <summary>
+        /// What Happen when generate button is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCreate_Click(object sender, EventArgs e)
         {
             if (numInterval.Value == 0)

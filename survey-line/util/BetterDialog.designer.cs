@@ -1,4 +1,4 @@
-﻿namespace DotNetPerls
+﻿namespace SurveyLine
 {
     partial class BetterDialog
     {

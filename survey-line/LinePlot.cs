@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using ZedGraph;
 
-namespace CoordinateHelper
+namespace SurveyLine
 {
     public partial class LinePlot : Form
     {

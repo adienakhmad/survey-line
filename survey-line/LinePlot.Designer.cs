@@ -1,6 +1,4 @@
-﻿using ZedGraph;
-
-namespace CoordinateHelper
+﻿namespace SurveyLine
 {
     partial class LinePlot
     {
