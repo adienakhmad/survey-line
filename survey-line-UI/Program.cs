@@ -10,7 +10,8 @@
 using System;
 using System.Reflection;
 using System.Windows.Forms;
-using SurveyLine.util;
+using SurveyLine.Form;
+using SurveyLine.Util;
 
 namespace SurveyLine
 {

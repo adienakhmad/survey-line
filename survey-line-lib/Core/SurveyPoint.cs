@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 
-namespace SurveyLine.core
+namespace SurveyLine.Core
 {
-    class SurveyPoint
+    public class SurveyPoint
     {
         public string Name { get; private set; }
         public double X { get; private set; }
         public double Y { get; private set; }
 
-        public SurveyPoint(double x, double y, string name)
+        public SurveyPoint(double x, double y, string name="Undefined")
         {
             X = x;
             Y = y;
@@ -16,7 +16,7 @@ namespace SurveyLine.core
         }
         
     }
-    class SurveyPointList
+    public class SurveyPointList
     {
         private readonly List<SurveyPoint> _pointList;
 

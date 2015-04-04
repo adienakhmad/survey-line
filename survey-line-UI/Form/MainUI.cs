@@ -6,14 +6,14 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using SurveyLine.Properties;
-using SurveyLine.util;
+using SurveyLine.Util;
 
-namespace SurveyLine
+namespace SurveyLine.Form
 {
     /// <summary>
     ///     Description of MainForm.
     /// </summary>
-    public partial class MainUI : Form
+    public partial class MainUI : System.Windows.Forms.Form
     {
         private readonly LineMaker line1 = new LineMaker();
         private bool _alreadyFocused;

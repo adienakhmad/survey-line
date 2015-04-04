@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Windows.Forms;
 
-namespace SurveyLine
+namespace SurveyLine.Form
 {
-    public partial class SettingsForm : Form
+    public partial class SettingsForm : System.Windows.Forms.Form
     {
         private string linename;
         private bool _multimode;

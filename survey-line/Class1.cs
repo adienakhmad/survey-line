@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace survey_line_test
+namespace survey_line
 {
-    public class SurveyLineTest
+    public class Class1
     {
     }
 }

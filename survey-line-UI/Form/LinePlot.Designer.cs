@@ -1,4 +1,4 @@
-﻿namespace SurveyLine
+﻿namespace SurveyLine.Form
 {
     partial class LinePlot
     {

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
+  <TopNode>[0-1000]C:\Users\Adien\Documents\GitHub\survey-line\survey-line-test\survey-line-nunit.nunit</TopNode>
+  <SelectedNode>[0-1000]C:\Users\Adien\Documents\GitHub\survey-line\survey-line-test\survey-line-nunit.nunit</SelectedNode>
+  <ExcludeCategories>false</ExcludeCategories>
+  <Nodes>
+    <Node UniqueName="[0-1000]C:\Users\Adien\Documents\GitHub\survey-line\survey-line-test\survey-line-nunit.nunit" Expanded="true" />
+    <Node UniqueName="[0-1003]C:\Users\Adien\Documents\GitHub\survey-line\survey-line-test\bin\Debug\survey-line-test.dll" Expanded="true" />
+    <Node UniqueName="[0-1004]survey_line_test" Expanded="true" />
+    <Node UniqueName="[0-1001]survey_line_test.SurveyLineCoreTest" Expanded="true" />
+  </Nodes>
+</VisualState>

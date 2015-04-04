@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
-using System.Windows.Forms;
 using ZedGraph;
 
-namespace SurveyLine
+namespace SurveyLine.Form
 {
-    public partial class LinePlot : Form
+    public partial class LinePlot : System.Windows.Forms.Form
     {
         private readonly double _xMin;
         private readonly double _xMax;

@@ -1,4 +1,4 @@
-﻿namespace SurveyLine.core
+﻿namespace SurveyLine.Core
 {
     class SurveyLineDesign
     {

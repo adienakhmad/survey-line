@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
 
-namespace SurveyLine.util
+namespace SurveyLine.Util
 {
     public class EmbeddedAssembly
     {

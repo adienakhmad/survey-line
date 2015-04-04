@@ -30,12 +30,12 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace SurveyLine
+namespace SurveyLine.Form
 {
     /// <summary>
     /// An improved dialog, with OS styling, an icon, a large header, and smaller explanation text.
     /// </summary>
-    public partial class BetterDialog : Form
+    public partial class BetterDialog : System.Windows.Forms.Form
     {
         /// <summary>
         /// Create a special dialog in the style of Windows XP or Vista. A dialog has a custom icon, an optional large
