@@ -71,6 +71,7 @@
     </Reference>
     <Reference Include="ZedGraph">
       <HintPath>..\packages\ZedGraph.5.1.6\lib\net35-Client\ZedGraph.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -177,6 +178,13 @@
   <ItemGroup>
     <Content Include="Fatcow-Farm-Fresh-Map.ico" />
     <Content Include="License-LGPL.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\survey-line-lib\survey-line-lib.csproj">
+      <Project>{0563e300-a128-4835-85fc-b754580bc406}</Project>
+      <Name>survey-line-lib</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

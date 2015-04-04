@@ -14,6 +14,11 @@ namespace SurveyLine.Core
             Y = y;
             Name = name;
         }
+
+        public void SetName(string name)
+        {
+            Name = name;
+        }
         
     }
     public class SurveyPointList

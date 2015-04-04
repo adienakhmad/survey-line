@@ -40,9 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\SurveyLineDesign.cs" />
+    <Compile Include="Core\SurveyDesign.cs" />
+    <Compile Include="Core\ZeroIntervalException.cs" />
     <Compile Include="Core\SurveyPoint.cs" />
-    <Compile Include="Core\SurveyPointOperation.cs" />
+    <Compile Include="Core\SurveyLineOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
