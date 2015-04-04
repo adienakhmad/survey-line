@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System;
+using System.Diagnostics;
+using NUnit.Framework;
 using SurveyLine.Core;
 
 namespace SurveyLineTest
@@ -135,48 +137,56 @@ namespace SurveyLineTest
             Assert.AreEqual(expected.Y, actual.Y, Tolerancy, "Y Fail");
 
         }
+
         #endregion
 
-//        #region PointNameGenerator Test
-//
-//        [Test]
-//        public void PointNameGenerator_SingleLineTest()
-//        {
-//            var design = new SurveyDesign("Nunit", 0, 0, 90, 100, 101);
-//            design.PointsSeparator = "-";
-//
-//            var actualName = SurveyLineOperation.DebugPointNameGenerator(design, 12);
-//            var expectedName = "Nunit-12";
-//
-//            Assert.AreEqual(expectedName,actualName);
-//        }
-//
-//        [Test]
-//        public void PointNameGenerator_MultiLineTest()
-//        {
-//            var design = new SurveyDesign("Nunit",0,0,90,100,101,90,5);
-//            design.PointsSeparator = "-";
-//            design.LineSeparator = "-";
-//
-//            var actualName = SurveyLineOperation.DebugPointNameGenerator(design, 12, 12);
-//            var expectedName = "Nunit-12-12";
-//
-//            Assert.AreEqual(expectedName, actualName);
-//        }
-//
-//        [Test]
-//        public void PointNameGenerator_MultiLineAlphabetTest()
-//        {
-//            var design = new SurveyDesign("Nunit", 0, 0, 90, 100, 101, 90, 5);
-//            design.PointsSeparator = "-";
-//            design.LineSeparator = "-";
-//            design.LineIndexType = SurveyDesign.IndexType.Alphabet;
-//
-//            var actualName = SurveyLineOperation.DebugPointNameGenerator(design, 12, 12);
-//            var expectedName = "Nunit-L-12";
-//
-//            Assert.AreEqual(expectedName, actualName);
-//        }
-//        #endregion
+        [Test]
+        public void GenerateSurveyPointList_SingleLine_Test()
+        {
+            SurveyDesign design = new SurveyDesign("NUNIT", 0, 0, 90, 100, 11);
+            SurveyNamingDesign nameDesign = new SurveyNamingDesign();
+
+            var result = SurveyLineOperation.GenerateSurveyPointList(design, nameDesign).ToList();
+
+            Console.WriteLine("Bearing: {0} Interval:{1} PlusBearing:{2} LineSpacing:{3}", design.Bearing, design.Interval, design.PlusBearing, design.LineSpacing);
+            foreach (var point in result)
+            {
+                var str = string.Format("{0:}\t{1:F6}\t{2:F6}", point.Name, point.X, point.Y);
+                Console.WriteLine(str);
+            }
+        }
+
+        [Test]
+        public void GenerateSurveyPointList_MultiLine_Test()
+        {
+            SurveyDesign design = new SurveyDesign("NUNIT",0,0,90,100,11,90,2,200);
+            SurveyNamingDesign nameDesign = new SurveyNamingDesign();
+
+            var result = SurveyLineOperation.GenerateSurveyPointList(design, nameDesign).ToList();
+
+            Console.WriteLine("Bearing: {0} Interval:{1} PlusBearing:{2} LineSpacing:{3}", design.Bearing, design.Interval, design.PlusBearing, design.LineSpacing);
+            foreach (var point in result)
+            {
+                var str = string.Format("{0:}\t{1:F6}\t{2:F6}", point.Name, point.X, point.Y);
+                Console.WriteLine(str);
+            }
+        }
+
+        [Test]
+        public void GenerateSurveyPointList_FixedGrid_Test()
+        {
+            SurveyDesign design = new SurveyDesign("NUNIT", 0, 0, 90, 100, 11, 90,2);
+            SurveyNamingDesign nameDesign = new SurveyNamingDesign();
+
+            var result = SurveyLineOperation.GenerateSurveyPointList(design, nameDesign).ToList();
+
+            Console.WriteLine("Bearing: {0} Interval:{1} PlusBearing:{2} LineSpacing:{3}", design.Bearing, design.Interval, design.PlusBearing, design.LineSpacing);
+            foreach (var point in result)
+            {
+                var str = string.Format("{0:}\t{1:F6}\t{2:F6}", point.Name, point.X, point.Y);
+                Console.WriteLine(str);
+            }
+        }
+
     }
 }

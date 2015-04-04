@@ -31,39 +31,57 @@ namespace SurveyLine.Core
         /// <returns></returns>
         static public SurveyPointList GenerateSurveyPointList(SurveyDesign design, SurveyNamingDesign nameDesign)
         {
-            SurveyPointList surveyPointList = new SurveyPointList();
+            var surveyPointList = new SurveyPointList();
+            var startPoint = new SurveyPoint(design.XStart, design.YStart);
+            var stationStartingIndex = nameDesign.StationStartingIndex;
+            var lineStartingIndex = nameDesign.LineStartingIndex;
 
             switch (design.Type)
             {
                 #region DesignType.SingleLine
                 case SurveyDesign.DesignType.SingleLine:
-                    var staNumber = nameDesign.StationStartingIndex;
-                    var surveyPoint = new SurveyPoint(design.XStart, design.YStart, PointNameGenerator(design,nameDesign,staNumber));
-                    surveyPointList.Add(surveyPoint);
 
                     for (int i = 0; i < design.StationCount; i++)
                     {
-                        if (i == 0) continue; // skip the first point
-            
-                        surveyPoint = ProjectSurveyPoint(surveyPoint, design.Bearing, design.Interval);
-                        surveyPoint.SetName(PointNameGenerator(design, nameDesign, staNumber + i));
-
-                        surveyPointList.Add(surveyPoint);
+                        var point = ProjectSurveyPoint(startPoint, design.Bearing, (i+1) * design.Interval);
+                        point.SetName(PointNameGenerator(design, nameDesign, stationStartingIndex + i));
+                        surveyPointList.Add(point);
                     }
 
                     break;
                 #endregion
                 
                 #region DesignType.MultiLine
-                
                 case SurveyDesign.DesignType.MultiLine:
-                    // TODO : Implement MultiLine mode
+                    for (int j = 0; j < design.LineCount; j++)
+                    {
+                        var lineFirstPoint = ProjectSurveyPoint(startPoint, design.Bearing + design.PlusBearing,
+                            j * design.LineSpacing);
+
+                        for (int i = 0; i < design.StationCount; i++)
+                        {
+                            var point = ProjectSurveyPoint(lineFirstPoint, design.Bearing, i * design.Interval);
+                            point.SetName(PointNameGenerator(design, nameDesign, stationStartingIndex + i, lineStartingIndex + j));
+                            surveyPointList.Add(point);
+                        }
+                    }
                     break;
                 #endregion
 
                 #region DesignType.FixedGrid
                 case SurveyDesign.DesignType.FixedGrid:
-                    // TODO : Implement Fixed Grid mode
+                    for (int j = 0; j < design.LineCount; j++)
+                    {
+                        var lineFirstPoint = ProjectSurveyPoint(startPoint, design.Bearing + design.PlusBearing,
+                            j * design.Interval);
+
+                        for (int i = 0; i < design.StationCount; i++)
+                        {
+                            var point = ProjectSurveyPoint(lineFirstPoint, design.Bearing, i * design.Interval);
+                            point.SetName(PointNameGenerator(design, nameDesign, stationStartingIndex + i, lineStartingIndex + j));
+                            surveyPointList.Add(point);
+                        }
+                    }
                     break;
                 #endregion
             }
@@ -78,7 +96,7 @@ namespace SurveyLine.Core
         /// <returns></returns>
         static private double ToRadians(double number)
         {
-            return number*(Math.PI/180.00d);
+            return number*(Math.PI/180.0);
         }
 
         /// <summary>
