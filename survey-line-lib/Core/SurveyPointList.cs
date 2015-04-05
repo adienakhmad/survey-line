@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SurveyLine.Core
+namespace SurveyLineLib.Core
 {
     public class SurveyPointList
     {

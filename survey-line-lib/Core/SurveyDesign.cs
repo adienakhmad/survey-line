@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 
-namespace SurveyLine.Core
+namespace SurveyLineLib.Core
 {
     public class SurveyDesign
     {

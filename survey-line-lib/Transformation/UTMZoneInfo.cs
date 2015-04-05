@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace SurveyLine.Transformation
+namespace SurveyLineLib.Transformation
 {
     public static class UTMZoneInfo
     {

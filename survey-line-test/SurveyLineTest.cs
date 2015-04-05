@@ -1,8 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
-using SurveyLine.Core;
-using SurveyLine.Transformation;
-using SurveyLine.Ex;
+using SurveyLineLib.Core;
+using SurveyLineLib.Ex;
+using SurveyLineLib.Transformation;
 
 namespace SurveyLineTest
 {

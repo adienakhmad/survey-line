@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using SurveyLine.Ex;
+using SurveyLineLib.Ex;
 
-namespace SurveyLine.Core
+namespace SurveyLineLib.Core
 {
     public static class SurveyLineExtension
     {
