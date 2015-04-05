@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>SurveyLine</RootNamespace>
+    <RootNamespace>SurveyLineUI</RootNamespace>
     <AssemblyName>SurveyLine</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
@@ -52,7 +52,8 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Fatcow-Farm-Fresh-Map.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -71,7 +72,7 @@
     </Reference>
     <Reference Include="ZedGraph">
       <HintPath>..\packages\ZedGraph.5.1.6\lib\net35-Client\ZedGraph.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -161,10 +162,6 @@
     <None Include="Resources\Fatcow-Farm-Fresh-Map.ico" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ZedGraph.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Fatcow-Farm-Fresh-Map.ico" />
     <Content Include="License-LGPL.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

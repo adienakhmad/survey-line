@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace SurveyLine.Util
+namespace SurveyLineUI.Util
 {
     /// <summary>
     /// Provides textual cues to a text box.
