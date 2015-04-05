@@ -9,7 +9,7 @@
 
 using System.Windows.Forms;
 
-namespace SurveyLine.Form
+namespace SurveyLineUI.Form
 {
 	partial class MainUI
 	{

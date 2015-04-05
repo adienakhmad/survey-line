@@ -4,7 +4,7 @@ using System.Data;
 using System.Drawing;
 using ZedGraph;
 
-namespace SurveyLine.Form
+namespace SurveyLineUI.Form
 {
     public partial class LinePlot : System.Windows.Forms.Form
     {

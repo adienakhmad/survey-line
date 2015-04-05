@@ -10,7 +10,7 @@
 using System;
 using System.Data;
 
-namespace SurveyLine
+namespace SurveyLineUI
 {
     /// <summary>
     ///     Description of Line.

@@ -30,7 +30,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace SurveyLine.Form
+namespace SurveyLineUI.Form
 {
     /// <summary>
     /// An improved dialog, with OS styling, an icon, a large header, and smaller explanation text.
