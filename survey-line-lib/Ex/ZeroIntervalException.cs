@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace SurveyLine.Core
+namespace SurveyLine.Ex
 {
     class ZeroIntervalException:Exception
     {

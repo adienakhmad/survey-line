@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using NUnit.Framework;
 using SurveyLine.Core;
+using SurveyLine.Transformation;
 
 namespace SurveyLineTest
 {
