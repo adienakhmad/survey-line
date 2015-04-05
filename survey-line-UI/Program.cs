@@ -10,10 +10,10 @@
 using System;
 using System.Reflection;
 using System.Windows.Forms;
-using SurveyLineUI.Form;
-using SurveyLineUI.Util;
+using SurveyLine.Form;
+using SurveyLine.Util;
 
-namespace SurveyLineUI
+namespace SurveyLine
 {
 	/// <summary>
 	/// Class with program entry point.
@@ -26,8 +26,8 @@ namespace SurveyLineUI
 		[STAThread]
 		private static void Main(string[] args)
 		{
-//		    var resource1 = "SurveyLine.ZedGraph.dll";
-//		    EmbeddedAssembly.Load(resource1, "ZedGraph.dll");
+		    var resource1 = "SurveyLine.ZedGraph.dll";
+		    EmbeddedAssembly.Load(resource1, "ZedGraph.dll");
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
 
 

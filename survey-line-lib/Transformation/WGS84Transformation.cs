@@ -1,8 +1,8 @@
 ﻿using ProjNet.CoordinateSystems;
 using ProjNet.CoordinateSystems.Transformations;
-using SurveyLine.Core;
+using SurveyLineLib.Core;
 
-namespace SurveyLine.Transformation
+namespace SurveyLineLib.Transformation
 {
     public static class WGS84Transformation
     {

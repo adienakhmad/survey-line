@@ -1,12 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using SurveyLineUI.Util;
+using SurveyLine.Properties;
+using SurveyLine.Util;
 
-namespace SurveyLineUI.Form
+namespace SurveyLine.Form
 {
     /// <summary>
     ///     Description of MainForm.

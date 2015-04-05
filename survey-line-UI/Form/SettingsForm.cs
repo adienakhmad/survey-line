@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SurveyLineUI.Form
+namespace SurveyLine.Form
 {
     public partial class SettingsForm : System.Windows.Forms.Form
     {

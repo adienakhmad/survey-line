@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.IO;
-using SurveyLineUI.Form;
+using SurveyLine.Form;
+using SurveyLine.Properties;
 
-namespace SurveyLineUI
+namespace SurveyLine
 {
     class Utilities
     {

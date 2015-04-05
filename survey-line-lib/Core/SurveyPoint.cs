@@ -1,4 +1,4 @@
-﻿namespace SurveyLine.Core
+﻿namespace SurveyLineLib.Core
 {
     public class SurveyPoint
     {

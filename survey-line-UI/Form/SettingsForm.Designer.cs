@@ -1,4 +1,4 @@
-﻿namespace SurveyLineUI.Form
+﻿namespace SurveyLine.Form
 {
     partial class SettingsForm
     {
