@@ -61,32 +61,12 @@ namespace SurveyLine.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap aboutIco {
-            get {
-                object obj = ResourceManager.GetObject("aboutIco", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon Fatcow_Farm_Fresh_Map {
             get {
                 object obj = ResourceManager.GetObject("Fatcow_Farm_Fresh_Map", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap InfoblueIcon {
-            get {
-                object obj = ResourceManager.GetObject("InfoblueIcon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

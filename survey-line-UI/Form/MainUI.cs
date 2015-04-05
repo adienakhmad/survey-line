@@ -252,7 +252,7 @@ namespace SurveyLine.Form
             BetterDialog.ShowDialog("About SurveyLine", "SurveyLine v1.0",
                 "This simple tool was developed in purpose to help designing a survey for Geophysical measurement or any other field measurement which requires a set of coordinates.\n\n" +
                 "© 2014 Adien Akhmad. All rights reserved.", null, "Close",
-                (Image) Resources.ResourceManager.GetObject("aboutIco"));
+                null);
         }
 
         private void txtLineName_Enter(object sender, EventArgs e)

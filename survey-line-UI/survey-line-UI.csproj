@@ -158,12 +158,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Information_6227_32x_cyan.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\WebUserControl%28ascx%29_11270_32x.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Fatcow-Farm-Fresh-Map.ico" />
   </ItemGroup>
   <ItemGroup>
