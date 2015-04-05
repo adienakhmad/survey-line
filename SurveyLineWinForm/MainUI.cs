@@ -2,9 +2,11 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 using SurveyLine.Core;
-using SurveyLineUI.Util;
+using SurveyLine.Ex;
+using SurveyLineWinForm.Forms;
+using SurveyLineWinForm.Util;
 
-namespace SurveyLineUI.Form
+namespace SurveyLineWinForm
 {
     /// <summary>
     ///     Description of MainForm.
@@ -83,49 +85,64 @@ namespace SurveyLineUI.Form
                     break;
             }
 
+            if (design.Name == string.Empty) design.Name = "Undefined";
             surveyFactory = new SurveyFactory(design);
         }
 
         
-//        private void SetLineStatus()
-//        {
-//            if (multimode)
-//            {
-//                lblName.Text = line.Name;
-//                lblType.Text = string.Format("{0} ({1} lines)", line.Type, line.LineCount);
-//                lblBearing.Text = string.Format("N {0}° E", line.Bearing);
-//                lblSpacing.Text = string.Format("{0} m / {1} m", line.Interval, line.LineSpacing);
-//                lblStations.Text = string.Format("{0} points ({1} x {2})", line.Station*line.LineCount, line.Station,
-//                    line.LineCount);
-//
-//
-//                lblDistanceName.Text = "Area";
-//
-//                double length = ((line.Station - 1)*line.Interval);
-//                double height = ((line.LineCount - 1)*line.LineSpacing);
-//                string lengthUnit = length > 999 ? "Km" : "m";
-//                string heightUnit = height > 999 ? "Km" : "m";
-//                length = lengthUnit == "Km" ? length/1000 : length;
-//                height = heightUnit == "Km" ? height/1000 : height;
-//
-//                lblDistance.Text = string.Format("{0} {1} x {2} {3}", length, lengthUnit, height, heightUnit);
-//            }
-//
-//            else
-//            {
-//                lblName.Text = line.Name;
-//                lblType.Text = line.Type;
-//                lblBearing.Text = string.Format("N {0}° E", line.Bearing);
-//                lblSpacing.Text = string.Format("{0} m", line.Interval);
-//                lblStations.Text = string.Format("{0} points", line.Station);
-//
-//                lblDistanceName.Text = "Distance";
-//                double distance = ((line.Station - 1)*line.Interval);
-//                string unit = distance > 999 ? "Km" : "m";
-//                distance = distance > 999 ? distance/1000 : distance;
-//                lblDistance.Text = string.Format("{0} {1}", distance, unit);
-//            }
-//        }
+        private void SetLineStatus(SurveyDesign design)
+        {
+            switch (design.Type)
+            {
+                case SurveyDesign.DesignType.SingleLine:
+
+                    #region case single
+
+                    lblName.Text = design.Name;
+                    lblType.Text = design.Type.ToString();
+                    lblBearing.Text = string.Format("N {0}° E", design.Bearing);
+                    lblSpacing.Text = string.Format("{0} m", design.Interval);
+                    lblStations.Text = string.Format("{0} points", design.StationCount);
+
+                    lblDistanceName.Text = "Distance";
+                    double distance = ((design.StationCount - 1)*design.Interval);
+                    string unit = distance > 999 ? "Km" : "m";
+                    distance = distance > 999 ? distance/1000 : distance;
+                    lblDistance.Text = string.Format("{0} {1}", distance, unit);
+
+                    #endregion
+
+                    break;
+                case SurveyDesign.DesignType.MultiLine:
+                case SurveyDesign.DesignType.FixedGrid:
+
+                    #region case multi or grid
+
+                    lblName.Text = design.Name;
+                    lblType.Text = string.Format("{0} ({1})", design.Type, design.LineCount);
+                    lblBearing.Text = string.Format("N {0}° E", design.Bearing);
+                    lblSpacing.Text = string.Format("{0} m / {1} m", design.Interval, design.LineSpacing);
+                    lblStations.Text = string.Format("{0} points ({1} x {2})", design.StationCount*design.LineCount,
+                        design.StationCount,
+                        design.LineCount);
+
+
+                    lblDistanceName.Text = "Area";
+
+                    double length = ((design.StationCount - 1)*design.Interval);
+                    double height = ((design.LineCount - 1)*design.LineSpacing);
+                    string lengthUnit = length > 999 ? "Km" : "m";
+                    string heightUnit = height > 999 ? "Km" : "m";
+                    length = lengthUnit == "Km" ? length/1000 : length;
+                    height = heightUnit == "Km" ? height/1000 : height;
+
+                    lblDistance.Text = string.Format("{0} {1} x {2} {3}", length, lengthUnit, height, heightUnit);
+                    break;
+
+                    #endregion
+
+            }
+        }
 
         private void SetLineStatus(string str)
         {
@@ -146,7 +163,7 @@ namespace SurveyLineUI.Form
         private void DisableButtonOnWork(bool disable)
         {
             btnCreate.Enabled = !disable;
-            btnMoreSetup.Enabled = !disable;
+            btnNamingSetup.Enabled = !disable;
             saveToolStripMenuItem.Enabled = !disable;
         }
 
@@ -181,6 +198,7 @@ namespace SurveyLineUI.Form
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            cboxMode.SelectedIndex = 0;
             CueProvider.SetCue(txtLineName, "Enter a name here..");
             DisableButtonOnLoad(true);
             dropDownDirection.SelectedIndex = 0;
@@ -214,13 +232,13 @@ namespace SurveyLineUI.Form
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            saveFileDialog1.ShowDialog();
+            saveToTxt.ShowDialog();
         }
 
         //TODO: Implement saving
         private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
-            saveFileDialog1.FileName = string.Empty;
+            saveToTxt.FileName = string.Empty;
             SetStatusBarText("\tFile saved successfully.");
         }
 
@@ -228,21 +246,42 @@ namespace SurveyLineUI.Form
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             e.Result = surveyFactory.BuildSurveyPoints();
+            
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            //TODO: Fix this datasource
-            var result = e.Result as SurveyPointList;
+            if (e.Error != null)
+            {
+                MessageBox.Show(e.Error.Message);
+                SetStatusBarText("Progress stopped.");
+            }
 
-            // ReSharper disable once PossibleNullReferenceException
-            dgvCoordinates.DataSource = result.ToList();
+            else
+            {
+                if (e.Cancelled)
+                {
+                    MessageBox.Show(@"Process cancelled");
+                    SetStatusBarText("Progress cancelled.");
+                }
+
+                else
+                {
+                    var result = e.Result as SurveyPointList;
+                    // ReSharper disable once PossibleNullReferenceException
+                    dgvCoordinates.DataSource = result.ToList();
+                    SetLineStatus(result.Design);
+                    SetStatusBarText("Progress completed.");
+                }
+            }
 
             DisableButtonOnLoad(false);
             DisableButtonOnWork(false);
-            SetStatusBarText("Progress completed.");
             toolStripProgressBar1.Visible = false;
-//          SetLineStatus(line1, cboxMultiMode.Checked);
+            //          SetLineStatus(line1, cboxMultiMode.Checked);
+                
+            
+
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -365,6 +404,36 @@ namespace SurveyLineUI.Form
         private void btnMoreSetup_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void cboxMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch ((SurveyDesign.DesignType)cboxMode.SelectedIndex)
+            {
+                case SurveyDesign.DesignType.SingleLine:
+
+                    numMultiLineCount.Enabled = false;
+                    numMultiLineSpacing.Enabled = false;
+                    dropDownDirection.Enabled = false;
+
+                    break;
+                    
+
+                case SurveyDesign.DesignType.MultiLine:
+
+                    numMultiLineCount.Enabled = true;
+                    numMultiLineSpacing.Enabled = true;
+                    dropDownDirection.Enabled = true;
+                    break;
+                    
+
+                case SurveyDesign.DesignType.FixedGrid:
+
+                    numMultiLineCount.Enabled = true;
+                    numMultiLineSpacing.Enabled = false;
+                    dropDownDirection.Enabled = true;
+                    break;
+            }
         }
     }
 }

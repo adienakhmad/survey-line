@@ -67,9 +67,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="ZedGraph">
       <HintPath>..\packages\ZedGraph.5.1.6\lib\net35-Client\ZedGraph.dll</HintPath>
       <Private>True</Private>
@@ -89,7 +86,6 @@
     </Compile>
     <Compile Include="Util\CueProvider.cs" />
     <Compile Include="Util\EmbeddedAssembly.cs" />
-    <Compile Include="Linemaker.cs" />
     <Compile Include="Form\LinePlot.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,7 +111,6 @@
     <Compile Include="Form\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Form\BetterDialog.resx">
@@ -163,6 +158,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="License-LGPL.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\survey-line-lib\SurveyLine.csproj">
+      <Project>{0563e300-a128-4835-85fc-b754580bc406}</Project>
+      <Name>SurveyLine</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

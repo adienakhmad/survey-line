@@ -1,4 +1,4 @@
-﻿namespace SurveyLineLib.Core
+﻿namespace SurveyLine.Core
 {
     public class StationNameDesign
     {

@@ -9,7 +9,7 @@
 
 using System.Windows.Forms;
 
-namespace SurveyLineUI.Form
+namespace SurveyLineWinForm
 {
 	partial class MainUI
 	{
@@ -41,10 +41,10 @@ namespace SurveyLineUI.Form
 		{
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainUI));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -68,9 +68,10 @@ namespace SurveyLineUI.Form
             this.label8 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.numStation = new System.Windows.Forms.NumericUpDown();
-            this.label7 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.label17 = new System.Windows.Forms.Label();
+            this.cboxMode = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.numMultiLineCount = new System.Windows.Forms.NumericUpDown();
             this.label12 = new System.Windows.Forms.Label();
@@ -81,13 +82,10 @@ namespace SurveyLineUI.Form
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnCreate = new System.Windows.Forms.Button();
-            this.btnMoreSetup = new System.Windows.Forms.Button();
+            this.btnNamingSetup = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageTable = new System.Windows.Forms.TabPage();
             this.dgvCoordinates = new System.Windows.Forms.DataGridView();
-            this.colStation = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colXPos = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colYPos = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemCopyAll = new System.Windows.Forms.ToolStripMenuItem();
@@ -120,10 +118,12 @@ namespace SurveyLineUI.Form
             this.shortcutsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.saveToTxt = new System.Windows.Forms.SaveFileDialog();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.label17 = new System.Windows.Forms.Label();
-            this.cboxMode = new System.Windows.Forms.ComboBox();
+            this.colStation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colXPos = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colYPos = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
             this.statusStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -151,6 +151,7 @@ namespace SurveyLineUI.Form
             this.flowLayoutPanel7.SuspendLayout();
             this.flowLayoutPanel6.SuspendLayout();
             this.flowLayoutPanel9.SuspendLayout();
+            this.tabPagePlot.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -237,8 +238,8 @@ namespace SurveyLineUI.Form
             this.groupBox1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(13, 13);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(10, 5, 5, 5);
-            this.groupBox1.Size = new System.Drawing.Size(191, 195);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(10, 5, 5, 10);
+            this.groupBox1.Size = new System.Drawing.Size(191, 223);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Survey Design";
@@ -259,16 +260,18 @@ namespace SurveyLineUI.Form
             this.flowLayoutPanel2.Controls.Add(this.label8);
             this.flowLayoutPanel2.Controls.Add(this.label5);
             this.flowLayoutPanel2.Controls.Add(this.numStation);
-            this.flowLayoutPanel2.Controls.Add(this.label7);
+            this.flowLayoutPanel2.Controls.Add(this.label17);
+            this.flowLayoutPanel2.Controls.Add(this.cboxMode);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(10, 19);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(176, 171);
+            this.flowLayoutPanel2.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(176, 194);
             this.flowLayoutPanel2.TabIndex = 0;
             // 
             // label9
             // 
-            this.label9.Location = new System.Drawing.Point(3, 0);
+            this.label9.Location = new System.Drawing.Point(3, 2);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(58, 23);
             this.label9.TabIndex = 0;
@@ -277,7 +280,7 @@ namespace SurveyLineUI.Form
             // 
             // txtLineName
             // 
-            this.txtLineName.Location = new System.Drawing.Point(67, 3);
+            this.txtLineName.Location = new System.Drawing.Point(67, 5);
             this.txtLineName.Name = "txtLineName";
             this.txtLineName.Size = new System.Drawing.Size(102, 21);
             this.txtLineName.TabIndex = 6;
@@ -288,7 +291,7 @@ namespace SurveyLineUI.Form
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(3, 27);
+            this.label1.Location = new System.Drawing.Point(3, 29);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(58, 23);
             this.label1.TabIndex = 1;
@@ -303,7 +306,7 @@ namespace SurveyLineUI.Form
             0,
             0,
             0});
-            this.numEasting.Location = new System.Drawing.Point(67, 30);
+            this.numEasting.Location = new System.Drawing.Point(67, 32);
             this.numEasting.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -317,7 +320,7 @@ namespace SurveyLineUI.Form
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(3, 54);
+            this.label2.Location = new System.Drawing.Point(3, 56);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(58, 23);
             this.label2.TabIndex = 2;
@@ -332,7 +335,7 @@ namespace SurveyLineUI.Form
             0,
             0,
             0});
-            this.numNorthing.Location = new System.Drawing.Point(67, 57);
+            this.numNorthing.Location = new System.Drawing.Point(67, 59);
             this.numNorthing.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -346,7 +349,7 @@ namespace SurveyLineUI.Form
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(3, 81);
+            this.label3.Location = new System.Drawing.Point(3, 83);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(58, 23);
             this.label3.TabIndex = 3;
@@ -361,7 +364,7 @@ namespace SurveyLineUI.Form
             0,
             0,
             0});
-            this.numBearing.Location = new System.Drawing.Point(67, 84);
+            this.numBearing.Location = new System.Drawing.Point(67, 86);
             this.numBearing.Maximum = new decimal(new int[] {
             360,
             0,
@@ -375,7 +378,7 @@ namespace SurveyLineUI.Form
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(139, 81);
+            this.label6.Location = new System.Drawing.Point(139, 83);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(27, 23);
             this.label6.TabIndex = 12;
@@ -384,11 +387,11 @@ namespace SurveyLineUI.Form
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(3, 108);
+            this.label4.Location = new System.Drawing.Point(3, 110);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(58, 23);
             this.label4.TabIndex = 4;
-            this.label4.Text = "Interval";
+            this.label4.Text = "Spacing";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // numInterval
@@ -399,7 +402,7 @@ namespace SurveyLineUI.Form
             0,
             0,
             0});
-            this.numInterval.Location = new System.Drawing.Point(67, 111);
+            this.numInterval.Location = new System.Drawing.Point(67, 113);
             this.numInterval.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -413,7 +416,7 @@ namespace SurveyLineUI.Form
             // 
             // label8
             // 
-            this.label8.Location = new System.Drawing.Point(139, 108);
+            this.label8.Location = new System.Drawing.Point(139, 110);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(27, 23);
             this.label8.TabIndex = 13;
@@ -422,7 +425,7 @@ namespace SurveyLineUI.Form
             // 
             // label5
             // 
-            this.label5.Location = new System.Drawing.Point(3, 135);
+            this.label5.Location = new System.Drawing.Point(3, 137);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(58, 23);
             this.label5.TabIndex = 5;
@@ -431,7 +434,7 @@ namespace SurveyLineUI.Form
             // 
             // numStation
             // 
-            this.numStation.Location = new System.Drawing.Point(67, 138);
+            this.numStation.Location = new System.Drawing.Point(67, 140);
             this.numStation.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -453,30 +456,20 @@ namespace SurveyLineUI.Form
             this.numStation.Enter += new System.EventHandler(this.NumOnFocus);
             this.numStation.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtLineName_KeyDown);
             // 
-            // label7
-            // 
-            this.label7.Location = new System.Drawing.Point(3, 162);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(58, 23);
-            this.label7.TabIndex = 14;
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.flowLayoutPanel3);
             this.groupBox2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(13, 214);
+            this.groupBox2.Location = new System.Drawing.Point(13, 242);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(10, 5, 5, 5);
-            this.groupBox2.Size = new System.Drawing.Size(191, 148);
+            this.groupBox2.Size = new System.Drawing.Size(191, 121);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Setup";
+            this.groupBox2.Text = "Multi and Grid Setup";
             // 
             // flowLayoutPanel3
             // 
-            this.flowLayoutPanel3.Controls.Add(this.label17);
-            this.flowLayoutPanel3.Controls.Add(this.cboxMode);
             this.flowLayoutPanel3.Controls.Add(this.label10);
             this.flowLayoutPanel3.Controls.Add(this.numMultiLineCount);
             this.flowLayoutPanel3.Controls.Add(this.label12);
@@ -488,12 +481,36 @@ namespace SurveyLineUI.Form
             this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel3.Location = new System.Drawing.Point(10, 19);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(176, 124);
+            this.flowLayoutPanel3.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(176, 97);
             this.flowLayoutPanel3.TabIndex = 0;
+            // 
+            // label17
+            // 
+            this.label17.Location = new System.Drawing.Point(3, 164);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(58, 23);
+            this.label17.TabIndex = 16;
+            this.label17.Text = "Mode";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // cboxMode
+            // 
+            this.cboxMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxMode.FormattingEnabled = true;
+            this.cboxMode.Items.AddRange(new object[] {
+            "Single Line",
+            "Multiple Line",
+            "Fixed Grid"});
+            this.cboxMode.Location = new System.Drawing.Point(67, 167);
+            this.cboxMode.Name = "cboxMode";
+            this.cboxMode.Size = new System.Drawing.Size(102, 21);
+            this.cboxMode.TabIndex = 17;
+            this.cboxMode.SelectedIndexChanged += new System.EventHandler(this.cboxMode_SelectedIndexChanged);
             // 
             // label10
             // 
-            this.label10.Location = new System.Drawing.Point(3, 27);
+            this.label10.Location = new System.Drawing.Point(3, 5);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(58, 23);
             this.label10.TabIndex = 1;
@@ -502,7 +519,7 @@ namespace SurveyLineUI.Form
             // 
             // numMultiLineCount
             // 
-            this.numMultiLineCount.Location = new System.Drawing.Point(67, 30);
+            this.numMultiLineCount.Location = new System.Drawing.Point(67, 8);
             this.numMultiLineCount.Minimum = new decimal(new int[] {
             2,
             0,
@@ -521,7 +538,7 @@ namespace SurveyLineUI.Form
             // 
             // label12
             // 
-            this.label12.Location = new System.Drawing.Point(3, 54);
+            this.label12.Location = new System.Drawing.Point(3, 32);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(58, 23);
             this.label12.TabIndex = 2;
@@ -535,7 +552,7 @@ namespace SurveyLineUI.Form
             0,
             0,
             0});
-            this.numMultiLineSpacing.Location = new System.Drawing.Point(67, 57);
+            this.numMultiLineSpacing.Location = new System.Drawing.Point(67, 35);
             this.numMultiLineSpacing.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -549,7 +566,7 @@ namespace SurveyLineUI.Form
             // 
             // label16
             // 
-            this.label16.Location = new System.Drawing.Point(139, 54);
+            this.label16.Location = new System.Drawing.Point(139, 32);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(27, 23);
             this.label16.TabIndex = 14;
@@ -558,7 +575,7 @@ namespace SurveyLineUI.Form
             // 
             // label11
             // 
-            this.label11.Location = new System.Drawing.Point(3, 81);
+            this.label11.Location = new System.Drawing.Point(3, 59);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(58, 23);
             this.label11.TabIndex = 3;
@@ -573,7 +590,7 @@ namespace SurveyLineUI.Form
             this.dropDownDirection.Items.AddRange(new object[] {
             "to Right",
             "to Left"});
-            this.dropDownDirection.Location = new System.Drawing.Point(67, 84);
+            this.dropDownDirection.Location = new System.Drawing.Point(67, 62);
             this.dropDownDirection.Name = "dropDownDirection";
             this.dropDownDirection.Size = new System.Drawing.Size(66, 21);
             this.dropDownDirection.TabIndex = 6;
@@ -584,7 +601,7 @@ namespace SurveyLineUI.Form
             // 
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Help;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(139, 84);
+            this.pictureBox1.Location = new System.Drawing.Point(139, 62);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Padding = new System.Windows.Forms.Padding(3, 2, 0, 0);
             this.pictureBox1.Size = new System.Drawing.Size(27, 21);
@@ -595,16 +612,17 @@ namespace SurveyLineUI.Form
             // flowLayoutPanel4
             // 
             this.flowLayoutPanel4.Controls.Add(this.btnCreate);
-            this.flowLayoutPanel4.Controls.Add(this.btnMoreSetup);
-            this.flowLayoutPanel4.Location = new System.Drawing.Point(13, 368);
+            this.flowLayoutPanel4.Controls.Add(this.btnNamingSetup);
+            this.flowLayoutPanel4.Location = new System.Drawing.Point(13, 369);
             this.flowLayoutPanel4.Name = "flowLayoutPanel4";
+            this.flowLayoutPanel4.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.flowLayoutPanel4.Size = new System.Drawing.Size(201, 45);
             this.flowLayoutPanel4.TabIndex = 2;
             // 
             // btnCreate
             // 
             this.btnCreate.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCreate.Location = new System.Drawing.Point(3, 3);
+            this.btnCreate.Location = new System.Drawing.Point(8, 3);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(75, 31);
             this.btnCreate.TabIndex = 0;
@@ -613,17 +631,17 @@ namespace SurveyLineUI.Form
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
-            // btnMoreSetup
+            // btnNamingSetup
             // 
-            this.btnMoreSetup.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMoreSetup.Location = new System.Drawing.Point(84, 3);
-            this.btnMoreSetup.Name = "btnMoreSetup";
-            this.btnMoreSetup.Size = new System.Drawing.Size(92, 31);
-            this.btnMoreSetup.TabIndex = 1;
-            this.btnMoreSetup.Text = "More Setup";
-            this.btnMoreSetup.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnMoreSetup.UseVisualStyleBackColor = true;
-            this.btnMoreSetup.Click += new System.EventHandler(this.btnMoreSetup_Click);
+            this.btnNamingSetup.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNamingSetup.Location = new System.Drawing.Point(89, 3);
+            this.btnNamingSetup.Name = "btnNamingSetup";
+            this.btnNamingSetup.Size = new System.Drawing.Size(92, 31);
+            this.btnNamingSetup.TabIndex = 1;
+            this.btnNamingSetup.Text = "Name Settings";
+            this.btnNamingSetup.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnNamingSetup.UseVisualStyleBackColor = true;
+            this.btnNamingSetup.Click += new System.EventHandler(this.btnMoreSetup_Click);
             // 
             // tabControl1
             // 
@@ -652,6 +670,7 @@ namespace SurveyLineUI.Form
             // 
             this.dgvCoordinates.AllowUserToAddRows = false;
             this.dgvCoordinates.AllowUserToDeleteRows = false;
+            this.dgvCoordinates.AllowUserToResizeColumns = false;
             this.dgvCoordinates.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvCoordinates.BackgroundColor = System.Drawing.Color.WhiteSmoke;
             this.dgvCoordinates.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -661,50 +680,20 @@ namespace SurveyLineUI.Form
             this.colXPos,
             this.colYPos});
             this.dgvCoordinates.ContextMenuStrip = this.contextMenuStrip1;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCoordinates.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCoordinates.DefaultCellStyle = dataGridViewCellStyle17;
             this.dgvCoordinates.Dock = System.Windows.Forms.DockStyle.Top;
             this.dgvCoordinates.Location = new System.Drawing.Point(3, 3);
             this.dgvCoordinates.Name = "dgvCoordinates";
             this.dgvCoordinates.ReadOnly = true;
-            this.dgvCoordinates.Size = new System.Drawing.Size(370, 314);
+            this.dgvCoordinates.Size = new System.Drawing.Size(370, 313);
             this.dgvCoordinates.TabIndex = 3;
-            // 
-            // colStation
-            // 
-            this.colStation.DataPropertyName = "Name";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colStation.DefaultCellStyle = dataGridViewCellStyle5;
-            this.colStation.HeaderText = "Station";
-            this.colStation.Name = "colStation";
-            this.colStation.ReadOnly = true;
-            // 
-            // colXPos
-            // 
-            this.colXPos.DataPropertyName = "X";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle6.Format = "F6";
-            dataGridViewCellStyle6.NullValue = null;
-            this.colXPos.DefaultCellStyle = dataGridViewCellStyle6;
-            this.colXPos.HeaderText = "X-Position";
-            this.colXPos.Name = "colXPos";
-            this.colXPos.ReadOnly = true;
-            // 
-            // colYPos
-            // 
-            this.colYPos.DataPropertyName = "Y";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle7.Format = "F6";
-            this.colYPos.DefaultCellStyle = dataGridViewCellStyle7;
-            this.colYPos.HeaderText = "Y-Position";
-            this.colYPos.Name = "colYPos";
-            this.colYPos.ReadOnly = true;
             // 
             // contextMenuStrip1
             // 
@@ -730,18 +719,19 @@ namespace SurveyLineUI.Form
             // 
             // groupBox3
             // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.flowLayoutPanel8);
             this.groupBox3.Controls.Add(this.flowLayoutPanel7);
             this.groupBox3.Controls.Add(this.flowLayoutPanel6);
             this.groupBox3.Controls.Add(this.flowLayoutPanel9);
-            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.groupBox3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(3, 323);
+            this.groupBox3.Location = new System.Drawing.Point(3, 322);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(370, 67);
+            this.groupBox3.Size = new System.Drawing.Size(370, 68);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Properties";
+            this.groupBox3.Text = "Design Properties";
             // 
             // flowLayoutPanel8
             // 
@@ -903,6 +893,7 @@ namespace SurveyLineUI.Form
             // 
             // tabPagePlot
             // 
+            this.tabPagePlot.Controls.Add(this.zedGraphControl1);
             this.tabPagePlot.Location = new System.Drawing.Point(4, 22);
             this.tabPagePlot.Name = "tabPagePlot";
             this.tabPagePlot.Padding = new System.Windows.Forms.Padding(3);
@@ -1000,39 +991,73 @@ namespace SurveyLineUI.Form
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // saveFileDialog1
+            // saveToTxt
             // 
-            this.saveFileDialog1.Filter = "Text files (*.txt)|*.txt|DAT Files (*.dat)|*.dat|All files (*.*)|*.*";
-            this.saveFileDialog1.RestoreDirectory = true;
-            this.saveFileDialog1.Title = "Save Coordinates Table As";
-            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
+            this.saveToTxt.Filter = "Text files (*.txt)|*.txt|DAT Files (*.dat)|*.dat|All files (*.*)|*.*";
+            this.saveToTxt.RestoreDirectory = true;
+            this.saveToTxt.Title = "Save Coordinates Table As";
+            this.saveToTxt.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
             // 
             // backgroundWorker1
             // 
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
-            // label17
+            // colStation
             // 
-            this.label17.Location = new System.Drawing.Point(3, 0);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(58, 23);
-            this.label17.TabIndex = 16;
-            this.label17.Text = "Mode";
-            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.colStation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colStation.DataPropertyName = "Name";
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.colStation.DefaultCellStyle = dataGridViewCellStyle11;
+            this.colStation.HeaderText = "Station";
+            this.colStation.Name = "colStation";
+            this.colStation.ReadOnly = true;
             // 
-            // cboxMode
+            // colXPos
             // 
-            this.cboxMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxMode.FormattingEnabled = true;
-            this.cboxMode.Items.AddRange(new object[] {
-            "Single Line",
-            "Multi Line",
-            "Fixed Grid"});
-            this.cboxMode.Location = new System.Drawing.Point(67, 3);
-            this.cboxMode.Name = "cboxMode";
-            this.cboxMode.Size = new System.Drawing.Size(102, 21);
-            this.cboxMode.TabIndex = 17;
+            this.colXPos.DataPropertyName = "X";
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle15.Format = "F3";
+            dataGridViewCellStyle15.NullValue = null;
+            this.colXPos.DefaultCellStyle = dataGridViewCellStyle15;
+            this.colXPos.HeaderText = "X-Position";
+            this.colXPos.Name = "colXPos";
+            this.colXPos.ReadOnly = true;
+            // 
+            // colYPos
+            // 
+            this.colYPos.DataPropertyName = "Y";
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle16.Format = "F3";
+            this.colYPos.DefaultCellStyle = dataGridViewCellStyle16;
+            this.colYPos.HeaderText = "Y-Position";
+            this.colYPos.Name = "colYPos";
+            this.colYPos.ReadOnly = true;
+            // 
+            // zedGraphControl1
+            // 
+            this.zedGraphControl1.AutoSize = true;
+            this.zedGraphControl1.BackColor = System.Drawing.SystemColors.Control;
+            this.zedGraphControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.zedGraphControl1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.zedGraphControl1.IsAntiAlias = true;
+            this.zedGraphControl1.Location = new System.Drawing.Point(3, 3);
+            this.zedGraphControl1.Name = "zedGraphControl1";
+            this.zedGraphControl1.PanButtons2 = System.Windows.Forms.MouseButtons.None;
+            this.zedGraphControl1.PanModifierKeys = System.Windows.Forms.Keys.None;
+            this.zedGraphControl1.ScrollGrace = 0D;
+            this.zedGraphControl1.ScrollMaxX = 0D;
+            this.zedGraphControl1.ScrollMaxY = 0D;
+            this.zedGraphControl1.ScrollMaxY2 = 0D;
+            this.zedGraphControl1.ScrollMinX = 0D;
+            this.zedGraphControl1.ScrollMinY = 0D;
+            this.zedGraphControl1.ScrollMinY2 = 0D;
+            this.zedGraphControl1.Size = new System.Drawing.Size(370, 387);
+            this.zedGraphControl1.TabIndex = 1;
+            this.zedGraphControl1.ZoomModifierKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.None)));
             // 
             // MainUI
             // 
@@ -1079,6 +1104,8 @@ namespace SurveyLineUI.Form
             this.flowLayoutPanel6.ResumeLayout(false);
             this.flowLayoutPanel6.PerformLayout();
             this.flowLayoutPanel9.ResumeLayout(false);
+            this.tabPagePlot.ResumeLayout(false);
+            this.tabPagePlot.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -1087,7 +1114,7 @@ namespace SurveyLineUI.Form
 		}
         private System.Windows.Forms.NumericUpDown numEasting;
         private System.Windows.Forms.ToolStripMenuItem latLongToUTMToolStripMenuItem;
-		private System.Windows.Forms.Button btnMoreSetup;
+		private System.Windows.Forms.Button btnNamingSetup;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel4;
 		private System.Windows.Forms.Button btnCreate;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelAuthor;
@@ -1102,13 +1129,11 @@ namespace SurveyLineUI.Form
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.TextBox txtLineName;
         private System.Windows.Forms.Label label9;
-		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.Label label6;
 		private NumericUpDown numStation;
 		private System.Windows.Forms.Label label5;
-		private NumericUpDown numInterval;
-		private System.Windows.Forms.Label label4;
+        private NumericUpDown numInterval;
 		private System.Windows.Forms.NumericUpDown numBearing;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.NumericUpDown numNorthing;
@@ -1129,7 +1154,7 @@ namespace SurveyLineUI.Form
 		private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.Label label12;
         private NumericUpDown numMultiLineSpacing;
-        private SaveFileDialog saveFileDialog1;
+        private SaveFileDialog saveToTxt;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private ToolStripMenuItem plotCurrentTableToolStripMenuItem;
         private Label label16;
@@ -1159,10 +1184,12 @@ namespace SurveyLineUI.Form
         private Label lblSpacing;
         private Label lblDistance;
         private TabPage tabPagePlot;
+        private Label label17;
+        private ComboBox cboxMode;
+        private Label label4;
         private DataGridViewTextBoxColumn colStation;
         private DataGridViewTextBoxColumn colXPos;
         private DataGridViewTextBoxColumn colYPos;
-        private Label label17;
-        private ComboBox cboxMode;
+        private ZedGraph.ZedGraphControl zedGraphControl1;
 	}
 }

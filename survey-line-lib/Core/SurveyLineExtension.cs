@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using SurveyLineLib.Ex;
+using SurveyLine.Ex;
 
-namespace SurveyLineLib.Core
+namespace SurveyLine.Core
 {
     public static class SurveyLineExtension
     {
@@ -109,10 +109,13 @@ namespace SurveyLineLib.Core
         static public SurveyPointList BuildSurveyPoints(this SurveyFactory factory)
         {
             var design = factory.Design;
+            if (design == null) throw new SurveyDesignNotFoundException();
             var nameDesign = factory.NamingDesign;
 
-//          throw ZeroIntervalException if interval is zero
-            if (Math.Abs(design.Interval) < 1e-12) throw new ZeroIntervalException();
+//          throw ZeroIntervalException if spacing is zero
+            if (Math.Abs(design.Interval) < 1e-12) throw new ZeroIntervalException("Spacing cannot be zero.");
+            if (Math.Abs(design.LineSpacing) < 1e-12 && (design.Type == SurveyDesign.DesignType.MultiLine || design.Type == SurveyDesign.DesignType.MultiLine)) 
+                throw new ZeroIntervalException("Line spacing cannot be zero.");
 
             var surveyPointList = new SurveyPointList(design);
             var startPoint = new SurveyPoint(design.XStart, design.YStart);

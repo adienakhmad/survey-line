@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SurveyLineLib.Ex
+namespace SurveyLine.Ex
 {
     public class ZeroIntervalException:Exception
     {

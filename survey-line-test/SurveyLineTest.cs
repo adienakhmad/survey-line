@@ -1,8 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
-using SurveyLineLib.Core;
-using SurveyLineLib.Ex;
-using SurveyLineLib.Transformation;
+using SurveyLine.Core;
+using SurveyLine.Ex;
+using SurveyLine.Transformation;
 
 namespace SurveyLineTest
 {
@@ -199,7 +199,42 @@ namespace SurveyLineTest
 
         #endregion
 
-       
+        #region enumeration test
+
+        [Test]
+        public void DesignTypeEnumeration_Test_0_SingleLine()
+        {
+            int a = 0;
+
+            var actual = (SurveyDesign.DesignType) a;
+            var expected = SurveyDesign.DesignType.SingleLine;
+
+            Assert.AreEqual(expected,actual);
+        }
+        [Test]
+        public void DesignTypeEnumeration_Test_1_MultiLine()
+        {
+            int a = 1;
+
+            var actual = (SurveyDesign.DesignType)a;
+            var expected = SurveyDesign.DesignType.MultiLine;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void DesignTypeEnumeration_Test_2_FixedGrid()
+        {
+            int a = 2;
+
+            var actual = (SurveyDesign.DesignType)a;
+            var expected = SurveyDesign.DesignType.FixedGrid;
+
+            Assert.AreEqual(expected, actual);
+        }
+        #endregion
+
+
     }
 
     [TestFixture]

@@ -38,7 +38,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -47,6 +46,7 @@
     <Compile Include="Core\SurveyFactory.cs" />
     <Compile Include="Core\StationNameDesign.cs" />
     <Compile Include="Core\SurveyPointList.cs" />
+    <Compile Include="Ex\SurveyDesignNotFoundException.cs" />
     <Compile Include="Ex\ZeroIntervalException.cs" />
     <Compile Include="Core\SurveyPoint.cs" />
     <Compile Include="Core\SurveyLineExtension.cs" />

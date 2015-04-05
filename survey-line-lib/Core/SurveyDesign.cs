@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SurveyLineLib.Core
+namespace SurveyLine.Core
 {
     public class SurveyDesign
     {
@@ -50,6 +50,7 @@ namespace SurveyLineLib.Core
             Bearing = bearing;
             Interval = interval;
             StationCount = stationCount;
+            LineCount = 1;
         }
 
         /// <summary>
