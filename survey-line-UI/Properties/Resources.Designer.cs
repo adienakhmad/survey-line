@@ -71,36 +71,6 @@ namespace SurveyLine.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap acceptIco {
-            get {
-                object obj = ResourceManager.GetObject("acceptIco", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap cancelIco {
-            get {
-                object obj = ResourceManager.GetObject("cancelIco", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap CreateTableIco {
-            get {
-                object obj = ResourceManager.GetObject("CreateTableIco", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon Fatcow_Farm_Fresh_Map {
@@ -116,26 +86,6 @@ namespace SurveyLine.Properties {
         internal static System.Drawing.Bitmap InfoblueIcon {
             get {
                 object obj = ResourceManager.GetObject("InfoblueIcon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap MoreSetupIco {
-            get {
-                object obj = ResourceManager.GetObject("MoreSetupIco", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap saveIco {
-            get {
-                object obj = ResourceManager.GetObject("saveIco", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

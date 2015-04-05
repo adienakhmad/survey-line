@@ -153,25 +153,9 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Resources\save_16xLG.png" />
     <None Include="SurveyLineHelp.chm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\AddTable_5632.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\properties_16xLG.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Symbols_Complete_and_ok_16xLG.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Symbols_Critical_16xLG.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\SorryImage.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Information_6227_32x_cyan.png" />
