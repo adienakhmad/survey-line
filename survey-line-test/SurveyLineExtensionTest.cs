@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using NUnit.Framework;
 using SurveyLine.Core;
 using SurveyLine.Transformation;
@@ -7,7 +6,7 @@ using SurveyLine.Transformation;
 namespace SurveyLineTest
 {
     [TestFixture]
-    public class SurveyLineCoreTest
+    public class SurveyLineExtensionTest
     {
         private const double Tolerancy = 1e-12; // tolerance for difference between expected and actual
 
@@ -18,7 +17,7 @@ namespace SurveyLineTest
             var source = new SurveyPoint(0, 0);
             var expected = new SurveyPoint(0, 100);
 
-            var actual = SurveyLineOperation.ProjectSurveyPoint(source, 0, 100);
+            var actual = source.ProjectTo(0, 100);
 
             Assert.AreEqual(expected.X, actual.X, Tolerancy, "X Fail");
             Assert.AreEqual(expected.Y, actual.Y, Tolerancy, "Y Fail");
@@ -30,7 +29,7 @@ namespace SurveyLineTest
             var source = new SurveyPoint(100, 100);
             var expected = new SurveyPoint(100, 200);
 
-            var actual = SurveyLineOperation.ProjectSurveyPoint(source, 0, 100);
+            var actual = source.ProjectTo(0, 100);
 
             Assert.AreEqual(expected.X, actual.X, Tolerancy, "X Fail");
             Assert.AreEqual(expected.Y, actual.Y, Tolerancy, "Y Fail");
@@ -42,7 +41,7 @@ namespace SurveyLineTest
             var source = new SurveyPoint(0, 0);
             var expected = new SurveyPoint(100, 0);
 
-            var actual = SurveyLineOperation.ProjectSurveyPoint(source, 90, 100);
+            var actual = source.ProjectTo(90, 100);
 
             Assert.AreEqual(expected.X, actual.X, Tolerancy, "X Fail");
             Assert.AreEqual(expected.Y, actual.Y, Tolerancy, "Y Fail");
@@ -54,13 +53,14 @@ namespace SurveyLineTest
             var source = new SurveyPoint(100, 100);
             var expected = new SurveyPoint(200, 100);
 
-            var actual = SurveyLineOperation.ProjectSurveyPoint(source, 90, 100);
+            var actual = source.ProjectTo(90, 100);
 
             Assert.AreEqual(expected.X, actual.X, Tolerancy, "X Fail");
             Assert.AreEqual(expected.Y, actual.Y, Tolerancy, "Y Fail");
 
         }
         #endregion
+
         #region 2nd Quadran Projection Test
         [Test]
         public void ProjectSurveyPoint0_0_N180_100()
@@ -68,7 +68,7 @@ namespace SurveyLineTest
             var source = new SurveyPoint(0, 0);
             var expected = new SurveyPoint(0, -100);
 
-            var actual = SurveyLineOperation.ProjectSurveyPoint(source, 180, 100);
+            var actual = source.ProjectTo(180, 100);
 
             Assert.AreEqual(expected.X, actual.X, Tolerancy, "X Fail");
             Assert.AreEqual(expected.Y, actual.Y, Tolerancy, "Y Fail");
@@ -80,13 +80,14 @@ namespace SurveyLineTest
             var source = new SurveyPoint(100, 100);
             var expected = new SurveyPoint(100, 0);
 
-            var actual = SurveyLineOperation.ProjectSurveyPoint(source, 180, 100);
+            var actual = source.ProjectTo(180, 100);
 
             Assert.AreEqual(expected.X, actual.X, Tolerancy, "X Fail");
             Assert.AreEqual(expected.Y, actual.Y, Tolerancy, "Y Fail");
 
         }
         #endregion
+
         #region 3rd Quadran Projection Test
         [Test]
         public void ProjectSurveyPoint0_0_N270_100()
@@ -94,7 +95,7 @@ namespace SurveyLineTest
             var source = new SurveyPoint(0, 0);
             var expected = new SurveyPoint(-100, 0);
 
-            var actual = SurveyLineOperation.ProjectSurveyPoint(source, 270, 100);
+            var actual = source.ProjectTo(270, 100);
 
             Assert.AreEqual(expected.X, actual.X, Tolerancy, "X Fail");
             Assert.AreEqual(expected.Y, actual.Y, Tolerancy, "Y Fail");
@@ -106,13 +107,14 @@ namespace SurveyLineTest
             var source = new SurveyPoint(100, 100);
             var expected = new SurveyPoint(0, 100);
 
-            var actual = SurveyLineOperation.ProjectSurveyPoint(source, 270, 100);
+            var actual = source.ProjectTo(270, 100);
 
             Assert.AreEqual(expected.X, actual.X, Tolerancy, "X Fail");
             Assert.AreEqual(expected.Y, actual.Y, Tolerancy, "Y Fail");
 
         }
         #endregion
+
         #region 4th Quadran Projection Test
         [Test]
         public void ProjectSurveyPoint0_0_N360_100()
@@ -120,7 +122,7 @@ namespace SurveyLineTest
             var source = new SurveyPoint(0, 0);
             var expected = new SurveyPoint(0, 100);
 
-            var actual = SurveyLineOperation.ProjectSurveyPoint(source, 360, 100);
+            var actual = source.ProjectTo(360, 100);
 
             Assert.AreEqual(expected.X, actual.X, Tolerancy, "X Fail");
             Assert.AreEqual(expected.Y, actual.Y, Tolerancy, "Y Fail");
@@ -132,7 +134,7 @@ namespace SurveyLineTest
             var source = new SurveyPoint(100, 100);
             var expected = new SurveyPoint(100, 200);
 
-            var actual = SurveyLineOperation.ProjectSurveyPoint(source, 360, 100);
+            var actual = source.ProjectTo(360, 100);
 
             Assert.AreEqual(expected.X, actual.X, Tolerancy, "X Fail");
             Assert.AreEqual(expected.Y, actual.Y, Tolerancy, "Y Fail");
@@ -141,53 +143,67 @@ namespace SurveyLineTest
 
         #endregion
 
+    }
+
+    [TestFixture]
+    public class SurveyLineCoreTest
+    {
+        #region Survey Factory Test
+
         [Test]
-        public void GenerateSurveyPointList_SingleLine_Test()
+        public void GenerateSurveyPointList_SingleLine_Debug()
         {
             SurveyDesign design = new SurveyDesign("NUNIT", 0, 0, 90, 100, 11);
-            SurveyNamingDesign nameDesign = new SurveyNamingDesign();
+            StationNameDesign nameDesign = new StationNameDesign();
 
-            var result = SurveyLineOperation.GenerateSurveyPointList(design, nameDesign).ToList();
+            SurveyFactory survey = new SurveyFactory(design, nameDesign);
+            Console.WriteLine(survey.Design.ToString());
+            Console.WriteLine(survey.CreateSurveyPoints().ToString());
 
-            Console.WriteLine("Bearing: {0} Interval:{1} PlusBearing:{2} LineSpacing:{3}", design.Bearing, design.Interval, design.PlusBearing, design.LineSpacing);
-            foreach (var point in result)
-            {
-                var str = string.Format("{0:}\t{1:F6}\t{2:F6}", point.Name, point.X, point.Y);
-                Console.WriteLine(str);
-            }
         }
 
         [Test]
-        public void GenerateSurveyPointList_MultiLine_Test()
+        public void GenerateSurveyPointList_MultiLine_Debug()
         {
-            SurveyDesign design = new SurveyDesign("NUNIT",0,0,90,100,11,90,2,200);
-            SurveyNamingDesign nameDesign = new SurveyNamingDesign();
+            SurveyDesign design = new SurveyDesign("NUNIT", 0, 0, 90, 100, 11, 90, 2, 200);
+            StationNameDesign nameDesign = new StationNameDesign();
 
-            var result = SurveyLineOperation.GenerateSurveyPointList(design, nameDesign).ToList();
-
-            Console.WriteLine("Bearing: {0} Interval:{1} PlusBearing:{2} LineSpacing:{3}", design.Bearing, design.Interval, design.PlusBearing, design.LineSpacing);
-            foreach (var point in result)
-            {
-                var str = string.Format("{0:}\t{1:F6}\t{2:F6}", point.Name, point.X, point.Y);
-                Console.WriteLine(str);
-            }
+            SurveyFactory survey = new SurveyFactory(design, nameDesign);
+            Console.WriteLine(survey.Design.ToString());
+            Console.WriteLine(survey.CreateSurveyPoints().ToString());
         }
 
         [Test]
-        public void GenerateSurveyPointList_FixedGrid_Test()
+        public void GenerateSurveyPointList_FixedGrid_Debug()
         {
-            SurveyDesign design = new SurveyDesign("NUNIT", 0, 0, 90, 100, 11, 90,2);
-            SurveyNamingDesign nameDesign = new SurveyNamingDesign();
+            SurveyDesign design = new SurveyDesign("NUNIT", 0, 0, 90, 100, 5, 90, 5);
+            StationNameDesign nameDesign = new StationNameDesign();
 
-            var result = SurveyLineOperation.GenerateSurveyPointList(design, nameDesign).ToList();
-
-            Console.WriteLine("Bearing: {0} Interval:{1} PlusBearing:{2} LineSpacing:{3}", design.Bearing, design.Interval, design.PlusBearing, design.LineSpacing);
-            foreach (var point in result)
-            {
-                var str = string.Format("{0:}\t{1:F6}\t{2:F6}", point.Name, point.X, point.Y);
-                Console.WriteLine(str);
-            }
+            SurveyFactory survey = new SurveyFactory(design, nameDesign);
+            Console.WriteLine(survey.Design.ToString());
+            Console.WriteLine(survey.CreateSurveyPoints().ToString());
         }
 
+        #endregion
+    }
+
+    [TestFixture]
+    public class SurveyLineTransformationTest
+    {
+        #region WGS84 Trannsformation Test
+
+        [Test]
+        public void ToWGS84GeographicTransformDebug()
+        {
+            SurveyDesign design = new SurveyDesign("NUNIT", 422048, 9184693, 90, 100, 11);
+            StationNameDesign nameDesign = new StationNameDesign();
+
+            SurveyFactory survey = new SurveyFactory(design, nameDesign);
+            Console.WriteLine(survey.Design.ToString());
+            var inLatLong = survey.CreateSurveyPoints().ToWGS84Geographic(new UTMZone(49, false));
+            Console.WriteLine(inLatLong.ToString());
+        }
+
+        #endregion
     }
 }

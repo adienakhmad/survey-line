@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SurveyLine.Core
 {
@@ -39,6 +41,11 @@ namespace SurveyLine.Core
         public List<SurveyPoint> ToList()
         {
             return _pointList;
+        }
+
+        public override string ToString()
+        {
+            return string.Join(Environment.NewLine, ToList().Select(point => string.Format("{0}\t{1:F6}\t{2:F6}", point.Name, point.X, point.Y)).ToArray());
         }
     }
 }

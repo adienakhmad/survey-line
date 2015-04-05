@@ -1,4 +1,8 @@
-﻿namespace SurveyLine.Core
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+
+namespace SurveyLine.Core
 {
     public class SurveyDesign
     {
@@ -103,7 +107,24 @@
 
         #region Methods
 
-        
+        public override string ToString()
+        {
+            var str = new List<String>
+            {
+                string.Format("Type: {0}", Type),
+                string.Format("X0 : {0}", XStart),
+                string.Format("Y0 : {0}", YStart),
+                string.Format("Bearing: {0}", Bearing),
+                string.Format("Inteval: {0}", Interval),
+                string.Format("Num of stations: {0}", StationCount),
+                string.Format("Num of lines: {0}", LineCount),
+                string.Format("Line spacing: {0}", LineSpacing),
+                string.Format("Plus Bearing: {0}", PlusBearing)
+            };
+
+
+            return string.Join(Environment.NewLine, str.ToArray());
+        }
 
         #endregion
     }

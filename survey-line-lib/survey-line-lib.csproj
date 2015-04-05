@@ -44,10 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\SurveyDesign.cs" />
-    <Compile Include="Core\SurveyNamingDesign.cs" />
+    <Compile Include="Core\SurveyFactory.cs" />
+    <Compile Include="Core\StationNameDesign.cs" />
     <Compile Include="Ex\ZeroIntervalException.cs" />
     <Compile Include="Core\SurveyPoint.cs" />
-    <Compile Include="Core\SurveyLineOperation.cs" />
+    <Compile Include="Core\SurveyLineExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transformation\WGS84Transformation.cs" />
     <Compile Include="Transformation\UTMZone.cs" />

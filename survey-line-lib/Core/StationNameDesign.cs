@@ -1,6 +1,6 @@
 ﻿namespace SurveyLine.Core
 {
-    public class SurveyNamingDesign
+    public class StationNameDesign
     {
         public enum IndexType { Number, Alphabet }
         public int LineStartingIndex { get; set; }
@@ -12,7 +12,7 @@
         /// <summary>
         /// Default Constructor with default naming design
         /// </summary>
-        public SurveyNamingDesign()
+        public StationNameDesign()
         {
             SetNamingDefault();
         }
@@ -25,7 +25,7 @@
         /// <param name="pointSeparator"></param>
         /// <param name="lineStartIndex"></param>
         /// <param name="stationStartIndex"></param>
-        public SurveyNamingDesign(IndexType type, string lineSeparator, string pointSeparator, int lineStartIndex,
+        public StationNameDesign(IndexType type, string lineSeparator, string pointSeparator, int lineStartIndex,
             int stationStartIndex)
         {
             LineIndexType = type;
