@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "survey-line-test", "survey-line-test\survey-line-test.csproj", "{4B28E4C5-6A0A-4509-A15B-E86D6E357750}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurveyLineTest", "survey-line-test\SurveyLineTest.csproj", "{4B28E4C5-6A0A-4509-A15B-E86D6E357750}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "survey-line-UI", "survey-line-UI\survey-line-UI.csproj", "{6830F60A-26BB-43BC-865E-9724216D3E20}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurveyLineUI", "survey-line-UI\SurveyLineUI.csproj", "{6830F60A-26BB-43BC-865E-9724216D3E20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "survey-line-lib", "survey-line-lib\survey-line-lib.csproj", "{0563E300-A128-4835-85FC-B754580BC406}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurveyLine", "survey-line-lib\SurveyLine.csproj", "{0563E300-A128-4835-85FC-B754580BC406}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

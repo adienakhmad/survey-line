@@ -49,9 +49,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\survey-line-lib\survey-line-lib.csproj">
+    <ProjectReference Include="..\survey-line-lib\SurveyLine.csproj">
       <Project>{0563e300-a128-4835-85fc-b754580bc406}</Project>
-      <Name>survey-line-lib</Name>
+      <Name>SurveyLine</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
