@@ -2,7 +2,7 @@
 
 namespace SurveyLine.Ex
 {
-    class ZeroIntervalException:Exception
+    public class ZeroIntervalException:Exception
     {
         public ZeroIntervalException()
         {

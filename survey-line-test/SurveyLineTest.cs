@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using SurveyLine.Core;
 using SurveyLine.Transformation;
+using SurveyLine.Ex;
 
 namespace SurveyLineTest
 {
@@ -158,7 +159,7 @@ namespace SurveyLineTest
 
             SurveyFactory survey = new SurveyFactory(design, nameDesign);
             Console.WriteLine(survey.Design.ToString());
-            Console.WriteLine(survey.CreateSurveyPoints().ToString());
+            Console.WriteLine(survey.BuildSurveyPoints().ToString());
 
         }
 
@@ -170,7 +171,7 @@ namespace SurveyLineTest
 
             SurveyFactory survey = new SurveyFactory(design, nameDesign);
             Console.WriteLine(survey.Design.ToString());
-            Console.WriteLine(survey.CreateSurveyPoints().ToString());
+            Console.WriteLine(survey.BuildSurveyPoints().ToString());
         }
 
         [Test]
@@ -181,10 +182,24 @@ namespace SurveyLineTest
 
             SurveyFactory survey = new SurveyFactory(design, nameDesign);
             Console.WriteLine(survey.Design.ToString());
-            Console.WriteLine(survey.CreateSurveyPoints().ToString());
+            Console.WriteLine(survey.BuildSurveyPoints().ToString());
         }
 
         #endregion
+        
+        #region Exception Test
+
+        [Test]
+        [ExpectedException(typeof (ZeroIntervalException))]
+        public void ZeroIntervalTest()
+        {
+            var survey = new SurveyFactory(new SurveyDesign("NUNIT Zero Interval", 0, 0, 90, 0, 11));
+            survey.BuildSurveyPoints();
+        }
+
+        #endregion
+
+       
     }
 
     [TestFixture]
@@ -200,7 +215,7 @@ namespace SurveyLineTest
 
             SurveyFactory survey = new SurveyFactory(design, nameDesign);
             Console.WriteLine(survey.Design.ToString());
-            var inLatLong = survey.CreateSurveyPoints().ToWGS84Geographic(new UTMZone(49, false));
+            var inLatLong = survey.BuildSurveyPoints().ToWGS84Geographic(new UTMZone(49, false));
             Console.WriteLine(inLatLong.ToString());
         }
 

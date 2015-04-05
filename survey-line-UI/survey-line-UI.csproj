@@ -81,6 +81,11 @@
     <Compile Include="Form\BetterDialog.designer.cs">
       <DependentUpon>BetterDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Util\CueProvider.cs" />
     <Compile Include="Util\EmbeddedAssembly.cs" />
     <Compile Include="Linemaker.cs" />
@@ -142,7 +147,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Resources\save_16xLG.png" />
     <None Include="SurveyLineHelp.chm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -178,13 +188,6 @@
   <ItemGroup>
     <Content Include="Fatcow-Farm-Fresh-Map.ico" />
     <Content Include="License-LGPL.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\survey-line-lib\survey-line-lib.csproj">
-      <Project>{0563e300-a128-4835-85fc-b754580bc406}</Project>
-      <Name>survey-line-lib</Name>
-      <Private>False</Private>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -8,7 +8,7 @@ namespace SurveyLine.Transformation
     {
         public static SurveyPointList ToWGS84Geographic(this SurveyPointList pointList, UTMZone zone)
         {
-            var surveyPointList = new SurveyPointList();
+            var surveyPointList = new SurveyPointList(pointList.Design);
             var utmzone = zone;
 
             IGeographicCoordinateSystem geo = GeographicCoordinateSystem.WGS84;

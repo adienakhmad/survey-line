@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using SurveyLine.Ex;
 
 namespace SurveyLine.Core
 {
@@ -13,6 +16,7 @@ namespace SurveyLine.Core
         {
             return number * (Math.PI / 180.0);
         }
+
         /// <summary>
         /// This function return an automated survey point naming.
         /// </summary>
@@ -21,7 +25,7 @@ namespace SurveyLine.Core
         /// <param name="staindex"></param>
         /// <param name="lineindex"></param>
         /// <returns></returns>
-        static private string PointNameGenerator(SurveyDesign design, StationNameDesign nameDesign, int staindex, int lineindex=0)
+        static private string CreateStationNamebyDesign(SurveyDesign design, StationNameDesign nameDesign, int staindex, int lineindex=0)
         {
             var stationLeadingZeroFormat = string.Format("D{0}", design.StationCount.ToString().Length);
             var lineDigitCount = design.LineCount.ToString().Length;
@@ -33,7 +37,7 @@ namespace SurveyLine.Core
                     break;
                 case SurveyDesign.DesignType.MultiLine:
                 case SurveyDesign.DesignType.FixedGrid:
-                    pointname = string.Format("{0}{1}{2}{3}{4}", design.Name, nameDesign.LineSeparator, LineNameGenerator(nameDesign, lineindex, lineDigitCount), nameDesign.PointsSeparator, staindex.ToString(stationLeadingZeroFormat));
+                    pointname = string.Format("{0}{1}{2}{3}{4}", design.Name, nameDesign.LineSeparator, CreateLineNamebyDesign(nameDesign, lineindex, lineDigitCount), nameDesign.PointsSeparator, staindex.ToString(stationLeadingZeroFormat));
                     break;
                 default:
                     pointname = string.Empty;
@@ -50,7 +54,7 @@ namespace SurveyLine.Core
         /// <param name="number"></param>
         /// <param name="digitCount"></param>
         /// <returns></returns>
-        static private string LineNameGenerator(StationNameDesign design, int number, int digitCount)
+        static private string CreateLineNamebyDesign(StationNameDesign design, int number, int digitCount)
         {
             string leadingZeroFormat = string.Format("D{0}", digitCount);
             string returnedName;
@@ -98,14 +102,19 @@ namespace SurveyLine.Core
         }
 
         /// <summary>
-        /// Generate SurveyPointList from a SurveyDesign object
+        /// Generate SurveyPointList from a factory object.
         /// </summary>
-        /// <param name="design"></param>
-        /// <param name="nameDesign"></param>
+        /// <param name="factory"></param>
         /// <returns></returns>
-        static internal SurveyPointList Create(this SurveyDesign design, StationNameDesign nameDesign)
+        static public SurveyPointList BuildSurveyPoints(this SurveyFactory factory)
         {
-            var surveyPointList = new SurveyPointList();
+            var design = factory.Design;
+            var nameDesign = factory.NamingDesign;
+
+//          throw ZeroIntervalException if interval is zero
+            if (Math.Abs(design.Interval) < 1e-12) throw new ZeroIntervalException();
+
+            var surveyPointList = new SurveyPointList(design);
             var startPoint = new SurveyPoint(design.XStart, design.YStart);
             var stationStartingIndex = nameDesign.StationStartingIndex;
             var lineStartingIndex = nameDesign.LineStartingIndex;
@@ -118,7 +127,7 @@ namespace SurveyLine.Core
                     for (int i = 0; i < design.StationCount; i++)
                     {
                         var point = ProjectTo(startPoint, design.Bearing, (i+1) * design.Interval);
-                        point.SetName(PointNameGenerator(design, nameDesign, stationStartingIndex + i));
+                        point.SetName(CreateStationNamebyDesign(design, nameDesign, stationStartingIndex + i));
                         surveyPointList.Add(point);
                     }
 
@@ -135,7 +144,7 @@ namespace SurveyLine.Core
                         for (int i = 0; i < design.StationCount; i++)
                         {
                             var point = ProjectTo(lineFirstPoint, design.Bearing, i * design.Interval);
-                            point.SetName(PointNameGenerator(design, nameDesign, stationStartingIndex + i, lineStartingIndex + j));
+                            point.SetName(CreateStationNamebyDesign(design, nameDesign, stationStartingIndex + i, lineStartingIndex + j));
                             surveyPointList.Add(point);
                         }
                     }
@@ -152,7 +161,7 @@ namespace SurveyLine.Core
                         for (int i = 0; i < design.StationCount; i++)
                         {
                             var point = ProjectTo(lineFirstPoint, design.Bearing, i * design.Interval);
-                            point.SetName(PointNameGenerator(design, nameDesign, stationStartingIndex + i, lineStartingIndex + j));
+                            point.SetName(CreateStationNamebyDesign(design, nameDesign, stationStartingIndex + i, lineStartingIndex + j));
                             surveyPointList.Add(point);
                         }
                     }
@@ -164,13 +173,31 @@ namespace SurveyLine.Core
         }
 
         /// <summary>
-        /// Overload Method: Generate SurveyPointList from a SurveyDesign object with default namedesign
+        /// Export the Points List to text file with delimiter
         /// </summary>
-        /// <param name="design"></param>
-        /// <returns></returns>
-        static internal SurveyPointList Create(this SurveyDesign design)
+        /// <param name="points"></param>
+        /// <param name="filename"></param>
+        /// <param name="delimiter"></param>
+        public static void ExportToText(this SurveyPointList points, string filename, string delimiter="\t")
         {
-            return design.Create(new StationNameDesign());
+            var writer = new StreamWriter(filename);
+            writer.WriteLine();
+            writer.WriteLine("X-Position{0}Y-Position{0}Station", delimiter);
+
+            var str = new List<string>();
+            foreach (var surveyPoint in points.ToList())
+            {
+                str.Add(String.Format("{0,10:F6}", surveyPoint.X));
+                str.Add(String.Format("{0,10:F6}", surveyPoint.Y));
+                str.Add(String.Format("{0}", surveyPoint.Name));
+
+                writer.WriteLine(string.Join(delimiter,str.ToArray()));
+                str.Clear();
+            }
+
+            writer.Flush();
+            writer.Close();
+
         }
     }
 }
