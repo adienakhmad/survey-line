@@ -15,11 +15,16 @@ namespace SurveyLineWinForm
     /// </summary>
     public partial class MainUI : Form
     {
+        #region Field Declarations
+
         private SurveyFactory _surveyFactory;
         private bool _alreadyFocused;
         private readonly GraphPane _myPane;
 
         private double _xScaleMax, _xScaleMin, _yScaleMax, _yScaleMin;
+
+        #endregion
+
         public MainUI()
         {
             InitializeComponent();
@@ -67,6 +72,18 @@ namespace SurveyLineWinForm
             #endregion
         }
 
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            cboxMode.SelectedIndex = 0;
+            CueProvider.SetCue(txtLineName, "Enter a name here..");
+            DisableButtonOnLoad(true);
+            dropDownDirection.SelectedIndex = 0;
+            SetLineStatus("-");
+            SetStatusBarText("Ready.");
+        }
+
+        #region Zedgraph Plotting Methods
+
         private void graphPane_AxisChangeEvent(GraphPane pane)
         {
             _xScaleMax = _myPane.XAxis.Scale.Max;
@@ -79,29 +96,29 @@ namespace SurveyLineWinForm
         private void SetScaleEqual()
         {
             var graphPane = _myPane;
-            double scaleX2 = (_xScaleMax - _xScaleMin) / graphPane.Rect.Width;
-            double scaleY2 = (_yScaleMax - _yScaleMin) / graphPane.Rect.Height;
+            double scaleX2 = (_xScaleMax - _xScaleMin)/graphPane.Rect.Width;
+            double scaleY2 = (_yScaleMax - _yScaleMin)/graphPane.Rect.Height;
 
             Debug.WriteLine(string.Format("{0} {1}", scaleX2, scaleY2));
 
             if (scaleX2 > scaleY2)
             {
                 double diff = _yScaleMax - _yScaleMin;
-                double newDiff = graphPane.Rect.Height * scaleX2;
-                graphPane.YAxis.Scale.Min = _yScaleMin - (newDiff - diff) / 2.0;
-                graphPane.YAxis.Scale.Max = _yScaleMax + (newDiff - diff) / 2.0;
+                double newDiff = graphPane.Rect.Height*scaleX2;
+                graphPane.YAxis.Scale.Min = _yScaleMin - (newDiff - diff)/2.0;
+                graphPane.YAxis.Scale.Max = _yScaleMax + (newDiff - diff)/2.0;
             }
             else if (scaleY2 > scaleX2)
             {
                 double diff = _xScaleMax - _xScaleMin;
-                double new_diff = graphPane.Rect.Width * scaleY2;
-                graphPane.XAxis.Scale.Min = _xScaleMin - (new_diff - diff) / 2.0;
-                graphPane.XAxis.Scale.Max = _yScaleMax + (new_diff - diff) / 2.0;
+                double new_diff = graphPane.Rect.Width*scaleY2;
+                graphPane.XAxis.Scale.Min = _xScaleMin - (new_diff - diff)/2.0;
+                graphPane.XAxis.Scale.Max = _yScaleMax + (new_diff - diff)/2.0;
             }
-            
+
         }
 
-        RectangleF GetEqualRatioRect(RectangleF rect)
+        private RectangleF GetEqualRatioRect(RectangleF rect)
         {
             if (rect.Width > rect.Height)
             {
@@ -134,6 +151,10 @@ namespace SurveyLineWinForm
             SetScaleEqual();
 
         }
+
+        #endregion
+
+        #region Main Methods
 
         private void GrabAllInputs()
         {
@@ -203,7 +224,74 @@ namespace SurveyLineWinForm
             _surveyFactory = new SurveyFactory(design);
         }
 
-        
+        /// <summary>
+        /// Main method
+        /// </summary>
+        private void StartMainMethod()
+        {
+            GrabAllInputs();
+            SetStatusBarText("Working.. Please wait..");
+            toolStripProgressBar1.Visible = true;
+            DisableButtonOnWork(true);
+
+            backgroundWorker1.RunWorkerAsync();
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            e.Result = _surveyFactory.BuildSurveyPoints();
+            
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                MessageBox.Show(e.Error.Message);
+                SetStatusBarText("Progress stopped.");
+            }
+
+            else
+            {
+                if (e.Cancelled)
+                {
+                    MessageBox.Show(@"Process cancelled");
+                    SetStatusBarText("Progress cancelled.");
+                }
+
+                else
+                {
+                    var result = e.Result as SurveyPointList;
+                    // ReSharper disable once PossibleNullReferenceException
+                    dgvCoordinates.DataSource = result.ToList();
+                    SetLineStatus(result.Design);
+                    SetStatusBarText("Progress completed.");
+                }
+            }
+
+            DisableButtonOnLoad(false);
+            DisableButtonOnWork(false);
+            toolStripProgressBar1.Visible = false;
+            //          SetLineStatus(line1, cboxMultiMode.Checked);
+                
+            
+
+        }
+
+        /// <summary>
+        /// What Happen when generate button is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+            StartMainMethod();
+        }
+
+        #endregion
+
+        #region UI Info Display
+
         private void SetLineStatus(SurveyDesign design)
         {
             switch (design.Type)
@@ -274,6 +362,10 @@ namespace SurveyLineWinForm
             statusStrip1.Refresh();
         }
 
+        #endregion
+
+        #region UI Disable Enable Control Behavior
+
         private void DisableButtonOnWork(bool disable)
         {
             btnCreate.Enabled = !disable;
@@ -287,125 +379,58 @@ namespace SurveyLineWinForm
             plotCurrentTableToolStripMenuItem.Enabled = !disable;
         }
 
-        /// <summary>
-        /// What Happen when generate button is clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnCreate_Click(object sender, EventArgs e)
+        private void cboxMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            StartMainMethod();
+            switch ((SurveyDesign.DesignType)cboxMode.SelectedIndex)
+            {
+                case SurveyDesign.DesignType.SingleLine:
+
+                    numMultiLineCount.Enabled = false;
+                    numMultiLineSpacing.Enabled = false;
+                    dropDownDirection.Enabled = false;
+
+                    break;
+                    
+
+                case SurveyDesign.DesignType.MultiLine:
+
+                    numMultiLineCount.Enabled = true;
+                    numMultiLineSpacing.Enabled = true;
+                    dropDownDirection.Enabled = true;
+                    break;
+                    
+
+                case SurveyDesign.DesignType.FixedGrid:
+
+                    numMultiLineCount.Enabled = true;
+                    numMultiLineSpacing.Enabled = false;
+                    dropDownDirection.Enabled = true;
+                    break;
+            }
         }
 
-        /// <summary>
-        /// Main method
-        /// </summary>
-        private void StartMainMethod()
-        {
-            GrabAllInputs();
-            SetStatusBarText("Working.. Please wait..");
-            toolStripProgressBar1.Visible = true;
-            DisableButtonOnWork(true);
+        #endregion
 
-            backgroundWorker1.RunWorkerAsync();
-        }
+        #region All button click event
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            cboxMode.SelectedIndex = 0;
-            CueProvider.SetCue(txtLineName, "Enter a name here..");
-            DisableButtonOnLoad(true);
-            dropDownDirection.SelectedIndex = 0;
-            SetLineStatus("-");
-            SetStatusBarText("Ready.");
-        }
-
-//        private void btnMoreSetup_Click(object sender, EventArgs e)
-//        {
-//            var settings1 = new SettingsForm();
-//
-//            if (!string.IsNullOrEmpty(txtLineName.Text))
-//            {
-//                line1.Name = txtLineName.Text;
-//            }
-//
-//            settings1.ReadSettings(line1, cboxMultiMode.Checked);
-//
-//            settings1.ShowDialog();
-//
-//            if (!settings1.ButtonSavePressed) return;
-//
-//            bool somethingChanged = settings1.IsSomethingChanged(line1);
-//            settings1.SaveSettings(line1);
-//
-//            if (dgvCoordinates.DataSource != null && somethingChanged)
-//            {
-//                StartMainMethod();
-//            }
-//        }
+        #region File Saving
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             saveToTxt.ShowDialog();
         }
 
-        //TODO: Implement saving
         private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
             saveToTxt.FileName = string.Empty;
             SetStatusBarText("\tFile saved successfully.");
         }
 
-        //TODO: Implement main worker
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-            e.Result = _surveyFactory.BuildSurveyPoints();
-            
-        }
-
-        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (e.Error != null)
-            {
-                MessageBox.Show(e.Error.Message);
-                SetStatusBarText("Progress stopped.");
-            }
-
-            else
-            {
-                if (e.Cancelled)
-                {
-                    MessageBox.Show(@"Process cancelled");
-                    SetStatusBarText("Progress cancelled.");
-                }
-
-                else
-                {
-                    var result = e.Result as SurveyPointList;
-                    // ReSharper disable once PossibleNullReferenceException
-                    dgvCoordinates.DataSource = result.ToList();
-                    SetLineStatus(result.Design);
-                    SetStatusBarText("Progress completed.");
-                }
-            }
-
-            DisableButtonOnLoad(false);
-            DisableButtonOnWork(false);
-            toolStripProgressBar1.Visible = false;
-            //          SetLineStatus(line1, cboxMultiMode.Checked);
-                
-            
-
-        }
+        #endregion
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
-        }
-
-        private void latLongToUTMToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //TODO: Implement Coordinate Transform
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -414,51 +439,6 @@ namespace SurveyLineWinForm
                 "This simple tool was developed in purpose to help designing a survey for Geophysical measurement or any other field measurement which requires a set of coordinates.\n\n" +
                 "© 2014 Adien Akhmad. All rights reserved.", null, "Close",
                 null);
-        }
-
-        private void txtLineName_Enter(object sender, EventArgs e)
-        {
-            if (MouseButtons != MouseButtons.None) return;
-            txtLineName.SelectAll();
-            _alreadyFocused = true;
-        }
-
-        private void txtLineName_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (_alreadyFocused || txtLineName.SelectionLength != 0) return;
-            _alreadyFocused = true;
-            txtLineName.SelectAll();
-        }
-
-        private void txtLineName_Leave(object sender, EventArgs e)
-        {
-            _alreadyFocused = false;
-        }
-
-        private void txtLineName_KeyDown(object sender, KeyEventArgs e)
-        {
-            if ((e.KeyCode == Keys.Enter) || (e.KeyCode == Keys.Return))
-            {
-                SelectNextControl((Control) sender, true, true, true, true);
-            }
-        }
-
-        private void NumOnFocus(object sender, EventArgs e)
-        {
-            var numControl = (NumericUpDown) sender;
-            numControl.Select(0, numControl.Text.Length);
-        }
-
-        private void plotCurrentTableToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //TODO: Implement the new plotting
-        }
-
-        private void toolStripMenuItemCopy_Click(object sender, EventArgs e)
-        {
-            var dataObj = dgvCoordinates.GetClipboardContent();
-            if (dataObj == null) return;
-            Clipboard.SetDataObject(dataObj);
         }
 
         private void toolStripMenuItemCopyAll_Click(object sender, EventArgs e)
@@ -498,13 +478,6 @@ namespace SurveyLineWinForm
             MessageBox.Show(@"Copied to clipboard.");
         }
 
-        private void dgvCoordinates_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            if (e.Button != MouseButtons.Right) return;
-            if (e.ColumnIndex >= 0 && e.RowIndex >= 0 && dgvCoordinates.SelectedCells.Count == 1)
-                dgvCoordinates.CurrentCell = dgvCoordinates[e.ColumnIndex, e.RowIndex];
-        }
-
         private void shortcutsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Help.ShowHelp(this,"SurveyLineHelp.chm");
@@ -520,36 +493,97 @@ namespace SurveyLineWinForm
 
         }
 
-        private void cboxMode_SelectedIndexChanged(object sender, EventArgs e)
+        private void toolStripMenuItemCopy_Click(object sender, EventArgs e)
         {
-            switch ((SurveyDesign.DesignType)cboxMode.SelectedIndex)
+            var dataObj = dgvCoordinates.GetClipboardContent();
+            if (dataObj == null) return;
+            Clipboard.SetDataObject(dataObj);
+        }
+
+        private void latLongToUTMToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //TODO: Implement Coordinate Transform
+        }
+
+        #endregion
+
+//        private void btnMoreSetup_Click(object sender, EventArgs e)
+//        {
+//            var settings1 = new SettingsForm();
+//
+//            if (!string.IsNullOrEmpty(txtLineName.Text))
+//            {
+//                line1.Name = txtLineName.Text;
+//            }
+//
+//            settings1.ReadSettings(line1, cboxMultiMode.Checked);
+//
+//            settings1.ShowDialog();
+//
+//            if (!settings1.ButtonSavePressed) return;
+//
+//            bool somethingChanged = settings1.IsSomethingChanged(line1);
+//            settings1.SaveSettings(line1);
+//
+//            if (dgvCoordinates.DataSource != null && somethingChanged)
+//            {
+//                StartMainMethod();
+//            }
+//        }
+
+        
+
+        //TODO: Implement saving
+
+        //TODO: Implement main worker
+
+        #region Mark For Delete
+
+        private void plotCurrentTableToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //TODO: Implement the new plotting
+        }
+
+        #endregion
+
+        private void txtLineName_Enter(object sender, EventArgs e)
+        {
+            if (MouseButtons != MouseButtons.None) return;
+            txtLineName.SelectAll();
+            _alreadyFocused = true;
+        }
+
+        private void txtLineName_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (_alreadyFocused || txtLineName.SelectionLength != 0) return;
+            _alreadyFocused = true;
+            txtLineName.SelectAll();
+        }
+
+        private void txtLineName_Leave(object sender, EventArgs e)
+        {
+            _alreadyFocused = false;
+        }
+
+        private void txtLineName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if ((e.KeyCode == Keys.Enter) || (e.KeyCode == Keys.Return))
             {
-                case SurveyDesign.DesignType.SingleLine:
-
-                    numMultiLineCount.Enabled = false;
-                    numMultiLineSpacing.Enabled = false;
-                    dropDownDirection.Enabled = false;
-
-                    break;
-                    
-
-                case SurveyDesign.DesignType.MultiLine:
-
-                    numMultiLineCount.Enabled = true;
-                    numMultiLineSpacing.Enabled = true;
-                    dropDownDirection.Enabled = true;
-                    break;
-                    
-
-                case SurveyDesign.DesignType.FixedGrid:
-
-                    numMultiLineCount.Enabled = true;
-                    numMultiLineSpacing.Enabled = false;
-                    dropDownDirection.Enabled = true;
-                    break;
+                SelectNextControl((Control) sender, true, true, true, true);
             }
         }
 
-        
+        private void NumOnFocus(object sender, EventArgs e)
+        {
+            var numControl = (NumericUpDown) sender;
+            numControl.Select(0, numControl.Text.Length);
+        }
+
+        private void dgvCoordinates_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right) return;
+            if (e.ColumnIndex >= 0 && e.RowIndex >= 0 && dgvCoordinates.SelectedCells.Count == 1)
+                dgvCoordinates.CurrentCell = dgvCoordinates[e.ColumnIndex, e.RowIndex];
+        }
     }
 }
