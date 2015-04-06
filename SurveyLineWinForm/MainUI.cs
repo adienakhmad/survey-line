@@ -18,56 +18,17 @@ namespace SurveyLineWinForm
         #region Field Declarations
 
         private SurveyFactory _surveyFactory;
-        private readonly GraphPane _myPane;
+        private GraphPane _myPane;
         
         #endregion
 
         public MainUI()
         {
             InitializeComponent();
-
-            #region Zedgraph Setup
-            _myPane = zgcSurveyPlot.GraphPane;
-            _myPane.Chart.Border.Color = Color.Gray;
-            _myPane.IsFontsScaled = false;
-            _myPane.Title.IsVisible = false;
-            _myPane.Border.Color = Color.White;
-            
-
-            _myPane.YAxis.MajorGrid.IsVisible = true;
-            _myPane.YAxis.MajorGrid.Color = Color.Gray;
-            _myPane.YAxis.Scale.FontSpec.Size = 10.0f;
-            _myPane.YAxis.Scale.IsVisible = true;
-            _myPane.YAxis.Title.IsVisible = false;
-            _myPane.YAxis.Scale.MagAuto = true;
-            _myPane.YAxis.MinorTic.IsAllTics = false;
-            _myPane.YAxis.MajorTic.IsAllTics = true;
-            _myPane.YAxis.MajorTic.Color = Color.Gray;
-
-            _myPane.XAxis.MajorGrid.IsVisible = true;
-            _myPane.XAxis.MajorGrid.Color = Color.Gray;
-            _myPane.XAxis.Scale.FontSpec.Size = 10.0f;
-            _myPane.XAxis.Scale.IsVisible = true;
-            _myPane.XAxis.Scale.MagAuto = true;
-            _myPane.XAxis.Title.IsVisible = false;
-            _myPane.XAxis.MinorTic.IsAllTics = false;
-            _myPane.XAxis.MajorTic.IsAllTics = true;
-            _myPane.XAxis.MajorTic.Color = Color.Gray;
-
-            _myPane.Legend.IsVisible = false;
-
-            var points = new PointPairList();
-            var myCurve = _myPane.AddCurve("Test Curve1", points, Color.Blue, SymbolType.None);
-            _myPane.AxisChangeEvent += graphPane_AxisChangeEvent;
-
-            points.Add(1000, 1000);
-            points.Add(2000, 2000);
-
-            _myPane.AxisChange();
-            zgcSurveyPlot.Invalidate();
-
-            #endregion
+            ZedGraphSetup();
         }
+
+        
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -82,6 +43,63 @@ namespace SurveyLineWinForm
         #region Zedgraph Plotting Behavior
 
         private double _xScaleMax, _xScaleMin, _yScaleMax, _yScaleMin;
+        private void ZedGraphSetup()
+        {
+            _myPane = zgcSurveyPlot.GraphPane;
+            _myPane.Chart.Border.Color = Color.Gray;
+            _myPane.IsFontsScaled = false;
+            _myPane.Title.IsVisible = false;
+            _myPane.Border.Color = Color.White;
+
+            _myPane.YAxis.MajorGrid.IsVisible = true;
+            _myPane.YAxis.MajorGrid.Color = Color.Gray;
+            _myPane.YAxis.Scale.FontSpec.Size = 10.0f;
+            _myPane.YAxis.Scale.IsVisible = true;
+            _myPane.YAxis.Title.IsVisible = false;
+            _myPane.YAxis.Scale.MagAuto = false;
+            _myPane.YAxis.MinorTic.IsAllTics = false;
+            _myPane.YAxis.MajorTic.IsAllTics = true;
+            _myPane.YAxis.MajorTic.Color = Color.Gray;
+            _myPane.YAxis.Title.FontSpec.IsAntiAlias = false;
+            _myPane.YAxis.Title.FontSpec.IsBold = true;
+            _myPane.YAxis.Title.FontSpec.Size = 12f;
+            _myPane.YAxis.Title.Text = "Y-Pos";
+//            _myPane.YAxis.ScaleFormatEvent += new Axis.ScaleFormatHandler(YAxis_ScaleFormatEvent);
+
+            _myPane.XAxis.MajorGrid.IsVisible = true;
+            _myPane.XAxis.MajorGrid.Color = Color.Gray;
+            _myPane.XAxis.Scale.FontSpec.Size = 10.0f;
+            _myPane.XAxis.Scale.IsVisible = true;
+            _myPane.XAxis.Scale.MagAuto = false;
+            _myPane.XAxis.Title.IsVisible = false;
+            _myPane.XAxis.MinorTic.IsAllTics = false;
+            _myPane.XAxis.MajorTic.IsAllTics = true;
+            _myPane.XAxis.MajorTic.Color = Color.Gray;
+            _myPane.XAxis.Title.FontSpec.IsAntiAlias = false;
+            _myPane.XAxis.Title.FontSpec.IsBold = true;
+            _myPane.XAxis.Title.FontSpec.Size = 12f;
+            _myPane.XAxis.Title.Text = "X-Pos";
+//            _myPane.XAxis.ScaleFormatEvent += new Axis.ScaleFormatHandler(XAxis_ScaleFormatEvent);
+
+            _myPane.Legend.IsVisible = false;
+            _myPane.AxisChangeEvent += graphPane_AxisChangeEvent;
+            var points = new PointPairList();
+
+            points.Add(422000, 9184000);
+            points.Add(423000, 9189000);
+
+            _myPane.AddCurve(label: "Test Curve1", points: points, color: Color.Blue, symbolType: SymbolType.None);
+            _myPane.AxisChange();
+            
+        }
+        string YAxis_ScaleFormatEvent(GraphPane pane, Axis axis, double val, int index)
+        {
+            return String.Format("{0}K", val / 1000);
+        }
+        string XAxis_ScaleFormatEvent(GraphPane pane, Axis axis, double val, int index)
+        {
+            return String.Format("{0}K", val / 1000);
+        }
         private void graphPane_AxisChangeEvent(GraphPane pane)
         {
             _xScaleMax = _myPane.XAxis.Scale.Max;
@@ -89,6 +107,7 @@ namespace SurveyLineWinForm
             _yScaleMax = _myPane.YAxis.Scale.Max;
             _yScaleMin = _myPane.YAxis.Scale.Min;
             SetScaleEqual();
+            zgcSurveyPlot.Invalidate();
         }
 
         private void SetScaleEqual()
@@ -97,7 +116,7 @@ namespace SurveyLineWinForm
             double scaleX2 = (_xScaleMax - _xScaleMin)/graphPane.Rect.Width;
             double scaleY2 = (_yScaleMax - _yScaleMin)/graphPane.Rect.Height;
 
-            Debug.WriteLine(string.Format("{0} {1}", scaleX2, scaleY2));
+            Debug.WriteLine(string.Format("{0} {1}", _xScaleMax, _xScaleMin));
 
             if (scaleX2 > scaleY2)
             {
@@ -105,14 +124,21 @@ namespace SurveyLineWinForm
                 double newDiff = graphPane.Rect.Height*scaleX2;
                 graphPane.YAxis.Scale.Min = _yScaleMin - (newDiff - diff)/2.0;
                 graphPane.YAxis.Scale.Max = _yScaleMax + (newDiff - diff)/2.0;
+                Debug.WriteLine(string.Format("{0} {1}", graphPane.YAxis.Scale.Min, graphPane.YAxis.Scale.Max));
             }
             else if (scaleY2 > scaleX2)
             {
                 double diff = _xScaleMax - _xScaleMin;
-                double new_diff = graphPane.Rect.Width*scaleY2;
-                graphPane.XAxis.Scale.Min = _xScaleMin - (new_diff - diff)/2.0;
-                graphPane.XAxis.Scale.Max = _yScaleMax + (new_diff - diff)/2.0;
+                double newDiff = graphPane.Rect.Width*scaleY2;
+                graphPane.XAxis.Scale.Min = _xScaleMin - (newDiff - diff)/2.0;
+                graphPane.XAxis.Scale.Max = _xScaleMax + (newDiff - diff)/2.0;
+                Debug.WriteLine(string.Format("{0} {1}", graphPane.XAxis.Scale.Min, graphPane.XAxis.Scale.Max));
             }
+
+            float scaleFactor = graphPane.CalcScaleFactor();
+            Graphics g = zgcSurveyPlot.CreateGraphics();
+            graphPane.XAxis.Scale.PickScale(graphPane, g, scaleFactor);
+            graphPane.YAxis.Scale.PickScale(graphPane, g, scaleFactor);
 
         }
 
@@ -139,11 +165,17 @@ namespace SurveyLineWinForm
             {
                 _myPane.XAxis.Scale.FontSpec.Size = 12.0f;
                 _myPane.YAxis.Scale.FontSpec.Size = 12.0f;
+                _myPane.Title.IsVisible = true;
+                _myPane.XAxis.Title.IsVisible = true;
+                _myPane.YAxis.Title.IsVisible = true;
             }
             else
             {
                 _myPane.XAxis.Scale.FontSpec.Size = 10.0f;
                 _myPane.YAxis.Scale.FontSpec.Size = 10.0f;
+                _myPane.Title.IsVisible = false;
+                _myPane.XAxis.Title.IsVisible = false;
+                _myPane.YAxis.Title.IsVisible = false;
             }
 
             SetScaleEqual();
