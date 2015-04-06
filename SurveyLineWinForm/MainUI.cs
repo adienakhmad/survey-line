@@ -18,11 +18,8 @@ namespace SurveyLineWinForm
         #region Field Declarations
 
         private SurveyFactory _surveyFactory;
-        private bool _alreadyFocused;
         private readonly GraphPane _myPane;
-
-        private double _xScaleMax, _xScaleMin, _yScaleMax, _yScaleMin;
-
+        
         #endregion
 
         public MainUI()
@@ -82,8 +79,9 @@ namespace SurveyLineWinForm
             SetStatusBarText("Ready.");
         }
 
-        #region Zedgraph Plotting Methods
+        #region Zedgraph Plotting Behavior
 
+        private double _xScaleMax, _xScaleMin, _yScaleMax, _yScaleMin;
         private void graphPane_AxisChangeEvent(GraphPane pane)
         {
             _xScaleMax = _myPane.XAxis.Scale.Max;
@@ -376,7 +374,6 @@ namespace SurveyLineWinForm
         private void DisableButtonOnLoad(bool disable)
         {
             saveToolStripMenuItem.Enabled = !disable;
-            plotCurrentTableToolStripMenuItem.Enabled = !disable;
         }
 
         private void cboxMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -411,8 +408,6 @@ namespace SurveyLineWinForm
 
         #endregion
 
-        #region All button click event
-
         #region File Saving
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -428,6 +423,8 @@ namespace SurveyLineWinForm
 
         #endregion
 
+        #region All button click event
+        
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -507,45 +504,8 @@ namespace SurveyLineWinForm
 
         #endregion
 
-//        private void btnMoreSetup_Click(object sender, EventArgs e)
-//        {
-//            var settings1 = new SettingsForm();
-//
-//            if (!string.IsNullOrEmpty(txtLineName.Text))
-//            {
-//                line1.Name = txtLineName.Text;
-//            }
-//
-//            settings1.ReadSettings(line1, cboxMultiMode.Checked);
-//
-//            settings1.ShowDialog();
-//
-//            if (!settings1.ButtonSavePressed) return;
-//
-//            bool somethingChanged = settings1.IsSomethingChanged(line1);
-//            settings1.SaveSettings(line1);
-//
-//            if (dgvCoordinates.DataSource != null && somethingChanged)
-//            {
-//                StartMainMethod();
-//            }
-//        }
-
-        
-
-        //TODO: Implement saving
-
-        //TODO: Implement main worker
-
-        #region Mark For Delete
-
-        private void plotCurrentTableToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //TODO: Implement the new plotting
-        }
-
-        #endregion
-
+        #region Survey Name Textbox Behavior
+        private bool _alreadyFocused;
         private void txtLineName_Enter(object sender, EventArgs e)
         {
             if (MouseButtons != MouseButtons.None) return;
@@ -569,9 +529,10 @@ namespace SurveyLineWinForm
         {
             if ((e.KeyCode == Keys.Enter) || (e.KeyCode == Keys.Return))
             {
-                SelectNextControl((Control) sender, true, true, true, true);
+                SelectNextControl((Control)sender, true, true, true, true);
             }
-        }
+        } 
+        #endregion
 
         private void NumOnFocus(object sender, EventArgs e)
         {

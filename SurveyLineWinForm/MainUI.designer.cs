@@ -117,7 +117,6 @@ namespace SurveyLineWinForm
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.plotCurrentTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.latLongToUTMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.shortcutsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -698,7 +697,7 @@ namespace SurveyLineWinForm
             this.tabPageTable.Location = new System.Drawing.Point(4, 22);
             this.tabPageTable.Name = "tabPageTable";
             this.tabPageTable.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTable.Size = new System.Drawing.Size(393, 310);
+            this.tabPageTable.Size = new System.Drawing.Size(361, 310);
             this.tabPageTable.TabIndex = 0;
             this.tabPageTable.Text = "Table";
             this.tabPageTable.UseVisualStyleBackColor = true;
@@ -733,6 +732,7 @@ namespace SurveyLineWinForm
             this.dgvCoordinates.ReadOnly = true;
             this.dgvCoordinates.Size = new System.Drawing.Size(387, 301);
             this.dgvCoordinates.TabIndex = 3;
+            this.dgvCoordinates.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvCoordinates_CellMouseDown);
             // 
             // colStation
             // 
@@ -1024,23 +1024,15 @@ namespace SurveyLineWinForm
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.plotCurrentTableToolStripMenuItem,
             this.latLongToUTMToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Text = "&Tools";
             // 
-            // plotCurrentTableToolStripMenuItem
-            // 
-            this.plotCurrentTableToolStripMenuItem.Name = "plotCurrentTableToolStripMenuItem";
-            this.plotCurrentTableToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.plotCurrentTableToolStripMenuItem.Text = "Plot Current Table";
-            this.plotCurrentTableToolStripMenuItem.Click += new System.EventHandler(this.plotCurrentTableToolStripMenuItem_Click);
-            // 
             // latLongToUTMToolStripMenuItem
             // 
             this.latLongToUTMToolStripMenuItem.Name = "latLongToUTMToolStripMenuItem";
-            this.latLongToUTMToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.latLongToUTMToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.latLongToUTMToolStripMenuItem.Text = "Lat/Long to UTM";
             this.latLongToUTMToolStripMenuItem.Click += new System.EventHandler(this.latLongToUTMToolStripMenuItem_Click);
             // 
@@ -1190,7 +1182,6 @@ namespace SurveyLineWinForm
         private NumericUpDown numMultiLineSpacing;
         private SaveFileDialog saveToTxt;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private ToolStripMenuItem plotCurrentTableToolStripMenuItem;
         private Label label16;
         private ToolStripMenuItem shortcutsToolStripMenuItem;
         private ContextMenuStrip contextMenuStrip1;
