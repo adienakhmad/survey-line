@@ -129,7 +129,7 @@ namespace SurveyLine.Core
 
                     for (int i = 0; i < design.StationCount; i++)
                     {
-                        var point = ProjectTo(startPoint, design.Bearing, (i+1) * design.Interval);
+                        var point = ProjectTo(startPoint, design.Bearing, i * design.Interval);
                         point.SetName(CreateStationNamebyDesign(design, nameDesign, stationStartingIndex + i));
                         surveyPointList.Add(point);
                     }

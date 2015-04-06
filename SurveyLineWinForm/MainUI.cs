@@ -1,24 +1,106 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 using SurveyLine.Core;
-using SurveyLine.Ex;
 using SurveyLineWinForm.Forms;
 using SurveyLineWinForm.Util;
+using ZedGraph;
 
 namespace SurveyLineWinForm
 {
     /// <summary>
     ///     Description of MainForm.
     /// </summary>
-    public partial class MainUI : System.Windows.Forms.Form
+    public partial class MainUI : Form
     {
-        private SurveyFactory surveyFactory;
+        private SurveyFactory _surveyFactory;
         private bool _alreadyFocused;
+        FormWindowState _lastWindowState;
+        private readonly GraphPane _myPane;
         
         public MainUI()
         {
             InitializeComponent();
+
+            #region Zedgraph Setup
+            _myPane = zgcSurveyPlot.GraphPane;
+            _myPane.Chart.Border.Color = Color.Gray;
+            _myPane.IsFontsScaled = false;
+            _myPane.Title.IsVisible = false;
+            _myPane.Border.Color = Color.White;
+            
+
+            _myPane.YAxis.MajorGrid.IsVisible = true;
+            _myPane.YAxis.MajorGrid.Color = Color.Gray;
+            _myPane.YAxis.Scale.FontSpec.Size = 10.0f;
+            _myPane.YAxis.Scale.IsVisible = true;
+            _myPane.YAxis.Title.IsVisible = false;
+            _myPane.YAxis.Scale.MagAuto = true;
+            _myPane.YAxis.MinorTic.IsAllTics = false;
+            _myPane.YAxis.MajorTic.IsAllTics = true;
+            _myPane.YAxis.MajorTic.Color = Color.Gray;
+
+            _myPane.XAxis.MajorGrid.IsVisible = true;
+            _myPane.XAxis.MajorGrid.Color = Color.Gray;
+            _myPane.XAxis.Scale.FontSpec.Size = 10.0f;
+            _myPane.XAxis.Scale.IsVisible = true;
+            _myPane.XAxis.Scale.MagAuto = true;
+            _myPane.XAxis.Title.IsVisible = false;
+            _myPane.XAxis.MinorTic.IsAllTics = false;
+            _myPane.XAxis.MajorTic.IsAllTics = true;
+            _myPane.XAxis.MajorTic.Color = Color.Gray;
+
+            _myPane.Legend.IsVisible = false;
+
+            var points = new PointPairList();
+            var myCurve = _myPane.AddCurve("Test Curve1", points, Color.Blue, SymbolType.None);
+
+
+            points.Add(1000, 2000);
+            points.Add(5000, 3000);
+            
+            _myPane.AxisChange();
+
+            var chartRect = _myPane.CalcChartRect(zgcSurveyPlot.CreateGraphics());
+            _myPane.Chart.Rect = GetEqualRatioRect(chartRect);
+
+
+            #endregion
+        }
+
+        RectangleF GetEqualRatioRect(RectangleF rect)
+        {
+            if (rect.Width > rect.Height)
+            {
+                rect.X = rect.X + (rect.Width - rect.Height)/2;
+                rect.Width = rect.Height;
+            }
+
+            if (rect.Width < rect.Height)
+            {
+                rect.Y = rect.Y + (rect.Height - rect.Width)/2;
+                rect.Height = rect.Width;
+            }
+
+            return rect;
+        }
+
+        private void zgcSurveyPlot_Resize(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Maximized)
+            {
+                _myPane.XAxis.Scale.FontSpec.Size = 12.0f;
+                _myPane.YAxis.Scale.FontSpec.Size = 12.0f;
+            }
+            else
+            {
+                _myPane.XAxis.Scale.FontSpec.Size = 10.0f;
+                _myPane.YAxis.Scale.FontSpec.Size = 10.0f;
+            }
+            var a = _myPane.CalcChartRect(zgcSurveyPlot.CreateGraphics());
+            _myPane.Chart.Rect = GetEqualRatioRect(a);
+
         }
 
         private void GrabAllInputs()
@@ -85,8 +167,8 @@ namespace SurveyLineWinForm
                     break;
             }
 
-            if (design.Name == string.Empty) design.Name = "Undefined";
-            surveyFactory = new SurveyFactory(design);
+            if (design != null && design.Name == string.Empty) design.Name = "Undefined";
+            _surveyFactory = new SurveyFactory(design);
         }
 
         
@@ -104,7 +186,7 @@ namespace SurveyLineWinForm
                     lblSpacing.Text = string.Format("{0} m", design.Interval);
                     lblStations.Text = string.Format("{0} points", design.StationCount);
 
-                    lblDistanceName.Text = "Distance";
+                    lblDistanceName.Text = @"Distance";
                     double distance = ((design.StationCount - 1)*design.Interval);
                     string unit = distance > 999 ? "Km" : "m";
                     distance = distance > 999 ? distance/1000 : distance;
@@ -127,7 +209,7 @@ namespace SurveyLineWinForm
                         design.LineCount);
 
 
-                    lblDistanceName.Text = "Area";
+                    lblDistanceName.Text = @"Area";
 
                     double length = ((design.StationCount - 1)*design.Interval);
                     double height = ((design.LineCount - 1)*design.LineSpacing);
@@ -245,7 +327,7 @@ namespace SurveyLineWinForm
         //TODO: Implement main worker
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            e.Result = surveyFactory.BuildSurveyPoints();
+            e.Result = _surveyFactory.BuildSurveyPoints();
             
         }
 
@@ -435,5 +517,7 @@ namespace SurveyLineWinForm
                     break;
             }
         }
+
+        
     }
 }
