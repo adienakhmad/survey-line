@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using SurveyLine.Core;
@@ -16,9 +17,9 @@ namespace SurveyLineWinForm
     {
         private SurveyFactory _surveyFactory;
         private bool _alreadyFocused;
-        FormWindowState _lastWindowState;
         private readonly GraphPane _myPane;
-        
+
+        private double _xScaleMax, _xScaleMin, _yScaleMax, _yScaleMin;
         public MainUI()
         {
             InitializeComponent();
@@ -55,18 +56,49 @@ namespace SurveyLineWinForm
 
             var points = new PointPairList();
             var myCurve = _myPane.AddCurve("Test Curve1", points, Color.Blue, SymbolType.None);
+            _myPane.AxisChangeEvent += graphPane_AxisChangeEvent;
 
+            points.Add(1000, 1000);
+            points.Add(2000, 2000);
 
-            points.Add(1000, 2000);
-            points.Add(5000, 3000);
-            
             _myPane.AxisChange();
-
-            var chartRect = _myPane.CalcChartRect(zgcSurveyPlot.CreateGraphics());
-            _myPane.Chart.Rect = GetEqualRatioRect(chartRect);
-
+            zgcSurveyPlot.Invalidate();
 
             #endregion
+        }
+
+        private void graphPane_AxisChangeEvent(GraphPane pane)
+        {
+            _xScaleMax = _myPane.XAxis.Scale.Max;
+            _xScaleMin = _myPane.XAxis.Scale.Min;
+            _yScaleMax = _myPane.YAxis.Scale.Max;
+            _yScaleMin = _myPane.YAxis.Scale.Min;
+            SetScaleEqual();
+        }
+
+        private void SetScaleEqual()
+        {
+            var graphPane = _myPane;
+            double scaleX2 = (_xScaleMax - _xScaleMin) / graphPane.Rect.Width;
+            double scaleY2 = (_yScaleMax - _yScaleMin) / graphPane.Rect.Height;
+
+            Debug.WriteLine(string.Format("{0} {1}", scaleX2, scaleY2));
+
+            if (scaleX2 > scaleY2)
+            {
+                double diff = _yScaleMax - _yScaleMin;
+                double newDiff = graphPane.Rect.Height * scaleX2;
+                graphPane.YAxis.Scale.Min = _yScaleMin - (newDiff - diff) / 2.0;
+                graphPane.YAxis.Scale.Max = _yScaleMax + (newDiff - diff) / 2.0;
+            }
+            else if (scaleY2 > scaleX2)
+            {
+                double diff = _xScaleMax - _xScaleMin;
+                double new_diff = graphPane.Rect.Width * scaleY2;
+                graphPane.XAxis.Scale.Min = _xScaleMin - (new_diff - diff) / 2.0;
+                graphPane.XAxis.Scale.Max = _yScaleMax + (new_diff - diff) / 2.0;
+            }
+            
         }
 
         RectangleF GetEqualRatioRect(RectangleF rect)
@@ -98,8 +130,8 @@ namespace SurveyLineWinForm
                 _myPane.XAxis.Scale.FontSpec.Size = 10.0f;
                 _myPane.YAxis.Scale.FontSpec.Size = 10.0f;
             }
-            var a = _myPane.CalcChartRect(zgcSurveyPlot.CreateGraphics());
-            _myPane.Chart.Rect = GetEqualRatioRect(a);
+
+            SetScaleEqual();
 
         }
 
