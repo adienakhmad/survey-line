@@ -43,6 +43,10 @@ namespace SurveyLineWinForm
 
         #region Zedgraph Plotting Behavior
         private double _xScaleMax, _xScaleMin, _yScaleMax, _yScaleMin;
+
+        /// <summary>
+        /// Initial setup of Zedgraph Chart Control
+        /// </summary>
         private void ZedGraphSetup()
         {
             _myPane = zgcSurveyPlot.GraphPane;
@@ -89,6 +93,10 @@ namespace SurveyLineWinForm
             _myPane.AxisChangeEvent += graphPane_AxisChangeEvent;
         }
 
+        /// <summary>
+        /// Plot SurveyPointsList into Zedgraph Chart Object
+        /// </summary>
+        /// <param name="points"></param>
         private void Plot(SurveyPointList points)
         {
             _myPane.CurveList.Clear();
@@ -132,6 +140,13 @@ namespace SurveyLineWinForm
           zgcSurveyPlot.Invalidate();
         }
 
+        /// <summary>
+        /// Set mypane maximum and minimum axis.
+        /// </summary>
+        /// <param name="xMin"></param>
+        /// <param name="xMax"></param>
+        /// <param name="yMin"></param>
+        /// <param name="yMax"></param>
         private void SetGraphScaleMaxMin(double xMin, double xMax, double yMin, double yMax)
         {
             const double grace = 0.1;
@@ -153,6 +168,10 @@ namespace SurveyLineWinForm
             Debug.WriteLine(string.Format("Set Max MinY:{0}\t{1}", _myPane.YAxis.Scale.Min, _myPane.YAxis.Scale.Max));
         }
 
+        /// <summary>
+        /// Scales to 1:1 ratio with min size
+        /// </summary>
+        /// <param name="minSize"></param>
         void ScaleGraph(double minSize)
         {  
             double ratio;
@@ -193,6 +212,9 @@ namespace SurveyLineWinForm
             SetScaleEqual();
         }
 
+        /// <summary>
+        /// Scales so the x-axis and y-axis have 1:1 ratio
+        /// </summary>
         private void SetScaleEqual()
         {
             double scaleX2 = (_myPane.XAxis.Scale.Max - _myPane.XAxis.Scale.Min) / _myPane.Rect.Width;
@@ -226,6 +248,11 @@ namespace SurveyLineWinForm
             
         }
 
+        /// <summary>
+        /// Return an equl width and height of Chart Rectangle
+        /// </summary>
+        /// <param name="rect"></param>
+        /// <returns></returns>
         private RectangleF GetEqualRatioRect(RectangleF rect)
         {
             if (rect.Width > rect.Height)
