@@ -7,7 +7,6 @@ namespace SurveyLine.Core
     {
         public enum DesignType { SingleLine, MultiLine, FixedGrid}
         
-
         #region Field Declaration
 
         public DesignType Type { get; private set; }

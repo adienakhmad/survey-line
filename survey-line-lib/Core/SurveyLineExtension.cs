@@ -18,7 +18,7 @@ namespace SurveyLine.Core
         }
 
         /// <summary>
-        /// This function return an automated survey point naming.
+        /// This function return an automated survey station naming.
         /// </summary>
         /// <param name="design"></param>
         /// <param name="nameDesign"></param>
@@ -56,13 +56,13 @@ namespace SurveyLine.Core
         /// <returns></returns>
         static private string CreateLineNamebyDesign(StationNameDesign design, int number, int digitCount)
         {
-            string leadingZeroFormat = string.Format("D{0}", digitCount);
+            var leadingZeroFormat = string.Format("D{0}", digitCount);
             string returnedName;
             switch (design.LineIndexType)
             {
                 case StationNameDesign.IndexType.Alphabet:
-                    int dividend = number;
-                    string lineName = String.Empty;
+                    var dividend = number;
+                    var lineName = String.Empty;
 
                     while (dividend > 0)
                     {
@@ -84,41 +84,42 @@ namespace SurveyLine.Core
         }
 
         /// <summary>
-        /// Project survey point to specified bearing and distance.
+        /// Project survey station to specified bearing and distance.
         /// </summary>
-        /// <param name="point"></param>
+        /// <param name="station"></param>
         /// <param name="bearing"></param>
         /// <param name="distance"></param>
         /// <returns></returns>
-        static public SurveyPoint ProjectTo(this SurveyPoint point, double bearing, double distance)
+        static public Station ProjectTo(this Station station, double bearing, double distance)
         {
-            var x = point.X;
-            var y = point.Y;
+            var x = station.X;
+            var y = station.Y;
 
             var xProj = x + (distance*Math.Sin(ToRadians(bearing)));
             var yProj = y + (distance*Math.Cos(ToRadians(bearing)));
 
-            return new SurveyPoint(xProj, yProj, String.Format("{0} Projected",point.Name));
+            return new Station(xProj, yProj, String.Format("{0} Projected",station.Name));
         }
 
         /// <summary>
-        /// Generate SurveyPointList from a factory object.
+        /// Generate StationList from a factory object.
         /// </summary>
         /// <param name="factory"></param>
         /// <returns></returns>
-        static public SurveyPointList BuildSurveyPoints(this SurveyFactory factory)
+        static public StationListContainer BuildSurveyPoints(this SurveyFactory factory)
         {
             var design = factory.Design;
             if (design == null) throw new SurveyDesignNotFoundException();
-            var nameDesign = factory.NamingDesign;
+            var nameDesign = factory.Naming;
 
 //          throw ZeroIntervalException if spacing is zero
             if (Math.Abs(design.Interval) < 1e-12) throw new ZeroIntervalException("Spacing cannot be zero.");
             if (Math.Abs(design.LineSpacing) < 1e-12 && (design.Type == SurveyDesign.DesignType.MultiLine || design.Type == SurveyDesign.DesignType.MultiLine)) 
                 throw new ZeroIntervalException("Line spacing cannot be zero.");
 
-            var surveyPointList = new SurveyPointList(design);
-            var startPoint = new SurveyPoint(design.XStart, design.YStart);
+            StationList currentLine;
+            List<StationList> lineCollection;
+            var startPoint = new Station(design.XStart, design.YStart);
             var stationStartingIndex = nameDesign.StationStartingIndex;
             var lineStartingIndex = nameDesign.LineStartingIndex;
 
@@ -127,52 +128,68 @@ namespace SurveyLine.Core
                 #region DesignType.SingleLine
                 case SurveyDesign.DesignType.SingleLine:
 
-                    for (int i = 0; i < design.StationCount; i++)
+                    currentLine = new StationList();
+                    for (var i = 0; i < design.StationCount; i++)
                     {
                         var point = ProjectTo(startPoint, design.Bearing, i * design.Interval);
                         point.SetName(CreateStationNamebyDesign(design, nameDesign, stationStartingIndex + i));
-                        surveyPointList.Add(point);
+                        currentLine.Add(point);
                     }
 
-                    break;
-                #endregion
+                    return new StationListContainer(design,currentLine);
+
+                    #endregion
                 
                 #region DesignType.MultiLine
                 case SurveyDesign.DesignType.MultiLine:
-                    for (int j = 0; j < design.LineCount; j++)
+
+                    lineCollection = new List<StationList>();
+
+                    for (var j = 0; j < design.LineCount; j++)
                     {
+                        currentLine = new StationList();
                         var lineFirstPoint = ProjectTo(startPoint, design.Bearing + design.PlusBearing,
                             j * design.LineSpacing);
 
-                        for (int i = 0; i < design.StationCount; i++)
+                        for (var i = 0; i < design.StationCount; i++)
                         {
                             var point = ProjectTo(lineFirstPoint, design.Bearing, i * design.Interval);
                             point.SetName(CreateStationNamebyDesign(design, nameDesign, stationStartingIndex + i, lineStartingIndex + j));
-                            surveyPointList.Add(point);
+                            currentLine.Add(point);
                         }
+                        lineCollection.Add(currentLine);
                     }
-                    break;
-                #endregion
+                    return new StationListContainer(design,lineCollection);
+
+                    #endregion
 
                 #region DesignType.FixedGrid
                 case SurveyDesign.DesignType.FixedGrid:
-                    for (int j = 0; j < design.LineCount; j++)
+                    lineCollection = new List<StationList>();
+                    for (var j = 0; j < design.LineCount; j++)
                     {
+                        currentLine = new StationList();
+
                         var lineFirstPoint = ProjectTo(startPoint, design.Bearing + design.PlusBearing,
                             j * design.Interval);
 
-                        for (int i = 0; i < design.StationCount; i++)
+                        for (var i = 0; i < design.StationCount; i++)
                         {
                             var point = ProjectTo(lineFirstPoint, design.Bearing, i * design.Interval);
                             point.SetName(CreateStationNamebyDesign(design, nameDesign, stationStartingIndex + i, lineStartingIndex + j));
-                            surveyPointList.Add(point);
+                            currentLine.Add(point);
                         }
-                    }
-                    break;
-                #endregion
-            }
 
-            return surveyPointList;
+                        lineCollection.Add(currentLine);
+                    }
+
+                    return new StationListContainer(design,lineCollection);
+                #endregion
+
+                default:
+                    throw new DesignTypeInvalidException("Design Type Unmatched");
+            }
+            
         }
 
         /// <summary>
@@ -181,14 +198,14 @@ namespace SurveyLine.Core
         /// <param name="points"></param>
         /// <param name="filename"></param>
         /// <param name="delimiter"></param>
-        public static void ExportToText(this SurveyPointList points, string filename, string delimiter="\t")
+        public static void ExportToText(this StationList points, string filename, string delimiter="\t")
         {
             var writer = new StreamWriter(filename);
             writer.WriteLine();
             writer.WriteLine("X-Position{0}Y-Position{0}Station", delimiter);
 
             var str = new List<string>();
-            foreach (var surveyPoint in points.ToList())
+            foreach (var surveyPoint in points.GetStations())
             {
                 str.Add(String.Format("{0,10:F6}", surveyPoint.X));
                 str.Add(String.Format("{0,10:F6}", surveyPoint.Y));

@@ -15,8 +15,8 @@ namespace SurveyLineTest
         [Test]
         public void ProjectSurveyPoint0_0_N0_100()
         {
-            var source = new SurveyPoint(0, 0);
-            var expected = new SurveyPoint(0, 100);
+            var source = new Station(0, 0);
+            var expected = new Station(0, 100);
 
             var actual = source.ProjectTo(0, 100);
 
@@ -27,8 +27,8 @@ namespace SurveyLineTest
         [Test]
         public void ProjectSurveyPoint100_100_N0_100()
         {
-            var source = new SurveyPoint(100, 100);
-            var expected = new SurveyPoint(100, 200);
+            var source = new Station(100, 100);
+            var expected = new Station(100, 200);
 
             var actual = source.ProjectTo(0, 100);
 
@@ -39,8 +39,8 @@ namespace SurveyLineTest
         [Test]
         public void ProjectSurveyPoint0_0_N090_100()
         {
-            var source = new SurveyPoint(0, 0);
-            var expected = new SurveyPoint(100, 0);
+            var source = new Station(0, 0);
+            var expected = new Station(100, 0);
 
             var actual = source.ProjectTo(90, 100);
 
@@ -51,8 +51,8 @@ namespace SurveyLineTest
         [Test]
         public void ProjectSurveyPoint100_100_N090_100()
         {
-            var source = new SurveyPoint(100, 100);
-            var expected = new SurveyPoint(200, 100);
+            var source = new Station(100, 100);
+            var expected = new Station(200, 100);
 
             var actual = source.ProjectTo(90, 100);
 
@@ -66,8 +66,8 @@ namespace SurveyLineTest
         [Test]
         public void ProjectSurveyPoint0_0_N180_100()
         {
-            var source = new SurveyPoint(0, 0);
-            var expected = new SurveyPoint(0, -100);
+            var source = new Station(0, 0);
+            var expected = new Station(0, -100);
 
             var actual = source.ProjectTo(180, 100);
 
@@ -78,8 +78,8 @@ namespace SurveyLineTest
         [Test]
         public void ProjectSurveyPoint100_100_N180_100()
         {
-            var source = new SurveyPoint(100, 100);
-            var expected = new SurveyPoint(100, 0);
+            var source = new Station(100, 100);
+            var expected = new Station(100, 0);
 
             var actual = source.ProjectTo(180, 100);
 
@@ -93,8 +93,8 @@ namespace SurveyLineTest
         [Test]
         public void ProjectSurveyPoint0_0_N270_100()
         {
-            var source = new SurveyPoint(0, 0);
-            var expected = new SurveyPoint(-100, 0);
+            var source = new Station(0, 0);
+            var expected = new Station(-100, 0);
 
             var actual = source.ProjectTo(270, 100);
 
@@ -105,8 +105,8 @@ namespace SurveyLineTest
         [Test]
         public void ProjectSurveyPoint100_100_N270_100()
         {
-            var source = new SurveyPoint(100, 100);
-            var expected = new SurveyPoint(0, 100);
+            var source = new Station(100, 100);
+            var expected = new Station(0, 100);
 
             var actual = source.ProjectTo(270, 100);
 
@@ -120,8 +120,8 @@ namespace SurveyLineTest
         [Test]
         public void ProjectSurveyPoint0_0_N360_100()
         {
-            var source = new SurveyPoint(0, 0);
-            var expected = new SurveyPoint(0, 100);
+            var source = new Station(0, 0);
+            var expected = new Station(0, 100);
 
             var actual = source.ProjectTo(360, 100);
 
@@ -132,8 +132,8 @@ namespace SurveyLineTest
         [Test]
         public void ProjectSurveyPoint100_100_N360_100()
         {
-            var source = new SurveyPoint(100, 100);
-            var expected = new SurveyPoint(100, 200);
+            var source = new Station(100, 100);
+            var expected = new Station(100, 200);
 
             var actual = source.ProjectTo(360, 100);
 

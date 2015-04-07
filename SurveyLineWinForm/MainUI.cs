@@ -99,53 +99,49 @@ namespace SurveyLineWinForm
         }
 
         /// <summary>
-        /// Plot SurveyPointsList into Zedgraph Chart Object
+        /// Plot StationListContainer into Zedgraph Chart Object
         /// </summary>
-        /// <param name="points"></param>
+        /// <param name="container"></param>
         /// <param name="style"></param>
-        private void Plot(SurveyPointList points, PlotStyle style)
+        private void Plot(StationListContainer container, PlotStyle style)
         {
-            _myPane.Title.Text = points.Design.Name;
+            _myPane.Title.Text = container.Design.Name;
             _myPane.CurveList.Clear();
             _xScaleMax = Double.MinValue;
             _xScaleMin = Double.MaxValue;
             _yScaleMax = Double.MinValue;
             _yScaleMin = Double.MaxValue;
 
-            var pointPairList = points.ToList();
+            
 
-            // TODO: consider re-design SurveyPointList to contain line
-            for (int i = 0; i < points.Design.LineCount; i++)
+            foreach (var line in container.Lines)
             {
                 var pointPairPlot = new PointPairList();
-                for (int j = 0; j < points.Design.StationCount; j++)
+                foreach (var station in line.GetStations())
                 {
-                    var x = pointPairList[j + (i*points.Design.StationCount)].X;
-                    var y = pointPairList[j + (i*points.Design.StationCount)].Y;
-                    var name = pointPairList[j + (i*points.Design.StationCount)].Name;
+                    pointPairPlot.Add(station.X, station.Y, station.Name);
 
-                    pointPairPlot.Add(x,y,name);
+                    // Find maximum and minimum (X, Y)
+                    if (_xScaleMax < station.X)
+                    {
+                        _xScaleMax = station.X;
+                    }
+                    if (_xScaleMin > station.X)
+                    {
+                        _xScaleMin = station.X;
+                    }
+                    if (_yScaleMax < station.Y)
+                    {
+                        _yScaleMax = station.Y;
+                    }
+                    if (_yScaleMin > station.Y)
+                    {
+                        _yScaleMin = station.Y;
+                    }
 
-                    if (_xScaleMax < x)
-                    {
-                        _xScaleMax = x;
-                    }
-                    if (_xScaleMin > x)
-                    {
-                        _xScaleMin = x;
-                    }
-                    if (_yScaleMax < y)
-                    {
-                        _yScaleMax = y;
-                    }
-                    if (_yScaleMin > y)
-                    {
-                        _yScaleMin = y;
-                    }
                 }
 
-                // TODO: Replace this plotting customization into its own class
-                var myCurve = _myPane.AddCurve(points.Design.Name, pointPairPlot, style.LineColor);
+                var myCurve = _myPane.AddCurve(container.Design.Name, pointPairPlot, style.LineColor);
                 myCurve.Symbol = style.Marker;
                 myCurve.Line.IsAntiAlias = style.IsAntiAlias;
                 myCurve.Line.IsVisible = style.IsLineVisible;
@@ -423,10 +419,10 @@ namespace SurveyLineWinForm
 
                 else
                 {
-                    var result = e.Result as SurveyPointList;
+                    var result = e.Result as StationListContainer;
                     Plot(result, _plottingStyle);
                     // ReSharper disable once PossibleNullReferenceException
-                    dgvCoordinates.DataSource = result.ToList();
+                    dgvCoordinates.DataSource = result.GetAllStations();
                     SetLineStatus(result.Design);
                     SetStatusBarText("Progress completed.");
                 }
@@ -597,9 +593,9 @@ namespace SurveyLineWinForm
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            BetterDialog.ShowDialog("About SurveyLine", "SurveyLine v1.0",
+            BetterDialog.ShowDialog("About Survey Line", "Survey Line v2.0",
                 "This simple tool was developed in purpose to help designing a survey for Geophysical measurement or any other field measurement which requires a set of coordinates.\n\n" +
-                "© 2014 Adien Akhmad. All rights reserved.", null, "Close",
+                "Copyright © 2014-2015 Adien Akhmad.", null, "Close",
                 null);
         }
 

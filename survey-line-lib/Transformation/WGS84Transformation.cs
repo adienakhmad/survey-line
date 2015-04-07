@@ -6,9 +6,9 @@ namespace SurveyLine.Transformation
 {
     public static class WGS84Transformation
     {
-        public static SurveyPointList ToWGS84Geographic(this SurveyPointList pointList, UTMZone zone)
+        public static Core.StationList ToWGS84Geographic(this Core.StationList line, UTMZone zone)
         {
-            var surveyPointList = new SurveyPointList(pointList.Design);
+            var surveyPointList = new Core.StationList();
             var utmzone = zone;
 
             IGeographicCoordinateSystem geo = GeographicCoordinateSystem.WGS84;
@@ -16,12 +16,12 @@ namespace SurveyLine.Transformation
             CoordinateTransformationFactory ctf = new CoordinateTransformationFactory();
             ICoordinateTransformation trans = ctf.CreateFromCoordinateSystems(utm, geo);
 
-            foreach (var point in pointList.ToList())
+            foreach (var point in line.GetStations())
             {
                 double[] fromPoint = {point.X, point.Y};
                 double[] toPoint = trans.MathTransform.Transform(fromPoint);
 
-                var surveyPoint = new SurveyPoint(toPoint[0], toPoint[1], point.Name);
+                var surveyPoint = new Station(toPoint[0], toPoint[1], point.Name);
                 surveyPointList.Add(surveyPoint);
             }
 

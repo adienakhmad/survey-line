@@ -1,12 +1,12 @@
 ﻿namespace SurveyLine.Core
 {
-    public class SurveyPoint
+    public class Station
     {
         public string Name { get; private set; }
         public double X { get; private set; }
         public double Y { get; private set; }
 
-        public SurveyPoint(double x, double y, string name="Undefined")
+        public Station(double x, double y, string name="Undefined")
         {
             X = x;
             Y = y;

@@ -45,10 +45,12 @@
     <Compile Include="Core\SurveyDesign.cs" />
     <Compile Include="Core\SurveyFactory.cs" />
     <Compile Include="Core\StationNameDesign.cs" />
-    <Compile Include="Core\SurveyPointList.cs" />
+    <Compile Include="Core\StationList.cs" />
+    <Compile Include="Core\StationListContainer.cs" />
+    <Compile Include="Ex\DesignTypeInvalidException.cs" />
     <Compile Include="Ex\SurveyDesignNotFoundException.cs" />
     <Compile Include="Ex\ZeroIntervalException.cs" />
-    <Compile Include="Core\SurveyPoint.cs" />
+    <Compile Include="Core\Station.cs" />
     <Compile Include="Core\SurveyLineExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transformation\UTMZoneInfo.cs" />
