@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 using SurveyLine.Core;
 using SurveyLineWinForm.Forms;
@@ -43,19 +42,23 @@ namespace SurveyLineWinForm
 
         #region Zedgraph Plotting Behavior
         private double _xScaleMax, _xScaleMin, _yScaleMax, _yScaleMin;
+        private PlotStyle _plottingStyle;
 
         /// <summary>
         /// Initial setup of Zedgraph Chart Control
         /// </summary>
         private void ZedGraphSetup()
         {
+            _plottingStyle = new PlotStyle();
             _myPane = zgcSurveyPlot.GraphPane;
             _myPane.Chart.Border.Color = Color.Gray;
             _myPane.IsFontsScaled = false;
             _myPane.Title.IsVisible = false;
+            _myPane.Title.Text = "";
             _myPane.Border.Color = Color.White;
 
             _myPane.YAxis.MajorGrid.IsVisible = true;
+            _myPane.YAxis.MajorGrid.IsZeroLine = false;
             _myPane.YAxis.MajorGrid.Color = Color.Gray;
             _myPane.YAxis.Scale.FontSpec.Size = 10.0f;
             _myPane.YAxis.Scale.IsVisible = true;
@@ -73,6 +76,7 @@ namespace SurveyLineWinForm
 //            _myPane.YAxis.ScaleFormatEvent += new Axis.ScaleFormatHandler(YAxis_ScaleFormatEvent);
 
             _myPane.XAxis.MajorGrid.IsVisible = true;
+            _myPane.XAxis.MajorGrid.IsZeroLine = false;
             _myPane.XAxis.MajorGrid.Color = Color.Gray;
             _myPane.XAxis.Scale.FontSpec.Size = 10.0f;
             _myPane.XAxis.Scale.IsVisible = true;
@@ -91,49 +95,62 @@ namespace SurveyLineWinForm
 
             _myPane.Legend.IsVisible = false;
             _myPane.AxisChangeEvent += graphPane_AxisChangeEvent;
+
+            SetGraphScaleMaxMin(0,0,0,0);
         }
 
         /// <summary>
         /// Plot SurveyPointsList into Zedgraph Chart Object
         /// </summary>
         /// <param name="points"></param>
-        private void Plot(SurveyPointList points)
+        /// <param name="style"></param>
+        private void Plot(SurveyPointList points, PlotStyle style)
         {
+            _myPane.Title.Text = points.Design.Name;
             _myPane.CurveList.Clear();
             _xScaleMax = Double.MinValue;
             _xScaleMin = Double.MaxValue;
             _yScaleMax = Double.MinValue;
             _yScaleMin = Double.MaxValue;
 
-            var pointPairList = new PointPairList();
+            var pointPairList = points.ToList();
 
-            foreach (var point in points.ToList())
+            // TODO: consider re-design SurveyPointList to contain line
+            for (int i = 0; i < points.Design.LineCount; i++)
             {
-                pointPairList.Add(point.X,point.Y,point.Name);
+                var pointPairPlot = new PointPairList();
+                for (int j = 0; j < points.Design.StationCount; j++)
+                {
+                    var x = pointPairList[j + (i*points.Design.StationCount)].X;
+                    var y = pointPairList[j + (i*points.Design.StationCount)].Y;
+                    var name = pointPairList[j + (i*points.Design.StationCount)].Name;
 
-                if (_xScaleMax < point.X)
-                {
-                    _xScaleMax = point.X;
+                    pointPairPlot.Add(x,y,name);
+
+                    if (_xScaleMax < x)
+                    {
+                        _xScaleMax = x;
+                    }
+                    if (_xScaleMin > x)
+                    {
+                        _xScaleMin = x;
+                    }
+                    if (_yScaleMax < y)
+                    {
+                        _yScaleMax = y;
+                    }
+                    if (_yScaleMin > y)
+                    {
+                        _yScaleMin = y;
+                    }
                 }
-                if (_xScaleMin > point.X)
-                {
-                    _xScaleMin = point.X;
-                }
-                if (_yScaleMax < point.Y)
-                {
-                    _yScaleMax = point.Y;
-                }
-                if (_yScaleMin > point.Y)
-                {
-                    _yScaleMin = point.Y;
-                }
+
+                // TODO: Replace this plotting customization into its own class
+                var myCurve = _myPane.AddCurve(points.Design.Name, pointPairPlot, style.LineColor);
+                myCurve.Symbol = style.Marker;
+                myCurve.Line.IsAntiAlias = style.IsAntiAlias;
+                myCurve.Line.IsVisible = style.IsLineVisible;
             }
-
-            LineItem curveItem = _myPane.AddCurve(points.Design.Name,pointPairList,Color.Blue,SymbolType.Diamond);
-            curveItem.Symbol.Fill = new Fill(Color.OrangeRed);
-            curveItem.Symbol.Size = 5.0f;
-            curveItem.Symbol.Border.IsVisible = false;
-            curveItem.Line.IsVisible = false;
 
           SetGraphScaleMaxMin(_xScaleMin, _xScaleMax, _yScaleMin, _yScaleMax);
           _myPane.AxisChange();
@@ -168,6 +185,7 @@ namespace SurveyLineWinForm
             Debug.WriteLine(string.Format("Set Max MinY:{0}\t{1}", _myPane.YAxis.Scale.Min, _myPane.YAxis.Scale.Max));
         }
 
+/*
         /// <summary>
         /// Scales to 1:1 ratio with min size
         /// </summary>
@@ -207,6 +225,7 @@ namespace SurveyLineWinForm
                 _myPane.XAxis.Scale.Max = xAxisCenter + minSize * 0.5 * ratio;
             }
         }
+*/
         private void graphPane_AxisChangeEvent(GraphPane pane)
         {
             SetScaleEqual();
@@ -235,9 +254,9 @@ namespace SurveyLineWinForm
             else if (scaleY2 > scaleX2)
             {
                 double diff = _myPane.XAxis.Scale.Max - _myPane.XAxis.Scale.Min;
-                double new_diff = _myPane.Rect.Width * scaleY2;
-                _myPane.XAxis.Scale.Min -= (new_diff - diff) / 2.0;
-                _myPane.XAxis.Scale.Max += (new_diff - diff) / 2.0;
+                double newDiff = _myPane.Rect.Width * scaleY2;
+                _myPane.XAxis.Scale.Min -= (newDiff - diff) / 2.0;
+                _myPane.XAxis.Scale.Max += (newDiff - diff) / 2.0;
             }
 
             // Recompute the grid lines
@@ -248,6 +267,7 @@ namespace SurveyLineWinForm
             
         }
 
+/*
         /// <summary>
         /// Return an equl width and height of Chart Rectangle
         /// </summary>
@@ -269,6 +289,7 @@ namespace SurveyLineWinForm
 
             return rect;
         }
+*/
 
         private void zgcSurveyPlot_Resize(object sender, EventArgs e)
         {
@@ -404,7 +425,7 @@ namespace SurveyLineWinForm
                 else
                 {
                     var result = e.Result as SurveyPointList;
-                    Plot(result);
+                    Plot(result, _plottingStyle);
                     // ReSharper disable once PossibleNullReferenceException
                     dgvCoordinates.DataSource = result.ToList();
                     SetLineStatus(result.Design);

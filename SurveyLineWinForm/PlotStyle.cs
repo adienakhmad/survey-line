@@ -30,21 +30,24 @@ namespace SurveyLineWinForm
             IsAntiAlias = antialias;
             Marker = new Symbol
             {
-                Fill = new Fill(markerColor), Type = markerType, Size = markerSize
+                Fill = new Fill(markerColor),
+                Type = markerType,
+                Size = markerSize,
+                Border = new Border() { IsVisible = markerBorder}
             };
         }
 
         public PlotStyle()
         {
-            LineColor = Color.DeepSkyBlue;
+            LineColor = Color.Gainsboro;
             IsLineVisible = true;
             IsAntiAlias = true;
             Marker = new Symbol()
             {
                 Fill = new Fill(Color.OrangeRed),
-                Type = SymbolType.Diamond,
-                Size = 5f,
-                Border = new Border() { IsVisible = true}
+                Type = SymbolType.Square,
+                Size = 5.0f,
+                Border = new Border() { IsVisible = false}
                 
             };
             
