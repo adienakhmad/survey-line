@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using SurveyLine.Core;
 using SurveyLineWinForm.Forms;
@@ -41,7 +42,6 @@ namespace SurveyLineWinForm
         }
 
         #region Zedgraph Plotting Behavior
-
         private double _xScaleMax, _xScaleMin, _yScaleMax, _yScaleMin;
         private void ZedGraphSetup()
         {
@@ -64,6 +64,8 @@ namespace SurveyLineWinForm
             _myPane.YAxis.Title.FontSpec.IsBold = true;
             _myPane.YAxis.Title.FontSpec.Size = 12f;
             _myPane.YAxis.Title.Text = "Y-Pos";
+            _myPane.YAxis.Scale.MaxAuto = true;
+            _myPane.YAxis.Scale.MinAuto = true;
 //            _myPane.YAxis.ScaleFormatEvent += new Axis.ScaleFormatHandler(YAxis_ScaleFormatEvent);
 
             _myPane.XAxis.MajorGrid.IsVisible = true;
@@ -79,67 +81,149 @@ namespace SurveyLineWinForm
             _myPane.XAxis.Title.FontSpec.IsBold = true;
             _myPane.XAxis.Title.FontSpec.Size = 12f;
             _myPane.XAxis.Title.Text = "X-Pos";
+            _myPane.XAxis.Scale.MaxAuto = true;
+            _myPane.XAxis.Scale.MinAuto = true;
 //            _myPane.XAxis.ScaleFormatEvent += new Axis.ScaleFormatHandler(XAxis_ScaleFormatEvent);
 
             _myPane.Legend.IsVisible = false;
             _myPane.AxisChangeEvent += graphPane_AxisChangeEvent;
-            var points = new PointPairList();
-
-            points.Add(422000, 9184000);
-            points.Add(423000, 9189000);
-
-            _myPane.AddCurve(label: "Test Curve1", points: points, color: Color.Blue, symbolType: SymbolType.None);
-            _myPane.AxisChange();
-            
         }
-        string YAxis_ScaleFormatEvent(GraphPane pane, Axis axis, double val, int index)
+
+        private void Plot(SurveyPointList points)
         {
-            return String.Format("{0}K", val / 1000);
+            _myPane.CurveList.Clear();
+            _xScaleMax = Double.MinValue;
+            _xScaleMin = Double.MaxValue;
+            _yScaleMax = Double.MinValue;
+            _yScaleMin = Double.MaxValue;
+
+            var pointPairList = new PointPairList();
+
+            foreach (var point in points.ToList())
+            {
+                pointPairList.Add(point.X,point.Y,point.Name);
+
+                if (_xScaleMax < point.X)
+                {
+                    _xScaleMax = point.X;
+                }
+                if (_xScaleMin > point.X)
+                {
+                    _xScaleMin = point.X;
+                }
+                if (_yScaleMax < point.Y)
+                {
+                    _yScaleMax = point.Y;
+                }
+                if (_yScaleMin > point.Y)
+                {
+                    _yScaleMin = point.Y;
+                }
+            }
+
+            LineItem curveItem = _myPane.AddCurve(points.Design.Name,pointPairList,Color.Blue,SymbolType.Diamond);
+            curveItem.Symbol.Fill = new Fill(Color.OrangeRed);
+            curveItem.Symbol.Size = 5.0f;
+            curveItem.Symbol.Border.IsVisible = false;
+            curveItem.Line.IsVisible = false;
+
+          SetGraphScaleMaxMin(_xScaleMin, _xScaleMax, _yScaleMin, _yScaleMax);
+          _myPane.AxisChange();
+          zgcSurveyPlot.Invalidate();
         }
-        string XAxis_ScaleFormatEvent(GraphPane pane, Axis axis, double val, int index)
+
+        private void SetGraphScaleMaxMin(double xMin, double xMax, double yMin, double yMax)
         {
-            return String.Format("{0}K", val / 1000);
+            const double grace = 0.1;
+
+            Debug.WriteLine(string.Format("See Max Min X:{0}\t{1}", xMin, xMax));
+            Debug.WriteLine(string.Format("See Max Min Y:{0}\t{1}", yMin, yMax));
+
+            xMin -= ((xMax - xMin)*grace);
+            xMax += ((xMax - xMin)*grace);
+            yMax += ((yMax - yMin)*grace);
+            yMin -= ((yMax - yMin)*grace);
+
+            _myPane.XAxis.Scale.Min = xMin;
+            _myPane.XAxis.Scale.Max = xMax;
+            _myPane.YAxis.Scale.Min = yMin;
+            _myPane.YAxis.Scale.Max = yMax;
+
+            Debug.WriteLine(string.Format("Set Max Min X:{0}\t{1}", _myPane.XAxis.Scale.Min, _myPane.XAxis.Scale.Max));
+            Debug.WriteLine(string.Format("Set Max MinY:{0}\t{1}", _myPane.YAxis.Scale.Min, _myPane.YAxis.Scale.Max));
+        }
+
+        void ScaleGraph(double minSize)
+        {  
+            double ratio;
+            double xAxisCenter = (_myPane.XAxis.Scale.Max + _myPane.XAxis.Scale.Min) * 0.5;
+            double yAxisCenter = (_myPane.YAxis.Scale.Max + _myPane.YAxis.Scale.Min) * 0.5;
+
+            Debug.WriteLine(string.Format("X:{0}\t{1}", _myPane.XAxis.Scale.Min, _myPane.XAxis.Scale.Max));
+            Debug.WriteLine(string.Format("Y:{0}\t{1}", _myPane.YAxis.Scale.Min, _myPane.XAxis.Scale.Max));
+            Debug.WriteLine(string.Format("Rect:{0}\t{1}", _myPane.Chart.Rect.Height, _myPane.Chart.Rect.Width));
+
+            zgcSurveyPlot.Refresh();
+
+            if (_myPane.Chart.Rect.Height > _myPane.Chart.Rect.Width)
+            {
+                Debug.WriteLine(string.Format("Case Height > Widht"));
+                ratio = _myPane.Chart.Rect.Height / _myPane.Chart.Rect.Width;
+
+                _myPane.XAxis.Scale.Min = xAxisCenter - minSize * 0.5;
+                _myPane.XAxis.Scale.Max = xAxisCenter + minSize * 0.5;
+
+                _myPane.YAxis.Scale.Min = yAxisCenter - minSize * 0.5 * ratio;
+                _myPane.YAxis.Scale.Max = yAxisCenter + minSize * 0.5 * ratio;
+            }
+            else
+            {
+                Debug.WriteLine(string.Format("Case Width > Height"));
+                ratio = _myPane.Chart.Rect.Width / _myPane.Chart.Rect.Height;
+
+                _myPane.YAxis.Scale.Min = yAxisCenter - minSize * 0.5;
+                _myPane.YAxis.Scale.Max = yAxisCenter + minSize * 0.5;
+
+                _myPane.XAxis.Scale.Min = xAxisCenter - minSize * 0.5 * ratio;
+                _myPane.XAxis.Scale.Max = xAxisCenter + minSize * 0.5 * ratio;
+            }
         }
         private void graphPane_AxisChangeEvent(GraphPane pane)
         {
-            _xScaleMax = _myPane.XAxis.Scale.Max;
-            _xScaleMin = _myPane.XAxis.Scale.Min;
-            _yScaleMax = _myPane.YAxis.Scale.Max;
-            _yScaleMin = _myPane.YAxis.Scale.Min;
             SetScaleEqual();
-            zgcSurveyPlot.Invalidate();
         }
 
         private void SetScaleEqual()
         {
-            var graphPane = _myPane;
-            double scaleX2 = (_xScaleMax - _xScaleMin)/graphPane.Rect.Width;
-            double scaleY2 = (_yScaleMax - _yScaleMin)/graphPane.Rect.Height;
+            double scaleX2 = (_myPane.XAxis.Scale.Max - _myPane.XAxis.Scale.Min) / _myPane.Rect.Width;
+            double scaleY2 = (_myPane.YAxis.Scale.Max - _myPane.YAxis.Scale.Min) / _myPane.Rect.Height;
 
-            Debug.WriteLine(string.Format("{0} {1}", _xScaleMax, _xScaleMin));
+            Debug.WriteLine(string.Format("Rect:{0}\t{1}", _myPane.Chart.Rect.Height, _myPane.Chart.Rect.Width));
+            Debug.WriteLine(string.Format("Scale:{0}\t{1}", scaleX2, scaleY2));
 
             if (scaleX2 > scaleY2)
             {
-                double diff = _yScaleMax - _yScaleMin;
-                double newDiff = graphPane.Rect.Height*scaleX2;
-                graphPane.YAxis.Scale.Min = _yScaleMin - (newDiff - diff)/2.0;
-                graphPane.YAxis.Scale.Max = _yScaleMax + (newDiff - diff)/2.0;
-                Debug.WriteLine(string.Format("{0} {1}", graphPane.YAxis.Scale.Min, graphPane.YAxis.Scale.Max));
+                double diff = _myPane.YAxis.Scale.Max - _myPane.YAxis.Scale.Min;
+                double newDiff = _myPane.Rect.Height * scaleX2;
+                _myPane.YAxis.Scale.Min -= (newDiff - diff) / 2.0;
+                _myPane.YAxis.Scale.Max += (newDiff - diff) / 2.0;
+
+
             }
             else if (scaleY2 > scaleX2)
             {
-                double diff = _xScaleMax - _xScaleMin;
-                double newDiff = graphPane.Rect.Width*scaleY2;
-                graphPane.XAxis.Scale.Min = _xScaleMin - (newDiff - diff)/2.0;
-                graphPane.XAxis.Scale.Max = _xScaleMax + (newDiff - diff)/2.0;
-                Debug.WriteLine(string.Format("{0} {1}", graphPane.XAxis.Scale.Min, graphPane.XAxis.Scale.Max));
+                double diff = _myPane.XAxis.Scale.Max - _myPane.XAxis.Scale.Min;
+                double new_diff = _myPane.Rect.Width * scaleY2;
+                _myPane.XAxis.Scale.Min -= (new_diff - diff) / 2.0;
+                _myPane.XAxis.Scale.Max += (new_diff - diff) / 2.0;
             }
 
-            float scaleFactor = graphPane.CalcScaleFactor();
+            // Recompute the grid lines
+            float scaleFactor = _myPane.CalcScaleFactor();
             Graphics g = zgcSurveyPlot.CreateGraphics();
-            graphPane.XAxis.Scale.PickScale(graphPane, g, scaleFactor);
-            graphPane.YAxis.Scale.PickScale(graphPane, g, scaleFactor);
-
+            _myPane.XAxis.Scale.PickScale(_myPane, g, scaleFactor);
+            _myPane.YAxis.Scale.PickScale(_myPane, g, scaleFactor);
+            
         }
 
         private RectangleF GetEqualRatioRect(RectangleF rect)
@@ -178,6 +262,7 @@ namespace SurveyLineWinForm
                 _myPane.YAxis.Title.IsVisible = false;
             }
 
+            SetGraphScaleMaxMin(_xScaleMin, _xScaleMax, _yScaleMin, _yScaleMax);
             SetScaleEqual();
 
         }
@@ -292,6 +377,7 @@ namespace SurveyLineWinForm
                 else
                 {
                     var result = e.Result as SurveyPointList;
+                    Plot(result);
                     // ReSharper disable once PossibleNullReferenceException
                     dgvCoordinates.DataSource = result.ToList();
                     SetLineStatus(result.Design);
@@ -577,6 +663,12 @@ namespace SurveyLineWinForm
             if (e.Button != MouseButtons.Right) return;
             if (e.ColumnIndex >= 0 && e.RowIndex >= 0 && dgvCoordinates.SelectedCells.Count == 1)
                 dgvCoordinates.CurrentCell = dgvCoordinates[e.ColumnIndex, e.RowIndex];
+        }
+
+        private void label20_Click(object sender, EventArgs e)
+        {
+            Debug.WriteLine(string.Format("X:{0}\t{1}", _myPane.XAxis.Scale.Min, _myPane.XAxis.Scale.Max));
+            Debug.WriteLine(string.Format("Y:{0}\t{1}", _myPane.YAxis.Scale.Min, _myPane.XAxis.Scale.Max));
         }
     }
 }
