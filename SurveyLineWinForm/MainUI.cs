@@ -32,6 +32,7 @@ namespace SurveyLineWinForm
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            Size = new Size(630,530);
             cboxMode.SelectedIndex = 0;
             CueProvider.SetCue(txtLineName, "Enter a name here..");
             DisableButtonOnLoad(true);
@@ -73,7 +74,6 @@ namespace SurveyLineWinForm
             _myPane.YAxis.Title.Text = "Y-Pos";
             _myPane.YAxis.Scale.MaxAuto = true;
             _myPane.YAxis.Scale.MinAuto = true;
-//            _myPane.YAxis.ScaleFormatEvent += new Axis.ScaleFormatHandler(YAxis_ScaleFormatEvent);
 
             _myPane.XAxis.MajorGrid.IsVisible = true;
             _myPane.XAxis.MajorGrid.IsZeroLine = false;
@@ -91,7 +91,6 @@ namespace SurveyLineWinForm
             _myPane.XAxis.Title.Text = "X-Pos";
             _myPane.XAxis.Scale.MaxAuto = true;
             _myPane.XAxis.Scale.MinAuto = true;
-//            _myPane.XAxis.ScaleFormatEvent += new Axis.ScaleFormatHandler(XAxis_ScaleFormatEvent);
 
             _myPane.Legend.IsVisible = false;
             _myPane.AxisChangeEvent += graphPane_AxisChangeEvent;

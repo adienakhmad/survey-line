@@ -451,7 +451,7 @@ namespace SurveyLineWinForm
             this.numStation.Size = new System.Drawing.Size(66, 21);
             this.numStation.TabIndex = 11;
             this.numStation.Value = new decimal(new int[] {
-            1,
+            2,
             0,
             0,
             0});
@@ -737,7 +737,7 @@ namespace SurveyLineWinForm
             this.dgvCoordinates.Location = new System.Drawing.Point(3, 3);
             this.dgvCoordinates.Name = "dgvCoordinates";
             this.dgvCoordinates.ReadOnly = true;
-            this.dgvCoordinates.Size = new System.Drawing.Size(387, 301);
+            this.dgvCoordinates.Size = new System.Drawing.Size(358, 301);
             this.dgvCoordinates.TabIndex = 3;
             this.dgvCoordinates.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvCoordinates_CellMouseDown);
             // 
