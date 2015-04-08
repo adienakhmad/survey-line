@@ -25,8 +25,6 @@
  * 
  * */
 
-//todo: benchmark, enhance performance
-
 using System.Drawing;
 using System.Windows.Forms;
 

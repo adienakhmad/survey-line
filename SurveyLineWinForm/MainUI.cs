@@ -421,6 +421,7 @@ namespace SurveyLineWinForm
                 {
                     var result = e.Result as StationListContainer;
                     Plot(result, _plottingStyle);
+                    tabControl1.SelectedTab = tabPagePlot;
                     // ReSharper disable once PossibleNullReferenceException
                     dgvCoordinates.DataSource = result.GetAllStations();
                     SetLineStatus(result.Design);
@@ -712,6 +713,29 @@ namespace SurveyLineWinForm
         {
             Debug.WriteLine(string.Format("X:{0}\t{1}", _myPane.XAxis.Scale.Min, _myPane.XAxis.Scale.Max));
             Debug.WriteLine(string.Format("Y:{0}\t{1}", _myPane.YAxis.Scale.Min, _myPane.XAxis.Scale.Max));
+        }
+
+        private void buttonLineColor_Click(object sender, EventArgs e)
+        {
+            var dlgresult = lineColorDialog.ShowDialog();
+
+            if (dlgresult == DialogResult.OK)
+            {
+                buttonLineColor.BackColor = lineColorDialog.Color;
+               
+            }
+
+            
+        }
+
+        private void buttonMarkerColor_Click(object sender, EventArgs e)
+        {
+            var dlgresult = markerColorDialog.ShowDialog();
+
+            if (dlgresult == DialogResult.OK)
+            {
+                buttonMarkerColor.BackColor = markerColorDialog.Color;
+            }
         }
     }
 }

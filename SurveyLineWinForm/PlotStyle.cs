@@ -9,6 +9,7 @@ namespace SurveyLineWinForm
 {
     class PlotStyle
     {
+        //TODO: Make this class in sync with plotting style control
         public Color LineColor { get; set; }
         public Symbol Marker { get; set; }
         public bool IsAntiAlias { get; set; }
