@@ -39,6 +39,141 @@ namespace SurveyLineWinForm
 
         #endregion
 
+        #region Main Methods
+
+        private void GrabAllInputs()
+        {
+            SurveyDesign design;
+            double bearing;
+            switch ((SurveyDesign.DesignType)cboxMode.SelectedIndex)
+            {
+                case SurveyDesign.DesignType.SingleLine:
+
+                    #region Case Single Line
+
+                    design = new SurveyDesign(txtLineName.Text, Convert.ToDouble(numEasting.Value),
+                        Convert.ToDouble(numNorthing.Value), Convert.ToDouble(numBearing.Value),
+                        Convert.ToDouble(numInterval.Value), (int)numStation.Value);
+                    break;
+
+                    #endregion
+
+                case SurveyDesign.DesignType.MultiLine:
+
+                    #region Case Multi Line
+
+                    switch (dropDownDirection.SelectedIndex)
+                    {
+                        case 1:
+                            bearing = +90.0;
+                            break;
+                        default:
+                            bearing = -90.0;
+                            break;
+                    }
+                    design = new SurveyDesign(txtLineName.Text, Convert.ToDouble(numEasting.Value),
+                        Convert.ToDouble(numNorthing.Value), Convert.ToDouble(numBearing.Value),
+                        Convert.ToDouble(numInterval.Value), (int)numStation.Value, bearing,
+                        (int)numMultiLineCount.Value, Convert.ToDouble(numMultiLineSpacing.Value));
+                    break;
+
+                    #endregion
+
+                case SurveyDesign.DesignType.FixedGrid:
+
+                    #region Case Fixed Grid
+
+                    switch (dropDownDirection.SelectedIndex)
+                    {
+                        case 0:
+                            bearing = +90.0;
+                            break;
+                        default:
+                            bearing = -90.0;
+                            break;
+                    }
+
+                    design = new SurveyDesign(txtLineName.Text, Convert.ToDouble(numEasting.Value),
+                        Convert.ToDouble(numNorthing.Value), Convert.ToDouble(numBearing.Value),
+                        Convert.ToDouble(numInterval.Value), (int)numStation.Value, bearing,
+                        (int)numMultiLineCount.Value);
+                    break;
+
+                    #endregion
+
+                default:
+                    design = null;
+                    break;
+            }
+
+            if (design != null && design.Name == string.Empty) design.Name = "Undefined";
+            _surveyFactory = new SurveyFactory(design);
+        }
+
+        /// <summary>
+        ///     Main method
+        /// </summary>
+        private void StartMainMethod()
+        {
+            GrabAllInputs();
+            SetStatusBarText("Working.. Please wait..");
+            toolStripProgressBar1.Visible = true;
+            DisableButtonOnWork(true);
+
+            backgroundWorker1.RunWorkerAsync();
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            e.Result = _surveyFactory.BuildSurveyPoints();
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                MessageBox.Show(e.Error.Message);
+                SetStatusBarText("Progress stopped.");
+            }
+
+            else
+            {
+                if (e.Cancelled)
+                {
+                    MessageBox.Show(@"Process cancelled");
+                    SetStatusBarText("Progress cancelled.");
+                }
+
+                else
+                {
+                    var result = e.Result as StationListContainer;
+                    Plot(result, _plottingStyle);
+                    tabControl1.SelectedTab = tabPagePlot;
+                    // ReSharper disable once PossibleNullReferenceException
+                    dgvCoordinates.DataSource = result.GetAllStations();
+                    SetLineStatus(result.Design);
+                    SetStatusBarText("Progress completed.");
+                }
+            }
+
+            DisableButtonOnLoad(false);
+            DisableButtonOnWork(false);
+            toolStripProgressBar1.Visible = false;
+            //          SetLineStatus(line1, cboxMultiMode.Checked);
+        }
+
+        /// <summary>
+        ///     What Happen when generate button is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+            StartMainMethod();
+        }
+
+        #endregion
+
         #region Zedgraph Plotting Behavior
 
         private double _xScaleMax, _xScaleMin, _yScaleMax, _yScaleMin;
@@ -294,141 +429,6 @@ namespace SurveyLineWinForm
 
             SetGraphScaleMaxMin(_xScaleMin, _xScaleMax, _yScaleMin, _yScaleMax);
             _myPane.AxisChange();
-        }
-
-        #endregion
-
-        #region Main Methods
-
-        private void GrabAllInputs()
-        {
-            SurveyDesign design;
-            double bearing;
-            switch ((SurveyDesign.DesignType) cboxMode.SelectedIndex)
-            {
-                case SurveyDesign.DesignType.SingleLine:
-
-                    #region Case Single Line
-
-                    design = new SurveyDesign(txtLineName.Text, Convert.ToDouble(numEasting.Value),
-                        Convert.ToDouble(numNorthing.Value), Convert.ToDouble(numBearing.Value),
-                        Convert.ToDouble(numInterval.Value), (int) numStation.Value);
-                    break;
-
-                    #endregion
-
-                case SurveyDesign.DesignType.MultiLine:
-
-                    #region Case Multi Line
-
-                    switch (dropDownDirection.SelectedIndex)
-                    {
-                        case 1:
-                            bearing = +90.0;
-                            break;
-                        default:
-                            bearing = -90.0;
-                            break;
-                    }
-                    design = new SurveyDesign(txtLineName.Text, Convert.ToDouble(numEasting.Value),
-                        Convert.ToDouble(numNorthing.Value), Convert.ToDouble(numBearing.Value),
-                        Convert.ToDouble(numInterval.Value), (int) numStation.Value, bearing,
-                        (int) numMultiLineCount.Value, Convert.ToDouble(numMultiLineSpacing.Value));
-                    break;
-
-                    #endregion
-
-                case SurveyDesign.DesignType.FixedGrid:
-
-                    #region Case Fixed Grid
-
-                    switch (dropDownDirection.SelectedIndex)
-                    {
-                        case 1:
-                            bearing = +90.0;
-                            break;
-                        default:
-                            bearing = -90.0;
-                            break;
-                    }
-
-                    design = new SurveyDesign(txtLineName.Text, Convert.ToDouble(numEasting.Value),
-                        Convert.ToDouble(numNorthing.Value), Convert.ToDouble(numBearing.Value),
-                        Convert.ToDouble(numInterval.Value), (int) numStation.Value, bearing,
-                        (int) numMultiLineCount.Value);
-                    break;
-
-                    #endregion
-
-                default:
-                    design = null;
-                    break;
-            }
-
-            if (design != null && design.Name == string.Empty) design.Name = "Undefined";
-            _surveyFactory = new SurveyFactory(design);
-        }
-
-        /// <summary>
-        ///     Main method
-        /// </summary>
-        private void StartMainMethod()
-        {
-            GrabAllInputs();
-            SetStatusBarText("Working.. Please wait..");
-            toolStripProgressBar1.Visible = true;
-            DisableButtonOnWork(true);
-
-            backgroundWorker1.RunWorkerAsync();
-        }
-
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-            e.Result = _surveyFactory.BuildSurveyPoints();
-        }
-
-        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (e.Error != null)
-            {
-                MessageBox.Show(e.Error.Message);
-                SetStatusBarText("Progress stopped.");
-            }
-
-            else
-            {
-                if (e.Cancelled)
-                {
-                    MessageBox.Show(@"Process cancelled");
-                    SetStatusBarText("Progress cancelled.");
-                }
-
-                else
-                {
-                    var result = e.Result as StationListContainer;
-                    Plot(result, _plottingStyle);
-                    tabControl1.SelectedTab = tabPagePlot;
-                    // ReSharper disable once PossibleNullReferenceException
-                    dgvCoordinates.DataSource = result.GetAllStations();
-                    SetLineStatus(result.Design);
-                    SetStatusBarText("Progress completed.");
-                }
-            }
-
-            DisableButtonOnLoad(false);
-            DisableButtonOnWork(false);
-            toolStripProgressBar1.Visible = false;
-            //          SetLineStatus(line1, cboxMultiMode.Checked);
-        }
-
-        /// <summary>
-        ///     What Happen when generate button is clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnCreate_Click(object sender, EventArgs e)
-        {
-            StartMainMethod();
         }
 
         #endregion
@@ -693,6 +693,8 @@ namespace SurveyLineWinForm
                 dgvCoordinates.CurrentCell = dgvCoordinates[e.ColumnIndex, e.RowIndex];
         }
 
+        #region Plot Customization Control
+
         private void buttonLineColor_Click(object sender, EventArgs e)
         {
             var dlgresult = lineColorDialog.ShowDialog();
@@ -713,10 +715,24 @@ namespace SurveyLineWinForm
             }
         }
 
+        #endregion
+
+        #region Easting Northing Context Menu Behavior
+
         private void cmNumButton_Opening(object sender, CancelEventArgs e)
         {
             var controlSender = sender as ContextMenuStrip;
             if (controlSender == null) return;
+            if (!Clipboard.ContainsText())
+            {
+                tsmPasteXY.Enabled = false;
+                tsmPaste.Enabled = false;
+            }
+            else
+            {
+                tsmPasteXY.Enabled = true;
+                tsmPaste.Enabled = true;
+            }
             var controlOwner = controlSender.SourceControl as NumericUpDown;
             if (controlOwner == null) return;
             controlOwner.Select();
@@ -797,9 +813,14 @@ namespace SurveyLineWinForm
 
             else
                 MessageBox.Show(@"The text you are trying to paste is not a valid coordinate.");
-            
-
-            
         }
+
+        #endregion
+
+        private void newWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("survey-line.exe");
+        }
+
     }
 }

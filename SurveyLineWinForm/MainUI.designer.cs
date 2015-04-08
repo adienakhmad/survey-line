@@ -40,11 +40,11 @@ namespace SurveyLineWinForm
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainUI));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -58,6 +58,13 @@ namespace SurveyLineWinForm
             this.txtLineName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.numEasting = new System.Windows.Forms.NumericUpDown();
+            this.cmNumButton = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmPasteXY = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmCut = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmPaste = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.label2 = new System.Windows.Forms.Label();
             this.numNorthing = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
@@ -79,7 +86,6 @@ namespace SurveyLineWinForm
             this.label16 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.dropDownDirection = new System.Windows.Forms.ComboBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnCreate = new System.Windows.Forms.Button();
             this.btnNamingSetup = new System.Windows.Forms.Button();
@@ -138,13 +144,18 @@ namespace SurveyLineWinForm
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.lineColorDialog = new System.Windows.Forms.ColorDialog();
             this.markerColorDialog = new System.Windows.Forms.ColorDialog();
-            this.cmNumButton = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmCopy = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmCut = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmPaste = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmPasteXY = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToTextFilestxtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToSurferToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.currentWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openDesignToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportDesignToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -153,6 +164,7 @@ namespace SurveyLineWinForm
             this.groupBox1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numEasting)).BeginInit();
+            this.cmNumButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numNorthing)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBearing)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numInterval)).BeginInit();
@@ -161,7 +173,6 @@ namespace SurveyLineWinForm
             this.flowLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMultiLineCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMultiLineSpacing)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.flowLayoutPanel4.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPagePlot.SuspendLayout();
@@ -178,7 +189,6 @@ namespace SurveyLineWinForm
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            this.cmNumButton.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -265,7 +275,7 @@ namespace SurveyLineWinForm
             this.groupBox1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(13, 13);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(10, 5, 5, 10);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(5, 5, 5, 10);
             this.groupBox1.Size = new System.Drawing.Size(191, 223);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
@@ -290,24 +300,24 @@ namespace SurveyLineWinForm
             this.flowLayoutPanel2.Controls.Add(this.label17);
             this.flowLayoutPanel2.Controls.Add(this.cboxMode);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(10, 19);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(5, 19);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(176, 194);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(181, 194);
             this.flowLayoutPanel2.TabIndex = 0;
             // 
             // label9
             // 
             this.label9.Location = new System.Drawing.Point(3, 2);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(58, 23);
+            this.label9.Size = new System.Drawing.Size(65, 23);
             this.label9.TabIndex = 0;
             this.label9.Text = "Name";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // txtLineName
             // 
-            this.txtLineName.Location = new System.Drawing.Point(67, 5);
+            this.txtLineName.Location = new System.Drawing.Point(74, 5);
             this.txtLineName.Name = "txtLineName";
             this.txtLineName.Size = new System.Drawing.Size(102, 21);
             this.txtLineName.TabIndex = 6;
@@ -320,7 +330,7 @@ namespace SurveyLineWinForm
             // 
             this.label1.Location = new System.Drawing.Point(3, 29);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(58, 23);
+            this.label1.Size = new System.Drawing.Size(65, 23);
             this.label1.TabIndex = 1;
             this.label1.Text = "Easting";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -334,7 +344,7 @@ namespace SurveyLineWinForm
             0,
             0,
             0});
-            this.numEasting.Location = new System.Drawing.Point(67, 32);
+            this.numEasting.Location = new System.Drawing.Point(74, 32);
             this.numEasting.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -346,11 +356,65 @@ namespace SurveyLineWinForm
             this.numEasting.Enter += new System.EventHandler(this.NumOnFocus);
             this.numEasting.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtLineName_KeyDown);
             // 
+            // cmNumButton
+            // 
+            this.cmNumButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.cmNumButton.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmPasteXY,
+            this.toolStripSeparator1,
+            this.tsmCopy,
+            this.tsmCut,
+            this.tsmPaste,
+            this.tsmDelete});
+            this.cmNumButton.Name = "cmNumButton";
+            this.cmNumButton.Size = new System.Drawing.Size(134, 120);
+            this.cmNumButton.Opening += new System.ComponentModel.CancelEventHandler(this.cmNumButton_Opening);
+            // 
+            // tsmPasteXY
+            // 
+            this.tsmPasteXY.Name = "tsmPasteXY";
+            this.tsmPasteXY.Size = new System.Drawing.Size(133, 22);
+            this.tsmPasteXY.Text = "Paste (X, Y)";
+            this.tsmPasteXY.Click += new System.EventHandler(this.tsmPasteXY_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(130, 6);
+            // 
+            // tsmCopy
+            // 
+            this.tsmCopy.Name = "tsmCopy";
+            this.tsmCopy.Size = new System.Drawing.Size(133, 22);
+            this.tsmCopy.Text = "&Copy";
+            this.tsmCopy.Click += new System.EventHandler(this.tsmCopy_Click);
+            // 
+            // tsmCut
+            // 
+            this.tsmCut.Name = "tsmCut";
+            this.tsmCut.Size = new System.Drawing.Size(133, 22);
+            this.tsmCut.Text = "Cut";
+            this.tsmCut.Click += new System.EventHandler(this.tsmCut_Click);
+            // 
+            // tsmPaste
+            // 
+            this.tsmPaste.Name = "tsmPaste";
+            this.tsmPaste.Size = new System.Drawing.Size(133, 22);
+            this.tsmPaste.Text = "&Paste";
+            this.tsmPaste.Click += new System.EventHandler(this.tsmPaste_Click);
+            // 
+            // tsmDelete
+            // 
+            this.tsmDelete.Name = "tsmDelete";
+            this.tsmDelete.Size = new System.Drawing.Size(133, 22);
+            this.tsmDelete.Text = "&Delete";
+            this.tsmDelete.Click += new System.EventHandler(this.tsmDelete_Click);
+            // 
             // label2
             // 
             this.label2.Location = new System.Drawing.Point(3, 56);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(58, 23);
+            this.label2.Size = new System.Drawing.Size(65, 23);
             this.label2.TabIndex = 2;
             this.label2.Text = "Northing";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -364,14 +428,14 @@ namespace SurveyLineWinForm
             0,
             0,
             0});
-            this.numNorthing.Location = new System.Drawing.Point(67, 59);
+            this.numNorthing.Location = new System.Drawing.Point(74, 59);
             this.numNorthing.Maximum = new decimal(new int[] {
             10000000,
             0,
             0,
             0});
             this.numNorthing.Name = "numNorthing";
-            this.numNorthing.Size = new System.Drawing.Size(102, 21);
+            this.numNorthing.Size = new System.Drawing.Size(101, 21);
             this.numNorthing.TabIndex = 8;
             this.numNorthing.Enter += new System.EventHandler(this.NumOnFocus);
             this.numNorthing.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtLineName_KeyDown);
@@ -380,7 +444,7 @@ namespace SurveyLineWinForm
             // 
             this.label3.Location = new System.Drawing.Point(3, 83);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(58, 23);
+            this.label3.Size = new System.Drawing.Size(65, 23);
             this.label3.TabIndex = 3;
             this.label3.Text = "Bearing";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -393,21 +457,21 @@ namespace SurveyLineWinForm
             0,
             0,
             0});
-            this.numBearing.Location = new System.Drawing.Point(67, 86);
+            this.numBearing.Location = new System.Drawing.Point(74, 86);
             this.numBearing.Maximum = new decimal(new int[] {
             360,
             0,
             0,
             0});
             this.numBearing.Name = "numBearing";
-            this.numBearing.Size = new System.Drawing.Size(66, 21);
+            this.numBearing.Size = new System.Drawing.Size(60, 21);
             this.numBearing.TabIndex = 9;
             this.numBearing.Enter += new System.EventHandler(this.NumOnFocus);
             this.numBearing.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtLineName_KeyDown);
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(139, 83);
+            this.label6.Location = new System.Drawing.Point(140, 83);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(27, 23);
             this.label6.TabIndex = 12;
@@ -418,7 +482,7 @@ namespace SurveyLineWinForm
             // 
             this.label4.Location = new System.Drawing.Point(3, 110);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(58, 23);
+            this.label4.Size = new System.Drawing.Size(65, 23);
             this.label4.TabIndex = 4;
             this.label4.Text = "Spacing";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -431,21 +495,21 @@ namespace SurveyLineWinForm
             0,
             0,
             0});
-            this.numInterval.Location = new System.Drawing.Point(67, 113);
+            this.numInterval.Location = new System.Drawing.Point(74, 113);
             this.numInterval.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
             this.numInterval.Name = "numInterval";
-            this.numInterval.Size = new System.Drawing.Size(66, 21);
+            this.numInterval.Size = new System.Drawing.Size(60, 21);
             this.numInterval.TabIndex = 10;
             this.numInterval.Enter += new System.EventHandler(this.NumOnFocus);
             this.numInterval.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtLineName_KeyDown);
             // 
             // label8
             // 
-            this.label8.Location = new System.Drawing.Point(139, 110);
+            this.label8.Location = new System.Drawing.Point(140, 110);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(27, 23);
             this.label8.TabIndex = 13;
@@ -456,14 +520,14 @@ namespace SurveyLineWinForm
             // 
             this.label5.Location = new System.Drawing.Point(3, 137);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(58, 23);
+            this.label5.Size = new System.Drawing.Size(65, 23);
             this.label5.TabIndex = 5;
             this.label5.Text = "Station";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // numStation
             // 
-            this.numStation.Location = new System.Drawing.Point(67, 140);
+            this.numStation.Location = new System.Drawing.Point(74, 140);
             this.numStation.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -475,7 +539,7 @@ namespace SurveyLineWinForm
             0,
             0});
             this.numStation.Name = "numStation";
-            this.numStation.Size = new System.Drawing.Size(66, 21);
+            this.numStation.Size = new System.Drawing.Size(60, 21);
             this.numStation.TabIndex = 11;
             this.numStation.Value = new decimal(new int[] {
             2,
@@ -489,7 +553,7 @@ namespace SurveyLineWinForm
             // 
             this.label17.Location = new System.Drawing.Point(3, 164);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(58, 23);
+            this.label17.Size = new System.Drawing.Size(65, 23);
             this.label17.TabIndex = 16;
             this.label17.Text = "Mode";
             this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -502,9 +566,9 @@ namespace SurveyLineWinForm
             "Single Line",
             "Multiple Line",
             "Fixed Grid"});
-            this.cboxMode.Location = new System.Drawing.Point(67, 167);
+            this.cboxMode.Location = new System.Drawing.Point(74, 167);
             this.cboxMode.Name = "cboxMode";
-            this.cboxMode.Size = new System.Drawing.Size(102, 21);
+            this.cboxMode.Size = new System.Drawing.Size(101, 21);
             this.cboxMode.TabIndex = 17;
             this.cboxMode.SelectedIndexChanged += new System.EventHandler(this.cboxMode_SelectedIndexChanged);
             // 
@@ -514,11 +578,11 @@ namespace SurveyLineWinForm
             this.groupBox2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(13, 242);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(10, 5, 5, 5);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(5);
             this.groupBox2.Size = new System.Drawing.Size(191, 121);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Multi and Grid Setup";
+            this.groupBox2.Text = "Multi and Grid Design";
             // 
             // flowLayoutPanel3
             // 
@@ -529,34 +593,34 @@ namespace SurveyLineWinForm
             this.flowLayoutPanel3.Controls.Add(this.label16);
             this.flowLayoutPanel3.Controls.Add(this.label11);
             this.flowLayoutPanel3.Controls.Add(this.dropDownDirection);
-            this.flowLayoutPanel3.Controls.Add(this.pictureBox1);
             this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(10, 19);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(5, 19);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
             this.flowLayoutPanel3.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(176, 97);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(181, 97);
             this.flowLayoutPanel3.TabIndex = 0;
             // 
             // label10
             // 
             this.label10.Location = new System.Drawing.Point(3, 5);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(58, 23);
+            this.label10.Size = new System.Drawing.Size(65, 23);
             this.label10.TabIndex = 1;
             this.label10.Text = "Lines";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // numMultiLineCount
             // 
-            this.numMultiLineCount.Location = new System.Drawing.Point(67, 8);
+            this.numMultiLineCount.Location = new System.Drawing.Point(74, 8);
             this.numMultiLineCount.Minimum = new decimal(new int[] {
             2,
             0,
             0,
             0});
             this.numMultiLineCount.Name = "numMultiLineCount";
-            this.numMultiLineCount.Size = new System.Drawing.Size(66, 21);
+            this.numMultiLineCount.Size = new System.Drawing.Size(60, 21);
             this.numMultiLineCount.TabIndex = 4;
+            this.numMultiLineCount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numMultiLineCount.Value = new decimal(new int[] {
             2,
             0,
@@ -569,33 +633,35 @@ namespace SurveyLineWinForm
             // 
             this.label12.Location = new System.Drawing.Point(3, 32);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(58, 23);
+            this.label12.Size = new System.Drawing.Size(65, 23);
             this.label12.TabIndex = 2;
             this.label12.Text = "Spacing";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // numMultiLineSpacing
             // 
+            this.numMultiLineSpacing.DecimalPlaces = 1;
             this.numMultiLineSpacing.Increment = new decimal(new int[] {
             5,
             0,
             0,
             0});
-            this.numMultiLineSpacing.Location = new System.Drawing.Point(67, 35);
+            this.numMultiLineSpacing.Location = new System.Drawing.Point(74, 35);
             this.numMultiLineSpacing.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
             this.numMultiLineSpacing.Name = "numMultiLineSpacing";
-            this.numMultiLineSpacing.Size = new System.Drawing.Size(66, 21);
+            this.numMultiLineSpacing.Size = new System.Drawing.Size(60, 21);
             this.numMultiLineSpacing.TabIndex = 5;
+            this.numMultiLineSpacing.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numMultiLineSpacing.Enter += new System.EventHandler(this.NumOnFocus);
             this.numMultiLineSpacing.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtLineName_KeyDown);
             // 
             // label16
             // 
-            this.label16.Location = new System.Drawing.Point(139, 32);
+            this.label16.Location = new System.Drawing.Point(140, 32);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(27, 23);
             this.label16.TabIndex = 14;
@@ -606,9 +672,10 @@ namespace SurveyLineWinForm
             // 
             this.label11.Location = new System.Drawing.Point(3, 59);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(58, 23);
+            this.label11.Padding = new System.Windows.Forms.Padding(0, 3, 0, 0);
+            this.label11.Size = new System.Drawing.Size(65, 23);
             this.label11.TabIndex = 3;
-            this.label11.Text = "Direction";
+            this.label11.Text = "Orientation";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // dropDownDirection
@@ -617,26 +684,14 @@ namespace SurveyLineWinForm
             this.dropDownDirection.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.dropDownDirection.FormattingEnabled = true;
             this.dropDownDirection.Items.AddRange(new object[] {
-            "to Right",
-            "to Left"});
-            this.dropDownDirection.Location = new System.Drawing.Point(67, 62);
+            "Clockwise",
+            "Counter CW"});
+            this.dropDownDirection.Location = new System.Drawing.Point(74, 62);
             this.dropDownDirection.Name = "dropDownDirection";
-            this.dropDownDirection.Size = new System.Drawing.Size(66, 21);
+            this.dropDownDirection.Size = new System.Drawing.Size(101, 21);
             this.dropDownDirection.TabIndex = 6;
             this.dropDownDirection.TabStop = false;
             this.dropDownDirection.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtLineName_KeyDown);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Help;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(139, 62);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Padding = new System.Windows.Forms.Padding(3, 2, 0, 0);
-            this.pictureBox1.Size = new System.Drawing.Size(27, 21);
-            this.pictureBox1.TabIndex = 15;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // flowLayoutPanel4
             // 
@@ -751,14 +806,14 @@ namespace SurveyLineWinForm
             this.colXPos,
             this.colYPos});
             this.dgvCoordinates.ContextMenuStrip = this.cmDatagrid;
-            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle26.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle26.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle26.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle26.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCoordinates.DefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCoordinates.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgvCoordinates.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCoordinates.Location = new System.Drawing.Point(3, 3);
             this.dgvCoordinates.Name = "dgvCoordinates";
@@ -771,9 +826,9 @@ namespace SurveyLineWinForm
             // 
             this.colStation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colStation.DataPropertyName = "Name";
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.colStation.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.colStation.DefaultCellStyle = dataGridViewCellStyle1;
             this.colStation.HeaderText = "Station";
             this.colStation.Name = "colStation";
             this.colStation.ReadOnly = true;
@@ -781,11 +836,11 @@ namespace SurveyLineWinForm
             // colXPos
             // 
             this.colXPos.DataPropertyName = "X";
-            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle24.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle24.Format = "F3";
-            dataGridViewCellStyle24.NullValue = null;
-            this.colXPos.DefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.Format = "F3";
+            dataGridViewCellStyle2.NullValue = null;
+            this.colXPos.DefaultCellStyle = dataGridViewCellStyle2;
             this.colXPos.HeaderText = "X-Position";
             this.colXPos.Name = "colXPos";
             this.colXPos.ReadOnly = true;
@@ -793,10 +848,10 @@ namespace SurveyLineWinForm
             // colYPos
             // 
             this.colYPos.DataPropertyName = "Y";
-            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle25.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle25.Format = "F3";
-            this.colYPos.DefaultCellStyle = dataGridViewCellStyle25;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.Format = "F3";
+            this.colYPos.DefaultCellStyle = dataGridViewCellStyle3;
             this.colYPos.HeaderText = "Y-Position";
             this.colYPos.Name = "colYPos";
             this.colYPos.ReadOnly = true;
@@ -1221,8 +1276,16 @@ namespace SurveyLineWinForm
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newToolStripMenuItem,
+            this.openToolStripMenuItem,
             this.saveToolStripMenuItem,
+            this.saveToolStripMenuItem1,
             this.toolStripSeparator2,
+            this.openDesignToolStripMenuItem,
+            this.exportDesignToolStripMenuItem,
+            this.toolStripSeparator3,
+            this.exportToolStripMenuItem,
+            this.toolStripSeparator4,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -1233,19 +1296,19 @@ namespace SurveyLineWinForm
             this.saveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-            this.saveToolStripMenuItem.Text = "&Save As";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.saveToolStripMenuItem.Text = "&Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(151, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(155, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -1260,8 +1323,8 @@ namespace SurveyLineWinForm
             // latLongToUTMToolStripMenuItem
             // 
             this.latLongToUTMToolStripMenuItem.Name = "latLongToUTMToolStripMenuItem";
-            this.latLongToUTMToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
-            this.latLongToUTMToolStripMenuItem.Text = "Lat/Long to UTM";
+            this.latLongToUTMToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.latLongToUTMToolStripMenuItem.Text = "Export to Geographic Coordinate";
             this.latLongToUTMToolStripMenuItem.Click += new System.EventHandler(this.latLongToUTMToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
@@ -1321,59 +1384,82 @@ namespace SurveyLineWinForm
             this.markerColorDialog.AnyColor = true;
             this.markerColorDialog.FullOpen = true;
             // 
-            // cmNumButton
+            // exportToolStripMenuItem
             // 
-            this.cmNumButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.cmNumButton.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmPasteXY,
-            this.toolStripSeparator1,
-            this.tsmCopy,
-            this.tsmCut,
-            this.tsmPaste,
-            this.tsmDelete});
-            this.cmNumButton.Name = "cmNumButton";
-            this.cmNumButton.Size = new System.Drawing.Size(153, 142);
-            this.cmNumButton.Opening += new System.ComponentModel.CancelEventHandler(this.cmNumButton_Opening);
+            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportToSurferToolStripMenuItem,
+            this.exportToTextFilestxtToolStripMenuItem});
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.exportToolStripMenuItem.Text = "Export";
             // 
-            // tsmCopy
+            // exportToTextFilestxtToolStripMenuItem
             // 
-            this.tsmCopy.Name = "tsmCopy";
-            this.tsmCopy.Size = new System.Drawing.Size(152, 22);
-            this.tsmCopy.Text = "&Copy";
-            this.tsmCopy.Click += new System.EventHandler(this.tsmCopy_Click);
+            this.exportToTextFilestxtToolStripMenuItem.Name = "exportToTextFilestxtToolStripMenuItem";
+            this.exportToTextFilestxtToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.exportToTextFilestxtToolStripMenuItem.Text = "Text Files (*.txt)";
             // 
-            // tsmCut
+            // exportToSurferToolStripMenuItem
             // 
-            this.tsmCut.Name = "tsmCut";
-            this.tsmCut.Size = new System.Drawing.Size(152, 22);
-            this.tsmCut.Text = "Cut";
-            this.tsmCut.Click += new System.EventHandler(this.tsmCut_Click);
+            this.exportToSurferToolStripMenuItem.Name = "exportToSurferToolStripMenuItem";
+            this.exportToSurferToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.exportToSurferToolStripMenuItem.Text = "Surfer Spreadsheet (*.bln)";
             // 
-            // tsmPaste
+            // openToolStripMenuItem
             // 
-            this.tsmPaste.Name = "tsmPaste";
-            this.tsmPaste.Size = new System.Drawing.Size(152, 22);
-            this.tsmPaste.Text = "&Paste";
-            this.tsmPaste.Click += new System.EventHandler(this.tsmPaste_Click);
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.openToolStripMenuItem.Text = "Open...";
             // 
-            // tsmPasteXY
+            // newToolStripMenuItem
             // 
-            this.tsmPasteXY.Name = "tsmPasteXY";
-            this.tsmPasteXY.Size = new System.Drawing.Size(152, 22);
-            this.tsmPasteXY.Text = "Paste (X, Y)";
-            this.tsmPasteXY.Click += new System.EventHandler(this.tsmPasteXY_Click);
+            this.newToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newWindowToolStripMenuItem,
+            this.currentWindowToolStripMenuItem});
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.newToolStripMenuItem.Text = "New";
             // 
-            // tsmDelete
+            // currentWindowToolStripMenuItem
             // 
-            this.tsmDelete.Name = "tsmDelete";
-            this.tsmDelete.Size = new System.Drawing.Size(152, 22);
-            this.tsmDelete.Text = "&Delete";
-            this.tsmDelete.Click += new System.EventHandler(this.tsmDelete_Click);
+            this.currentWindowToolStripMenuItem.Name = "currentWindowToolStripMenuItem";
+            this.currentWindowToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.currentWindowToolStripMenuItem.Text = "Existing Window";
             // 
-            // toolStripSeparator1
+            // newWindowToolStripMenuItem
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.newWindowToolStripMenuItem.Name = "newWindowToolStripMenuItem";
+            this.newWindowToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.newWindowToolStripMenuItem.Text = "New Window";
+            this.newWindowToolStripMenuItem.Click += new System.EventHandler(this.newWindowToolStripMenuItem_Click);
+            // 
+            // openDesignToolStripMenuItem
+            // 
+            this.openDesignToolStripMenuItem.Name = "openDesignToolStripMenuItem";
+            this.openDesignToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.openDesignToolStripMenuItem.Text = "Import Design...";
+            // 
+            // exportDesignToolStripMenuItem
+            // 
+            this.exportDesignToolStripMenuItem.Name = "exportDesignToolStripMenuItem";
+            this.exportDesignToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.exportDesignToolStripMenuItem.Text = "Export Design...";
+            // 
+            // saveToolStripMenuItem1
+            // 
+            this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
+            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(158, 22);
+            this.saveToolStripMenuItem1.Text = "Save As";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(155, 6);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(155, 6);
             // 
             // MainUI
             // 
@@ -1399,6 +1485,7 @@ namespace SurveyLineWinForm
             this.flowLayoutPanel2.ResumeLayout(false);
             this.flowLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numEasting)).EndInit();
+            this.cmNumButton.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numNorthing)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBearing)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numInterval)).EndInit();
@@ -1407,7 +1494,6 @@ namespace SurveyLineWinForm
             this.flowLayoutPanel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numMultiLineCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMultiLineSpacing)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.flowLayoutPanel4.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPagePlot.ResumeLayout(false);
@@ -1430,7 +1516,6 @@ namespace SurveyLineWinForm
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.cmNumButton.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1484,7 +1569,6 @@ namespace SurveyLineWinForm
         private ContextMenuStrip cmDatagrid;
         private ToolStripMenuItem toolStripMenuItemCopy;
         private ToolStripMenuItem toolStripMenuItemCopyAll;
-        private PictureBox pictureBox1;
         private TabControl tabControl1;
         private TabPage tabPageTable;
         private DataGridView dgvCoordinates;
@@ -1535,5 +1619,17 @@ namespace SurveyLineWinForm
         private ToolStripMenuItem tsmPasteXY;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripMenuItem tsmDelete;
+        private ToolStripMenuItem newToolStripMenuItem;
+        private ToolStripMenuItem currentWindowToolStripMenuItem;
+        private ToolStripMenuItem newWindowToolStripMenuItem;
+        private ToolStripMenuItem openToolStripMenuItem;
+        private ToolStripMenuItem saveToolStripMenuItem1;
+        private ToolStripMenuItem openDesignToolStripMenuItem;
+        private ToolStripMenuItem exportDesignToolStripMenuItem;
+        private ToolStripMenuItem exportToolStripMenuItem;
+        private ToolStripMenuItem exportToTextFilestxtToolStripMenuItem;
+        private ToolStripMenuItem exportToSurferToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator3;
+        private ToolStripSeparator toolStripSeparator4;
 	}
 }
