@@ -41,10 +41,10 @@ namespace SurveyLineWinForm
 		{
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainUI));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle65 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle59 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle63 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle64 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -91,7 +91,7 @@ namespace SurveyLineWinForm
             this.colStation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colXPos = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colYPos = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cmDatagrid = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemCopyAll = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -112,6 +112,18 @@ namespace SurveyLineWinForm
             this.lblStations = new System.Windows.Forms.Label();
             this.lblSpacing = new System.Windows.Forms.Label();
             this.lblDistance = new System.Windows.Forms.Label();
+            this.flowLayoutPanel6 = new System.Windows.Forms.FlowLayoutPanel();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.buttonLineColor = new System.Windows.Forms.Button();
+            this.buttonMarkerColor = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -124,20 +136,15 @@ namespace SurveyLineWinForm
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.saveToTxt = new System.Windows.Forms.SaveFileDialog();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.flowLayoutPanel6 = new System.Windows.Forms.FlowLayoutPanel();
-            this.buttonLineColor = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.lineColorDialog = new System.Windows.Forms.ColorDialog();
-            this.buttonMarkerColor = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
             this.markerColorDialog = new System.Windows.Forms.ColorDialog();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.cmNumButton = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmCut = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmPaste = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmPasteXY = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -160,17 +167,18 @@ namespace SurveyLineWinForm
             this.tabPagePlot.SuspendLayout();
             this.tabPageTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCoordinates)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
+            this.cmDatagrid.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.flowLayoutDesignProp.SuspendLayout();
             this.flowLayoutLabelProperty1.SuspendLayout();
             this.flowLayoutProperty1.SuspendLayout();
             this.flowLayoutLabelProperty2.SuspendLayout();
             this.flowLayoutProperty2.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
             this.flowLayoutPanel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
+            this.menuStrip1.SuspendLayout();
+            this.cmNumButton.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -182,7 +190,7 @@ namespace SurveyLineWinForm
             this.toolStripStatusLabelAuthor});
             this.statusStrip1.Location = new System.Drawing.Point(0, 458);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1165, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1260, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -203,7 +211,7 @@ namespace SurveyLineWinForm
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(823, 17);
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(1019, 17);
             this.toolStripStatusLabel2.Spring = true;
             // 
             // toolStripStatusLabelAuthor
@@ -234,7 +242,7 @@ namespace SurveyLineWinForm
             this.splitContainer1.Panel2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
             this.splitContainer1.Panel2.Controls.Add(this.groupBox3);
-            this.splitContainer1.Size = new System.Drawing.Size(1165, 434);
+            this.splitContainer1.Size = new System.Drawing.Size(1260, 434);
             this.splitContainer1.SplitterDistance = 219;
             this.splitContainer1.TabIndex = 2;
             // 
@@ -319,6 +327,7 @@ namespace SurveyLineWinForm
             // 
             // numEasting
             // 
+            this.numEasting.ContextMenuStrip = this.cmNumButton;
             this.numEasting.DecimalPlaces = 1;
             this.numEasting.Increment = new decimal(new int[] {
             100,
@@ -348,6 +357,7 @@ namespace SurveyLineWinForm
             // 
             // numNorthing
             // 
+            this.numNorthing.ContextMenuStrip = this.cmNumButton;
             this.numNorthing.DecimalPlaces = 1;
             this.numNorthing.Increment = new decimal(new int[] {
             100,
@@ -673,7 +683,7 @@ namespace SurveyLineWinForm
             this.tabControl1.Location = new System.Drawing.Point(7, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(924, 336);
+            this.tabControl1.Size = new System.Drawing.Size(1019, 336);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPagePlot
@@ -682,7 +692,7 @@ namespace SurveyLineWinForm
             this.tabPagePlot.Location = new System.Drawing.Point(4, 22);
             this.tabPagePlot.Name = "tabPagePlot";
             this.tabPagePlot.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPagePlot.Size = new System.Drawing.Size(916, 310);
+            this.tabPagePlot.Size = new System.Drawing.Size(1011, 310);
             this.tabPagePlot.TabIndex = 1;
             this.tabPagePlot.Text = "Survey Plot";
             this.tabPagePlot.UseVisualStyleBackColor = true;
@@ -711,7 +721,7 @@ namespace SurveyLineWinForm
             this.zgcSurveyPlot.ScrollMinX = 0D;
             this.zgcSurveyPlot.ScrollMinY = 0D;
             this.zgcSurveyPlot.ScrollMinY2 = 0D;
-            this.zgcSurveyPlot.Size = new System.Drawing.Size(910, 304);
+            this.zgcSurveyPlot.Size = new System.Drawing.Size(1005, 304);
             this.zgcSurveyPlot.TabIndex = 1;
             this.zgcSurveyPlot.ZoomModifierKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.None)));
             this.zgcSurveyPlot.Resize += new System.EventHandler(this.zgcSurveyPlot_Resize);
@@ -722,7 +732,7 @@ namespace SurveyLineWinForm
             this.tabPageTable.Location = new System.Drawing.Point(4, 22);
             this.tabPageTable.Name = "tabPageTable";
             this.tabPageTable.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTable.Size = new System.Drawing.Size(361, 310);
+            this.tabPageTable.Size = new System.Drawing.Size(1011, 310);
             this.tabPageTable.TabIndex = 0;
             this.tabPageTable.Text = "Table";
             this.tabPageTable.UseVisualStyleBackColor = true;
@@ -732,9 +742,6 @@ namespace SurveyLineWinForm
             this.dgvCoordinates.AllowUserToAddRows = false;
             this.dgvCoordinates.AllowUserToDeleteRows = false;
             this.dgvCoordinates.AllowUserToResizeColumns = false;
-            this.dgvCoordinates.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvCoordinates.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvCoordinates.BackgroundColor = System.Drawing.Color.WhiteSmoke;
             this.dgvCoordinates.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -743,19 +750,20 @@ namespace SurveyLineWinForm
             this.colStation,
             this.colXPos,
             this.colYPos});
-            this.dgvCoordinates.ContextMenuStrip = this.contextMenuStrip1;
-            dataGridViewCellStyle65.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle65.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle65.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle65.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle65.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle65.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle65.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCoordinates.DefaultCellStyle = dataGridViewCellStyle65;
+            this.dgvCoordinates.ContextMenuStrip = this.cmDatagrid;
+            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle26.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle26.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle26.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle26.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCoordinates.DefaultCellStyle = dataGridViewCellStyle26;
+            this.dgvCoordinates.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCoordinates.Location = new System.Drawing.Point(3, 3);
             this.dgvCoordinates.Name = "dgvCoordinates";
             this.dgvCoordinates.ReadOnly = true;
-            this.dgvCoordinates.Size = new System.Drawing.Size(358, 301);
+            this.dgvCoordinates.Size = new System.Drawing.Size(1005, 304);
             this.dgvCoordinates.TabIndex = 3;
             this.dgvCoordinates.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvCoordinates_CellMouseDown);
             // 
@@ -763,9 +771,9 @@ namespace SurveyLineWinForm
             // 
             this.colStation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colStation.DataPropertyName = "Name";
-            dataGridViewCellStyle59.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle59.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.colStation.DefaultCellStyle = dataGridViewCellStyle59;
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.colStation.DefaultCellStyle = dataGridViewCellStyle20;
             this.colStation.HeaderText = "Station";
             this.colStation.Name = "colStation";
             this.colStation.ReadOnly = true;
@@ -773,11 +781,11 @@ namespace SurveyLineWinForm
             // colXPos
             // 
             this.colXPos.DataPropertyName = "X";
-            dataGridViewCellStyle63.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle63.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle63.Format = "F3";
-            dataGridViewCellStyle63.NullValue = null;
-            this.colXPos.DefaultCellStyle = dataGridViewCellStyle63;
+            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle24.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle24.Format = "F3";
+            dataGridViewCellStyle24.NullValue = null;
+            this.colXPos.DefaultCellStyle = dataGridViewCellStyle24;
             this.colXPos.HeaderText = "X-Position";
             this.colXPos.Name = "colXPos";
             this.colXPos.ReadOnly = true;
@@ -785,21 +793,21 @@ namespace SurveyLineWinForm
             // colYPos
             // 
             this.colYPos.DataPropertyName = "Y";
-            dataGridViewCellStyle64.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle64.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle64.Format = "F3";
-            this.colYPos.DefaultCellStyle = dataGridViewCellStyle64;
+            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle25.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle25.Format = "F3";
+            this.colYPos.DefaultCellStyle = dataGridViewCellStyle25;
             this.colYPos.HeaderText = "Y-Position";
             this.colYPos.Name = "colYPos";
             this.colYPos.ReadOnly = true;
             // 
-            // contextMenuStrip1
+            // cmDatagrid
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmDatagrid.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemCopy,
             this.toolStripMenuItemCopyAll});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(120, 48);
+            this.cmDatagrid.Name = "contextMenuStrip1";
+            this.cmDatagrid.Size = new System.Drawing.Size(120, 48);
             // 
             // toolStripMenuItemCopy
             // 
@@ -824,7 +832,7 @@ namespace SurveyLineWinForm
             this.groupBox3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox3.Location = new System.Drawing.Point(8, 345);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(919, 82);
+            this.groupBox3.Size = new System.Drawing.Size(1014, 82);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Design Properties";
@@ -839,7 +847,7 @@ namespace SurveyLineWinForm
             this.flowLayoutDesignProp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutDesignProp.Location = new System.Drawing.Point(3, 17);
             this.flowLayoutDesignProp.Name = "flowLayoutDesignProp";
-            this.flowLayoutDesignProp.Size = new System.Drawing.Size(913, 62);
+            this.flowLayoutDesignProp.Size = new System.Drawing.Size(1008, 62);
             this.flowLayoutDesignProp.TabIndex = 0;
             this.flowLayoutDesignProp.WrapContents = false;
             // 
@@ -951,7 +959,6 @@ namespace SurveyLineWinForm
             this.label20.Size = new System.Drawing.Size(46, 13);
             this.label20.TabIndex = 0;
             this.label20.Text = "Stations";
-            this.label20.Click += new System.EventHandler(this.label20_Click);
             // 
             // label19
             // 
@@ -1019,99 +1026,6 @@ namespace SurveyLineWinForm
             this.lblDistance.Text = "value";
             this.lblDistance.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveToolStripMenuItem,
-            this.toolStripSeparator2,
-            this.exitToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "&File";
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-            this.saveToolStripMenuItem.Text = "&Save As";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(151, 6);
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-            this.exitToolStripMenuItem.Text = "E&xit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // toolsToolStripMenuItem
-            // 
-            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.latLongToUTMToolStripMenuItem});
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.toolsToolStripMenuItem.Text = "&Tools";
-            // 
-            // latLongToUTMToolStripMenuItem
-            // 
-            this.latLongToUTMToolStripMenuItem.Name = "latLongToUTMToolStripMenuItem";
-            this.latLongToUTMToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
-            this.latLongToUTMToolStripMenuItem.Text = "Lat/Long to UTM";
-            this.latLongToUTMToolStripMenuItem.Click += new System.EventHandler(this.latLongToUTMToolStripMenuItem_Click);
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.shortcutsToolStripMenuItem,
-            this.aboutToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "&Help";
-            // 
-            // shortcutsToolStripMenuItem
-            // 
-            this.shortcutsToolStripMenuItem.Name = "shortcutsToolStripMenuItem";
-            this.shortcutsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.shortcutsToolStripMenuItem.Text = "Help...";
-            this.shortcutsToolStripMenuItem.Click += new System.EventHandler(this.shortcutsToolStripMenuItem_Click);
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.aboutToolStripMenuItem.Text = "&About...";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.toolsToolStripMenuItem,
-            this.helpToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1165, 24);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // saveToTxt
-            // 
-            this.saveToTxt.Filter = "Text files (*.txt)|*.txt|DAT Files (*.dat)|*.dat|All files (*.*)|*.*";
-            this.saveToTxt.RestoreDirectory = true;
-            this.saveToTxt.Title = "Save Coordinates Table As";
-            this.saveToTxt.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
-            // 
-            // backgroundWorker1
-            // 
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
-            // 
             // flowLayoutPanel6
             // 
             this.flowLayoutPanel6.AutoSize = true;
@@ -1133,101 +1047,6 @@ namespace SurveyLineWinForm
             this.flowLayoutPanel6.Name = "flowLayoutPanel6";
             this.flowLayoutPanel6.Size = new System.Drawing.Size(470, 54);
             this.flowLayoutPanel6.TabIndex = 8;
-            // 
-            // buttonLineColor
-            // 
-            this.buttonLineColor.BackColor = System.Drawing.Color.Gainsboro;
-            this.buttonLineColor.FlatAppearance.BorderSize = 0;
-            this.buttonLineColor.Location = new System.Drawing.Point(186, 3);
-            this.buttonLineColor.Name = "buttonLineColor";
-            this.buttonLineColor.Size = new System.Drawing.Size(101, 20);
-            this.buttonLineColor.TabIndex = 1;
-            this.buttonLineColor.UseVisualStyleBackColor = false;
-            this.buttonLineColor.Click += new System.EventHandler(this.buttonLineColor_Click);
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(293, 6);
-            this.checkBox1.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(74, 17);
-            this.checkBox1.TabIndex = 2;
-            this.checkBox1.Text = "Show Line";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Checked = true;
-            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Location = new System.Drawing.Point(293, 31);
-            this.checkBox2.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(88, 17);
-            this.checkBox2.TabIndex = 3;
-            this.checkBox2.Text = "Show Marker";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(387, 6);
-            this.checkBox3.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(80, 17);
-            this.checkBox3.TabIndex = 4;
-            this.checkBox3.Text = "Show Label";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            // 
-            // lineColorDialog
-            // 
-            this.lineColorDialog.AnyColor = true;
-            this.lineColorDialog.FullOpen = true;
-            // 
-            // buttonMarkerColor
-            // 
-            this.buttonMarkerColor.BackColor = System.Drawing.Color.OrangeRed;
-            this.buttonMarkerColor.Location = new System.Drawing.Point(186, 29);
-            this.buttonMarkerColor.Name = "buttonMarkerColor";
-            this.buttonMarkerColor.Size = new System.Drawing.Size(101, 20);
-            this.buttonMarkerColor.TabIndex = 5;
-            this.buttonMarkerColor.UseVisualStyleBackColor = false;
-            this.buttonMarkerColor.Click += new System.EventHandler(this.buttonMarkerColor_Click);
-            // 
-            // label7
-            // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(125, 6);
-            this.label7.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(55, 13);
-            this.label7.TabIndex = 6;
-            this.label7.Text = "Line Color";
-            // 
-            // label18
-            // 
-            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label18.AutoSize = true;
-            this.flowLayoutPanel6.SetFlowBreak(this.label18, true);
-            this.label18.Location = new System.Drawing.Point(125, 31);
-            this.label18.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(55, 13);
-            this.label18.TabIndex = 7;
-            this.label18.Text = "Marker Fill";
-            // 
-            // markerColorDialog
-            // 
-            this.markerColorDialog.AnyColor = true;
-            this.markerColorDialog.FullOpen = true;
             // 
             // label21
             // 
@@ -1314,11 +1133,253 @@ namespace SurveyLineWinForm
             0,
             0});
             // 
+            // label7
+            // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(125, 6);
+            this.label7.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(55, 13);
+            this.label7.TabIndex = 6;
+            this.label7.Text = "Line Color";
+            // 
+            // label18
+            // 
+            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label18.AutoSize = true;
+            this.flowLayoutPanel6.SetFlowBreak(this.label18, true);
+            this.label18.Location = new System.Drawing.Point(125, 31);
+            this.label18.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(55, 13);
+            this.label18.TabIndex = 7;
+            this.label18.Text = "Marker Fill";
+            // 
+            // buttonLineColor
+            // 
+            this.buttonLineColor.BackColor = System.Drawing.Color.Gainsboro;
+            this.buttonLineColor.FlatAppearance.BorderSize = 0;
+            this.buttonLineColor.Location = new System.Drawing.Point(186, 3);
+            this.buttonLineColor.Name = "buttonLineColor";
+            this.buttonLineColor.Size = new System.Drawing.Size(101, 20);
+            this.buttonLineColor.TabIndex = 1;
+            this.buttonLineColor.UseVisualStyleBackColor = false;
+            this.buttonLineColor.Click += new System.EventHandler(this.buttonLineColor_Click);
+            // 
+            // buttonMarkerColor
+            // 
+            this.buttonMarkerColor.BackColor = System.Drawing.Color.OrangeRed;
+            this.buttonMarkerColor.Location = new System.Drawing.Point(186, 29);
+            this.buttonMarkerColor.Name = "buttonMarkerColor";
+            this.buttonMarkerColor.Size = new System.Drawing.Size(101, 20);
+            this.buttonMarkerColor.TabIndex = 5;
+            this.buttonMarkerColor.UseVisualStyleBackColor = false;
+            this.buttonMarkerColor.Click += new System.EventHandler(this.buttonMarkerColor_Click);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Location = new System.Drawing.Point(293, 6);
+            this.checkBox1.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(74, 17);
+            this.checkBox1.TabIndex = 2;
+            this.checkBox1.Text = "Show Line";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Checked = true;
+            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox2.Location = new System.Drawing.Point(293, 31);
+            this.checkBox2.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(88, 17);
+            this.checkBox2.TabIndex = 3;
+            this.checkBox2.Text = "Show Marker";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(387, 6);
+            this.checkBox3.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(80, 17);
+            this.checkBox3.TabIndex = 4;
+            this.checkBox3.Text = "Show Label";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "&File";
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.saveToolStripMenuItem.Text = "&Save As";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(151, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.exitToolStripMenuItem.Text = "E&xit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.latLongToUTMToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.toolsToolStripMenuItem.Text = "&Tools";
+            // 
+            // latLongToUTMToolStripMenuItem
+            // 
+            this.latLongToUTMToolStripMenuItem.Name = "latLongToUTMToolStripMenuItem";
+            this.latLongToUTMToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.latLongToUTMToolStripMenuItem.Text = "Lat/Long to UTM";
+            this.latLongToUTMToolStripMenuItem.Click += new System.EventHandler(this.latLongToUTMToolStripMenuItem_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.shortcutsToolStripMenuItem,
+            this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "&Help";
+            // 
+            // shortcutsToolStripMenuItem
+            // 
+            this.shortcutsToolStripMenuItem.Name = "shortcutsToolStripMenuItem";
+            this.shortcutsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.shortcutsToolStripMenuItem.Text = "Help...";
+            this.shortcutsToolStripMenuItem.Click += new System.EventHandler(this.shortcutsToolStripMenuItem_Click);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.aboutToolStripMenuItem.Text = "&About...";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.toolsToolStripMenuItem,
+            this.helpToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1260, 24);
+            this.menuStrip1.TabIndex = 0;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // saveToTxt
+            // 
+            this.saveToTxt.Filter = "Text files (*.txt)|*.txt|DAT Files (*.dat)|*.dat|All files (*.*)|*.*";
+            this.saveToTxt.RestoreDirectory = true;
+            this.saveToTxt.Title = "Save Coordinates Table As";
+            this.saveToTxt.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            // 
+            // lineColorDialog
+            // 
+            this.lineColorDialog.AnyColor = true;
+            this.lineColorDialog.FullOpen = true;
+            // 
+            // markerColorDialog
+            // 
+            this.markerColorDialog.AnyColor = true;
+            this.markerColorDialog.FullOpen = true;
+            // 
+            // cmNumButton
+            // 
+            this.cmNumButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.cmNumButton.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmPasteXY,
+            this.toolStripSeparator1,
+            this.tsmCopy,
+            this.tsmCut,
+            this.tsmPaste,
+            this.tsmDelete});
+            this.cmNumButton.Name = "cmNumButton";
+            this.cmNumButton.Size = new System.Drawing.Size(153, 142);
+            this.cmNumButton.Opening += new System.ComponentModel.CancelEventHandler(this.cmNumButton_Opening);
+            // 
+            // tsmCopy
+            // 
+            this.tsmCopy.Name = "tsmCopy";
+            this.tsmCopy.Size = new System.Drawing.Size(152, 22);
+            this.tsmCopy.Text = "&Copy";
+            this.tsmCopy.Click += new System.EventHandler(this.tsmCopy_Click);
+            // 
+            // tsmCut
+            // 
+            this.tsmCut.Name = "tsmCut";
+            this.tsmCut.Size = new System.Drawing.Size(152, 22);
+            this.tsmCut.Text = "Cut";
+            this.tsmCut.Click += new System.EventHandler(this.tsmCut_Click);
+            // 
+            // tsmPaste
+            // 
+            this.tsmPaste.Name = "tsmPaste";
+            this.tsmPaste.Size = new System.Drawing.Size(152, 22);
+            this.tsmPaste.Text = "&Paste";
+            this.tsmPaste.Click += new System.EventHandler(this.tsmPaste_Click);
+            // 
+            // tsmPasteXY
+            // 
+            this.tsmPasteXY.Name = "tsmPasteXY";
+            this.tsmPasteXY.Size = new System.Drawing.Size(152, 22);
+            this.tsmPasteXY.Text = "Paste (X, Y)";
+            this.tsmPasteXY.Click += new System.EventHandler(this.tsmPasteXY_Click);
+            // 
+            // tsmDelete
+            // 
+            this.tsmDelete.Name = "tsmDelete";
+            this.tsmDelete.Size = new System.Drawing.Size(152, 22);
+            this.tsmDelete.Text = "&Delete";
+            this.tsmDelete.Click += new System.EventHandler(this.tsmDelete_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            // 
             // MainUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1165, 480);
+            this.ClientSize = new System.Drawing.Size(1260, 480);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -1353,7 +1414,7 @@ namespace SurveyLineWinForm
             this.tabPagePlot.PerformLayout();
             this.tabPageTable.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCoordinates)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
+            this.cmDatagrid.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.flowLayoutDesignProp.ResumeLayout(false);
             this.flowLayoutDesignProp.PerformLayout();
@@ -1363,12 +1424,13 @@ namespace SurveyLineWinForm
             this.flowLayoutLabelProperty2.ResumeLayout(false);
             this.flowLayoutLabelProperty2.PerformLayout();
             this.flowLayoutProperty2.ResumeLayout(false);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             this.flowLayoutPanel6.ResumeLayout(false);
             this.flowLayoutPanel6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            this.cmNumButton.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1419,7 +1481,7 @@ namespace SurveyLineWinForm
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private Label label16;
         private ToolStripMenuItem shortcutsToolStripMenuItem;
-        private ContextMenuStrip contextMenuStrip1;
+        private ContextMenuStrip cmDatagrid;
         private ToolStripMenuItem toolStripMenuItemCopy;
         private ToolStripMenuItem toolStripMenuItemCopyAll;
         private PictureBox pictureBox1;
@@ -1466,5 +1528,12 @@ namespace SurveyLineWinForm
         private Label label22;
         private NumericUpDown numericUpDown1;
         private NumericUpDown numericUpDown3;
+        private ContextMenuStrip cmNumButton;
+        private ToolStripMenuItem tsmCopy;
+        private ToolStripMenuItem tsmCut;
+        private ToolStripMenuItem tsmPaste;
+        private ToolStripMenuItem tsmPasteXY;
+        private ToolStripSeparator toolStripSeparator1;
+        private ToolStripMenuItem tsmDelete;
 	}
 }

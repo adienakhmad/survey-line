@@ -15,24 +15,15 @@ namespace SurveyLineWinForm
     /// </summary>
     public partial class MainUI : Form
     {
-        #region Field Declarations
-
-        private SurveyFactory _surveyFactory;
-        private GraphPane _myPane;
-        
-        #endregion
-
         public MainUI()
         {
             InitializeComponent();
             ZedGraphSetup();
         }
 
-        
-
         private void MainForm_Load(object sender, EventArgs e)
         {
-            Size = new Size(630,530);
+            Size = new Size(630, 530);
             cboxMode.SelectedIndex = 0;
             CueProvider.SetCue(txtLineName, "Enter a name here..");
             DisableButtonOnLoad(true);
@@ -41,12 +32,20 @@ namespace SurveyLineWinForm
             SetStatusBarText("Ready.");
         }
 
+        #region Field Declarations
+
+        private SurveyFactory _surveyFactory;
+        private GraphPane _myPane;
+
+        #endregion
+
         #region Zedgraph Plotting Behavior
+
         private double _xScaleMax, _xScaleMin, _yScaleMax, _yScaleMin;
         private PlotStyle _plottingStyle;
 
         /// <summary>
-        /// Initial setup of Zedgraph Chart Control
+        ///     Initial setup of Zedgraph Chart Control
         /// </summary>
         private void ZedGraphSetup()
         {
@@ -95,11 +94,11 @@ namespace SurveyLineWinForm
             _myPane.Legend.IsVisible = false;
             _myPane.AxisChangeEvent += graphPane_AxisChangeEvent;
 
-            SetGraphScaleMaxMin(0,0,0,0);
+            SetGraphScaleMaxMin(0, 0, 0, 0);
         }
 
         /// <summary>
-        /// Plot StationListContainer into Zedgraph Chart Object
+        ///     Plot StationListContainer into Zedgraph Chart Object
         /// </summary>
         /// <param name="container"></param>
         /// <param name="style"></param>
@@ -112,7 +111,6 @@ namespace SurveyLineWinForm
             _yScaleMax = Double.MinValue;
             _yScaleMin = Double.MaxValue;
 
-            
 
             foreach (var line in container.Lines)
             {
@@ -138,7 +136,6 @@ namespace SurveyLineWinForm
                     {
                         _yScaleMin = station.Y;
                     }
-
                 }
 
                 var myCurve = _myPane.AddCurve(container.Design.Name, pointPairPlot, style.LineColor);
@@ -147,13 +144,13 @@ namespace SurveyLineWinForm
                 myCurve.Line.IsVisible = style.IsLineVisible;
             }
 
-          SetGraphScaleMaxMin(_xScaleMin, _xScaleMax, _yScaleMin, _yScaleMax);
-          _myPane.AxisChange();
-          zgcSurveyPlot.Invalidate();
+            SetGraphScaleMaxMin(_xScaleMin, _xScaleMax, _yScaleMin, _yScaleMax);
+            _myPane.AxisChange();
+            zgcSurveyPlot.Invalidate();
         }
 
         /// <summary>
-        /// Set mypane maximum and minimum axis.
+        ///     Set mypane maximum and minimum axis.
         /// </summary>
         /// <param name="xMin"></param>
         /// <param name="xMax"></param>
@@ -162,10 +159,7 @@ namespace SurveyLineWinForm
         private void SetGraphScaleMaxMin(double xMin, double xMax, double yMin, double yMax)
         {
             const double grace = 0.1;
-
-            Debug.WriteLine(string.Format("See Max Min X:{0}\t{1}", xMin, xMax));
-            Debug.WriteLine(string.Format("See Max Min Y:{0}\t{1}", yMin, yMax));
-
+            
             xMin -= ((xMax - xMin)*grace);
             xMax += ((xMax - xMin)*grace);
             yMax += ((yMax - yMin)*grace);
@@ -176,8 +170,6 @@ namespace SurveyLineWinForm
             _myPane.YAxis.Scale.Min = yMin;
             _myPane.YAxis.Scale.Max = yMax;
 
-            Debug.WriteLine(string.Format("Set Max Min X:{0}\t{1}", _myPane.XAxis.Scale.Min, _myPane.XAxis.Scale.Max));
-            Debug.WriteLine(string.Format("Set Max MinY:{0}\t{1}", _myPane.YAxis.Scale.Min, _myPane.YAxis.Scale.Max));
         }
 
 /*
@@ -221,45 +213,40 @@ namespace SurveyLineWinForm
             }
         }
 */
+
         private void graphPane_AxisChangeEvent(GraphPane pane)
         {
             SetScaleEqual();
         }
 
         /// <summary>
-        /// Scales so the x-axis and y-axis have 1:1 ratio
+        ///     Scales so the x-axis and y-axis have 1:1 ratio
         /// </summary>
         private void SetScaleEqual()
         {
-            double scaleX2 = (_myPane.XAxis.Scale.Max - _myPane.XAxis.Scale.Min) / _myPane.Rect.Width;
-            double scaleY2 = (_myPane.YAxis.Scale.Max - _myPane.YAxis.Scale.Min) / _myPane.Rect.Height;
-
-            Debug.WriteLine(string.Format("Rect:{0}\t{1}", _myPane.Chart.Rect.Height, _myPane.Chart.Rect.Width));
-            Debug.WriteLine(string.Format("Scale:{0}\t{1}", scaleX2, scaleY2));
+            var scaleX2 = (_myPane.XAxis.Scale.Max - _myPane.XAxis.Scale.Min)/_myPane.Rect.Width;
+            var scaleY2 = (_myPane.YAxis.Scale.Max - _myPane.YAxis.Scale.Min)/_myPane.Rect.Height;
 
             if (scaleX2 > scaleY2)
             {
-                double diff = _myPane.YAxis.Scale.Max - _myPane.YAxis.Scale.Min;
-                double newDiff = _myPane.Rect.Height * scaleX2;
-                _myPane.YAxis.Scale.Min -= (newDiff - diff) / 2.0;
-                _myPane.YAxis.Scale.Max += (newDiff - diff) / 2.0;
-
-
+                var diff = _myPane.YAxis.Scale.Max - _myPane.YAxis.Scale.Min;
+                var newDiff = _myPane.Rect.Height*scaleX2;
+                _myPane.YAxis.Scale.Min -= (newDiff - diff)/2.0;
+                _myPane.YAxis.Scale.Max += (newDiff - diff)/2.0;
             }
             else if (scaleY2 > scaleX2)
             {
-                double diff = _myPane.XAxis.Scale.Max - _myPane.XAxis.Scale.Min;
-                double newDiff = _myPane.Rect.Width * scaleY2;
-                _myPane.XAxis.Scale.Min -= (newDiff - diff) / 2.0;
-                _myPane.XAxis.Scale.Max += (newDiff - diff) / 2.0;
+                var diff = _myPane.XAxis.Scale.Max - _myPane.XAxis.Scale.Min;
+                var newDiff = _myPane.Rect.Width*scaleY2;
+                _myPane.XAxis.Scale.Min -= (newDiff - diff)/2.0;
+                _myPane.XAxis.Scale.Max += (newDiff - diff)/2.0;
             }
 
             // Recompute the grid lines
-            float scaleFactor = _myPane.CalcScaleFactor();
-            Graphics g = zgcSurveyPlot.CreateGraphics();
+            var scaleFactor = _myPane.CalcScaleFactor();
+            var g = zgcSurveyPlot.CreateGraphics();
             _myPane.XAxis.Scale.PickScale(_myPane, g, scaleFactor);
             _myPane.YAxis.Scale.PickScale(_myPane, g, scaleFactor);
-            
         }
 
 /*
@@ -306,8 +293,7 @@ namespace SurveyLineWinForm
             }
 
             SetGraphScaleMaxMin(_xScaleMin, _xScaleMax, _yScaleMin, _yScaleMax);
-            SetScaleEqual();
-
+            _myPane.AxisChange();
         }
 
         #endregion
@@ -328,6 +314,7 @@ namespace SurveyLineWinForm
                         Convert.ToDouble(numNorthing.Value), Convert.ToDouble(numBearing.Value),
                         Convert.ToDouble(numInterval.Value), (int) numStation.Value);
                     break;
+
                     #endregion
 
                 case SurveyDesign.DesignType.MultiLine:
@@ -350,7 +337,7 @@ namespace SurveyLineWinForm
                     break;
 
                     #endregion
-                    
+
                 case SurveyDesign.DesignType.FixedGrid:
 
                     #region Case Fixed Grid
@@ -383,7 +370,7 @@ namespace SurveyLineWinForm
         }
 
         /// <summary>
-        /// Main method
+        ///     Main method
         /// </summary>
         private void StartMainMethod()
         {
@@ -398,7 +385,6 @@ namespace SurveyLineWinForm
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             e.Result = _surveyFactory.BuildSurveyPoints();
-            
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -433,13 +419,10 @@ namespace SurveyLineWinForm
             DisableButtonOnWork(false);
             toolStripProgressBar1.Visible = false;
             //          SetLineStatus(line1, cboxMultiMode.Checked);
-                
-            
-
         }
 
         /// <summary>
-        /// What Happen when generate button is clicked
+        ///     What Happen when generate button is clicked
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -467,8 +450,8 @@ namespace SurveyLineWinForm
                     lblStations.Text = string.Format("{0} points", design.StationCount);
 
                     lblDistanceName.Text = @"Distance";
-                    double distance = ((design.StationCount - 1)*design.Interval);
-                    string unit = distance > 999 ? "Km" : "m";
+                    var distance = ((design.StationCount - 1)*design.Interval);
+                    var unit = distance > 999 ? "Km" : "m";
                     distance = distance > 999 ? distance/1000 : distance;
                     lblDistance.Text = string.Format("{0} {1}", distance, unit);
 
@@ -491,10 +474,10 @@ namespace SurveyLineWinForm
 
                     lblDistanceName.Text = @"Area";
 
-                    double length = ((design.StationCount - 1)*design.Interval);
-                    double height = ((design.LineCount - 1)*design.LineSpacing);
-                    string lengthUnit = length > 999 ? "Km" : "m";
-                    string heightUnit = height > 999 ? "Km" : "m";
+                    var length = ((design.StationCount - 1)*design.Interval);
+                    var height = ((design.LineCount - 1)*design.LineSpacing);
+                    var lengthUnit = length > 999 ? "Km" : "m";
+                    var heightUnit = height > 999 ? "Km" : "m";
                     length = lengthUnit == "Km" ? length/1000 : length;
                     height = heightUnit == "Km" ? height/1000 : height;
 
@@ -502,7 +485,6 @@ namespace SurveyLineWinForm
                     break;
 
                     #endregion
-
             }
         }
 
@@ -540,7 +522,7 @@ namespace SurveyLineWinForm
 
         private void cboxMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch ((SurveyDesign.DesignType)cboxMode.SelectedIndex)
+            switch ((SurveyDesign.DesignType) cboxMode.SelectedIndex)
             {
                 case SurveyDesign.DesignType.SingleLine:
 
@@ -549,7 +531,7 @@ namespace SurveyLineWinForm
                     dropDownDirection.Enabled = false;
 
                     break;
-                    
+
 
                 case SurveyDesign.DesignType.MultiLine:
 
@@ -557,7 +539,7 @@ namespace SurveyLineWinForm
                     numMultiLineSpacing.Enabled = true;
                     dropDownDirection.Enabled = true;
                     break;
-                    
+
 
                 case SurveyDesign.DesignType.FixedGrid:
 
@@ -586,7 +568,7 @@ namespace SurveyLineWinForm
         #endregion
 
         #region All button click event
-        
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -613,7 +595,7 @@ namespace SurveyLineWinForm
 
             // select all columns
             dgvCoordinates.RowHeadersVisible = false;
-            
+
             foreach (DataGridViewColumn c in dgvCoordinates.Columns)
             {
                 c.Selected = true;
@@ -632,24 +614,23 @@ namespace SurveyLineWinForm
             {
                 c.SortMode = DataGridViewColumnSortMode.Automatic;
             }
-            
+
             // Finally a message.
             MessageBox.Show(@"Copied to clipboard.");
         }
 
         private void shortcutsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Help.ShowHelp(this,"SurveyLineHelp.chm");
+            Help.ShowHelp(this, "SurveyLineHelp.chm");
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            Help.ShowHelp(this, "SurveyLineHelp.chm","Direction.htm");
+            Help.ShowHelp(this, "SurveyLineHelp.chm", "Direction.htm");
         }
 
         private void btnMoreSetup_Click(object sender, EventArgs e)
         {
-
         }
 
         private void toolStripMenuItemCopy_Click(object sender, EventArgs e)
@@ -667,7 +648,9 @@ namespace SurveyLineWinForm
         #endregion
 
         #region Survey Name Textbox Behavior
+
         private bool _alreadyFocused;
+
         private void txtLineName_Enter(object sender, EventArgs e)
         {
             if (MouseButtons != MouseButtons.None) return;
@@ -691,9 +674,10 @@ namespace SurveyLineWinForm
         {
             if ((e.KeyCode == Keys.Enter) || (e.KeyCode == Keys.Return))
             {
-                SelectNextControl((Control)sender, true, true, true, true);
+                SelectNextControl((Control) sender, true, true, true, true);
             }
-        } 
+        }
+
         #endregion
 
         private void NumOnFocus(object sender, EventArgs e)
@@ -709,12 +693,6 @@ namespace SurveyLineWinForm
                 dgvCoordinates.CurrentCell = dgvCoordinates[e.ColumnIndex, e.RowIndex];
         }
 
-        private void label20_Click(object sender, EventArgs e)
-        {
-            Debug.WriteLine(string.Format("X:{0}\t{1}", _myPane.XAxis.Scale.Min, _myPane.XAxis.Scale.Max));
-            Debug.WriteLine(string.Format("Y:{0}\t{1}", _myPane.YAxis.Scale.Min, _myPane.XAxis.Scale.Max));
-        }
-
         private void buttonLineColor_Click(object sender, EventArgs e)
         {
             var dlgresult = lineColorDialog.ShowDialog();
@@ -722,10 +700,7 @@ namespace SurveyLineWinForm
             if (dlgresult == DialogResult.OK)
             {
                 buttonLineColor.BackColor = lineColorDialog.Color;
-               
             }
-
-            
         }
 
         private void buttonMarkerColor_Click(object sender, EventArgs e)
@@ -736,6 +711,95 @@ namespace SurveyLineWinForm
             {
                 buttonMarkerColor.BackColor = markerColorDialog.Color;
             }
+        }
+
+        private void cmNumButton_Opening(object sender, CancelEventArgs e)
+        {
+            var controlSender = sender as ContextMenuStrip;
+            if (controlSender == null) return;
+            var controlOwner = controlSender.SourceControl as NumericUpDown;
+            if (controlOwner == null) return;
+            controlOwner.Select();
+            controlOwner.Select(0, controlOwner.Text.Length);
+        }
+
+        private void tsmCopy_Click(object sender, EventArgs e)
+        {
+            var tsm = sender as ToolStripMenuItem;
+            if (tsm == null) return;
+            var cms = tsm.Owner as ContextMenuStrip;
+            if (cms == null) return;
+            var nup = cms.SourceControl as NumericUpDown;
+
+            if (nup != null) Clipboard.SetText(nup.Text);
+        }
+
+        private void tsmCut_Click(object sender, EventArgs e)
+        {
+            var tsm = sender as ToolStripMenuItem;
+            if (tsm == null) return;
+            var cms = tsm.Owner as ContextMenuStrip;
+            if (cms == null) return;
+            var nup = cms.SourceControl as NumericUpDown;
+            if (nup == null) return;
+
+            Clipboard.SetText(nup.Text);
+            nup.Text = String.Empty;
+        }
+
+        private void tsmDelete_Click(object sender, EventArgs e)
+        {
+            var tsm = sender as ToolStripMenuItem;
+            if (tsm == null) return;
+            var cms = tsm.Owner as ContextMenuStrip;
+            if (cms == null) return;
+            var nup = cms.SourceControl as NumericUpDown;
+            if (nup == null) return;
+
+            nup.Text = String.Empty;
+        }
+
+        private void tsmPaste_Click(object sender, EventArgs e)
+        {
+            var tsm = sender as ToolStripMenuItem;
+            if (tsm == null) return;
+            var cms = tsm.Owner as ContextMenuStrip;
+            if (cms == null) return;
+            var nup = cms.SourceControl as NumericUpDown;
+            if (nup == null) return;
+
+            if (Clipboard.ContainsText())
+            {
+                nup.Text = Clipboard.GetText();
+            }
+        }
+
+        private void tsmPasteXY_Click(object sender, EventArgs e)
+        {
+            if (!Clipboard.ContainsText()) return;
+            var text = Clipboard.GetText();
+            var delimiter = new[] {'\t', ' ', ',',';'};
+            var splitted = text.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
+
+            if (splitted.Length == 2)
+            {
+                Decimal easting;
+                Decimal northing;
+
+                if (Decimal.TryParse(splitted[0], out easting) && Decimal.TryParse(splitted[1], out northing))
+                {
+                    numEasting.Value = Decimal.Parse(splitted[0]);
+                    numNorthing.Value = Decimal.Parse(splitted[1]);
+                }
+                else 
+                    MessageBox.Show(@"The text you are trying to paste is not a valid coordinate.");
+            }
+
+            else
+                MessageBox.Show(@"The text you are trying to paste is not a valid coordinate.");
+            
+
+            
         }
     }
 }
