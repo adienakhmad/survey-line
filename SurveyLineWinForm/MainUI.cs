@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using SurveyLine.Core;
 using SurveyLineWinForm.Forms;
@@ -165,6 +166,7 @@ namespace SurveyLineWinForm
                 else
                 {
                     var result = e.Result as StationListContainer;
+                    GrabPlottingStyle();
                     Plot(result, _plottingStyle);
                     tabControl1.SelectedTab = tabPagePlot;
                     // ReSharper disable once PossibleNullReferenceException
@@ -250,6 +252,28 @@ namespace SurveyLineWinForm
             SetGraphScaleMaxMin(0, 0, 0, 0);
         }
 
+        private void GrabPlottingStyle()
+        {
+            _plottingStyle = new PlotStyle(lineColorDialog.Color, checkboxShowLine.Checked, true, SymbolType.Square,
+                markerColorDialog.Color, (float) nupLineWidth.Value, (float) nupMarkerSize.Value,
+                checkboxShowMarker.Checked);
+        }
+
+        private void UpdatePlottingStyle()
+        {
+            GrabPlottingStyle();
+            foreach (var lineItem in zgcSurveyPlot.GraphPane.CurveList.Cast<LineItem>().Where(lineItem => lineItem != null))
+            {
+                lineItem.Color = _plottingStyle.LineColor;
+                lineItem.Line.IsVisible = _plottingStyle.IsLineVisible;
+                lineItem.Line.Width = _plottingStyle.LineWidth;
+                lineItem.Line.IsAntiAlias = _plottingStyle.IsAntiAlias;
+                lineItem.Symbol = _plottingStyle.Marker;
+            }
+
+            zgcSurveyPlot.Refresh();
+        }
+
         /// <summary>
         ///     Plot StationListContainer into Zedgraph Chart Object
         /// </summary>
@@ -295,6 +319,7 @@ namespace SurveyLineWinForm
                 myCurve.Symbol = style.Marker;
                 myCurve.Line.IsAntiAlias = style.IsAntiAlias;
                 myCurve.Line.IsVisible = style.IsLineVisible;
+                myCurve.Line.Width = style.LineWidth;
             }
 
             SetGraphScaleMaxMin(_xScaleMin, _xScaleMax, _yScaleMin, _yScaleMax);
@@ -679,11 +704,6 @@ namespace SurveyLineWinForm
             Help.ShowHelp(this, "SurveyLineHelp.chm");
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            Help.ShowHelp(this, "SurveyLineHelp.chm", "Direction.htm");
-        }
-
         private void btnMoreSetup_Click(object sender, EventArgs e)
         {
         }
@@ -757,6 +777,7 @@ namespace SurveyLineWinForm
             if (dlgresult == DialogResult.OK)
             {
                 buttonLineColor.BackColor = lineColorDialog.Color;
+                UpdatePlottingStyle();
             }
         }
 
@@ -767,6 +788,7 @@ namespace SurveyLineWinForm
             if (dlgresult == DialogResult.OK)
             {
                 buttonMarkerColor.BackColor = markerColorDialog.Color;
+                UpdatePlottingStyle();
             }
         }
 
@@ -875,6 +897,11 @@ namespace SurveyLineWinForm
         private void newWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start("survey-line.exe");
+        }
+
+        private void PlottingStyleChanged(object sender, EventArgs e)
+        {
+            UpdatePlottingStyle();
         }
 
     }

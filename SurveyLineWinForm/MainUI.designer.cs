@@ -121,18 +121,30 @@ namespace SurveyLineWinForm
             this.flowLayoutPanel6 = new System.Windows.Forms.FlowLayoutPanel();
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.nupLineWidth = new System.Windows.Forms.NumericUpDown();
+            this.nupMarkerSize = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.buttonLineColor = new System.Windows.Forms.Button();
             this.buttonMarkerColor = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkboxShowLine = new System.Windows.Forms.CheckBox();
+            this.checkboxShowMarker = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.currentWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.openDesignToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportDesignToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToSurferToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToTextFilestxtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.latLongToUTMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -144,18 +156,6 @@ namespace SurveyLineWinForm
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.lineColorDialog = new System.Windows.Forms.ColorDialog();
             this.markerColorDialog = new System.Windows.Forms.ColorDialog();
-            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportToTextFilestxtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportToSurferToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.currentWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openDesignToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportDesignToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -186,8 +186,8 @@ namespace SurveyLineWinForm
             this.flowLayoutLabelProperty2.SuspendLayout();
             this.flowLayoutProperty2.SuspendLayout();
             this.flowLayoutPanel6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupLineWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupMarkerSize)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -788,7 +788,7 @@ namespace SurveyLineWinForm
             this.tabPageTable.Location = new System.Drawing.Point(4, 22);
             this.tabPageTable.Name = "tabPageTable";
             this.tabPageTable.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTable.Size = new System.Drawing.Size(1011, 310);
+            this.tabPageTable.Size = new System.Drawing.Size(1001, 310);
             this.tabPageTable.TabIndex = 0;
             this.tabPageTable.Text = "Table";
             this.tabPageTable.UseVisualStyleBackColor = true;
@@ -819,7 +819,7 @@ namespace SurveyLineWinForm
             this.dgvCoordinates.Location = new System.Drawing.Point(3, 3);
             this.dgvCoordinates.Name = "dgvCoordinates";
             this.dgvCoordinates.ReadOnly = true;
-            this.dgvCoordinates.Size = new System.Drawing.Size(1005, 304);
+            this.dgvCoordinates.Size = new System.Drawing.Size(995, 304);
             this.dgvCoordinates.TabIndex = 3;
             this.dgvCoordinates.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvCoordinates_CellMouseDown);
             // 
@@ -1087,14 +1087,14 @@ namespace SurveyLineWinForm
             this.flowLayoutPanel6.AutoSize = true;
             this.flowLayoutPanel6.Controls.Add(this.label21);
             this.flowLayoutPanel6.Controls.Add(this.label22);
-            this.flowLayoutPanel6.Controls.Add(this.numericUpDown1);
-            this.flowLayoutPanel6.Controls.Add(this.numericUpDown3);
+            this.flowLayoutPanel6.Controls.Add(this.nupLineWidth);
+            this.flowLayoutPanel6.Controls.Add(this.nupMarkerSize);
             this.flowLayoutPanel6.Controls.Add(this.label7);
             this.flowLayoutPanel6.Controls.Add(this.label18);
             this.flowLayoutPanel6.Controls.Add(this.buttonLineColor);
             this.flowLayoutPanel6.Controls.Add(this.buttonMarkerColor);
-            this.flowLayoutPanel6.Controls.Add(this.checkBox1);
-            this.flowLayoutPanel6.Controls.Add(this.checkBox2);
+            this.flowLayoutPanel6.Controls.Add(this.checkboxShowLine);
+            this.flowLayoutPanel6.Controls.Add(this.checkboxShowMarker);
             this.flowLayoutPanel6.Controls.Add(this.checkBox3);
             this.flowLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel6.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
@@ -1131,63 +1131,65 @@ namespace SurveyLineWinForm
             this.label22.TabIndex = 9;
             this.label22.Text = "Marker Size";
             // 
-            // numericUpDown1
+            // nupLineWidth
             // 
-            this.numericUpDown1.DecimalPlaces = 1;
-            this.numericUpDown1.Increment = new decimal(new int[] {
+            this.nupLineWidth.DecimalPlaces = 1;
+            this.nupLineWidth.Increment = new decimal(new int[] {
             5,
             0,
             0,
             65536});
-            this.numericUpDown1.Location = new System.Drawing.Point(71, 3);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.nupLineWidth.Location = new System.Drawing.Point(71, 3);
+            this.nupLineWidth.Maximum = new decimal(new int[] {
             15,
             0,
             0,
             0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.nupLineWidth.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(48, 21);
-            this.numericUpDown1.TabIndex = 10;
-            this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numericUpDown1.Value = new decimal(new int[] {
-            2,
+            this.nupLineWidth.Name = "nupLineWidth";
+            this.nupLineWidth.Size = new System.Drawing.Size(48, 21);
+            this.nupLineWidth.TabIndex = 10;
+            this.nupLineWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nupLineWidth.Value = new decimal(new int[] {
+            15,
             0,
             0,
-            0});
+            65536});
+            this.nupLineWidth.ValueChanged += new System.EventHandler(this.PlottingStyleChanged);
             // 
-            // numericUpDown3
+            // nupMarkerSize
             // 
-            this.numericUpDown3.DecimalPlaces = 1;
-            this.numericUpDown3.Increment = new decimal(new int[] {
+            this.nupMarkerSize.DecimalPlaces = 1;
+            this.nupMarkerSize.Increment = new decimal(new int[] {
             5,
             0,
             0,
             65536});
-            this.numericUpDown3.Location = new System.Drawing.Point(71, 30);
-            this.numericUpDown3.Maximum = new decimal(new int[] {
+            this.nupMarkerSize.Location = new System.Drawing.Point(71, 30);
+            this.nupMarkerSize.Maximum = new decimal(new int[] {
             15,
             0,
             0,
             0});
-            this.numericUpDown3.Minimum = new decimal(new int[] {
+            this.nupMarkerSize.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(48, 21);
-            this.numericUpDown3.TabIndex = 12;
-            this.numericUpDown3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numericUpDown3.Value = new decimal(new int[] {
-            2,
+            this.nupMarkerSize.Name = "nupMarkerSize";
+            this.nupMarkerSize.Size = new System.Drawing.Size(48, 21);
+            this.nupMarkerSize.TabIndex = 12;
+            this.nupMarkerSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nupMarkerSize.Value = new decimal(new int[] {
+            5,
             0,
             0,
             0});
+            this.nupMarkerSize.ValueChanged += new System.EventHandler(this.PlottingStyleChanged);
             // 
             // label7
             // 
@@ -1237,31 +1239,33 @@ namespace SurveyLineWinForm
             this.buttonMarkerColor.UseVisualStyleBackColor = false;
             this.buttonMarkerColor.Click += new System.EventHandler(this.buttonMarkerColor_Click);
             // 
-            // checkBox1
+            // checkboxShowLine
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(293, 6);
-            this.checkBox1.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(74, 17);
-            this.checkBox1.TabIndex = 2;
-            this.checkBox1.Text = "Show Line";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkboxShowLine.AutoSize = true;
+            this.checkboxShowLine.Checked = true;
+            this.checkboxShowLine.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkboxShowLine.Location = new System.Drawing.Point(293, 6);
+            this.checkboxShowLine.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
+            this.checkboxShowLine.Name = "checkboxShowLine";
+            this.checkboxShowLine.Size = new System.Drawing.Size(74, 17);
+            this.checkboxShowLine.TabIndex = 2;
+            this.checkboxShowLine.Text = "Show Line";
+            this.checkboxShowLine.UseVisualStyleBackColor = true;
+            this.checkboxShowLine.CheckedChanged += new System.EventHandler(this.PlottingStyleChanged);
             // 
-            // checkBox2
+            // checkboxShowMarker
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Checked = true;
-            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Location = new System.Drawing.Point(293, 31);
-            this.checkBox2.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(88, 17);
-            this.checkBox2.TabIndex = 3;
-            this.checkBox2.Text = "Show Marker";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkboxShowMarker.AutoSize = true;
+            this.checkboxShowMarker.Checked = true;
+            this.checkboxShowMarker.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkboxShowMarker.Location = new System.Drawing.Point(293, 31);
+            this.checkboxShowMarker.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
+            this.checkboxShowMarker.Name = "checkboxShowMarker";
+            this.checkboxShowMarker.Size = new System.Drawing.Size(88, 17);
+            this.checkboxShowMarker.TabIndex = 3;
+            this.checkboxShowMarker.Text = "Show Marker";
+            this.checkboxShowMarker.UseVisualStyleBackColor = true;
+            this.checkboxShowMarker.CheckedChanged += new System.EventHandler(this.PlottingStyleChanged);
             // 
             // checkBox3
             // 
@@ -1292,6 +1296,34 @@ namespace SurveyLineWinForm
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newWindowToolStripMenuItem,
+            this.currentWindowToolStripMenuItem});
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.newToolStripMenuItem.Text = "New";
+            // 
+            // newWindowToolStripMenuItem
+            // 
+            this.newWindowToolStripMenuItem.Name = "newWindowToolStripMenuItem";
+            this.newWindowToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.newWindowToolStripMenuItem.Text = "New Window";
+            this.newWindowToolStripMenuItem.Click += new System.EventHandler(this.newWindowToolStripMenuItem_Click);
+            // 
+            // currentWindowToolStripMenuItem
+            // 
+            this.currentWindowToolStripMenuItem.Name = "currentWindowToolStripMenuItem";
+            this.currentWindowToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.currentWindowToolStripMenuItem.Text = "Existing Window";
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.openToolStripMenuItem.Text = "Open...";
+            // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -1301,10 +1333,59 @@ namespace SurveyLineWinForm
             this.saveToolStripMenuItem.Text = "&Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
+            // saveToolStripMenuItem1
+            // 
+            this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
+            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(158, 22);
+            this.saveToolStripMenuItem1.Text = "Save As";
+            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(155, 6);
+            // 
+            // openDesignToolStripMenuItem
+            // 
+            this.openDesignToolStripMenuItem.Name = "openDesignToolStripMenuItem";
+            this.openDesignToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.openDesignToolStripMenuItem.Text = "Import Design...";
+            // 
+            // exportDesignToolStripMenuItem
+            // 
+            this.exportDesignToolStripMenuItem.Name = "exportDesignToolStripMenuItem";
+            this.exportDesignToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.exportDesignToolStripMenuItem.Text = "Export Design...";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(155, 6);
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportToSurferToolStripMenuItem,
+            this.exportToTextFilestxtToolStripMenuItem});
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.exportToolStripMenuItem.Text = "Export";
+            // 
+            // exportToSurferToolStripMenuItem
+            // 
+            this.exportToSurferToolStripMenuItem.Name = "exportToSurferToolStripMenuItem";
+            this.exportToSurferToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.exportToSurferToolStripMenuItem.Text = "Surfer Spreadsheet (*.bln)";
+            // 
+            // exportToTextFilestxtToolStripMenuItem
+            // 
+            this.exportToTextFilestxtToolStripMenuItem.Name = "exportToTextFilestxtToolStripMenuItem";
+            this.exportToTextFilestxtToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.exportToTextFilestxtToolStripMenuItem.Text = "Text Files (*.txt)";
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(155, 6);
             // 
             // exitToolStripMenuItem
             // 
@@ -1340,14 +1421,14 @@ namespace SurveyLineWinForm
             // shortcutsToolStripMenuItem
             // 
             this.shortcutsToolStripMenuItem.Name = "shortcutsToolStripMenuItem";
-            this.shortcutsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.shortcutsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.shortcutsToolStripMenuItem.Text = "Help...";
             this.shortcutsToolStripMenuItem.Click += new System.EventHandler(this.shortcutsToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "&About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -1378,89 +1459,14 @@ namespace SurveyLineWinForm
             // lineColorDialog
             // 
             this.lineColorDialog.AnyColor = true;
+            this.lineColorDialog.Color = System.Drawing.Color.Gainsboro;
             this.lineColorDialog.FullOpen = true;
             // 
             // markerColorDialog
             // 
             this.markerColorDialog.AnyColor = true;
+            this.markerColorDialog.Color = System.Drawing.Color.OrangeRed;
             this.markerColorDialog.FullOpen = true;
-            // 
-            // exportToolStripMenuItem
-            // 
-            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exportToSurferToolStripMenuItem,
-            this.exportToTextFilestxtToolStripMenuItem});
-            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.exportToolStripMenuItem.Text = "Export";
-            // 
-            // exportToTextFilestxtToolStripMenuItem
-            // 
-            this.exportToTextFilestxtToolStripMenuItem.Name = "exportToTextFilestxtToolStripMenuItem";
-            this.exportToTextFilestxtToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
-            this.exportToTextFilestxtToolStripMenuItem.Text = "Text Files (*.txt)";
-            // 
-            // exportToSurferToolStripMenuItem
-            // 
-            this.exportToSurferToolStripMenuItem.Name = "exportToSurferToolStripMenuItem";
-            this.exportToSurferToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
-            this.exportToSurferToolStripMenuItem.Text = "Surfer Spreadsheet (*.bln)";
-            // 
-            // openToolStripMenuItem
-            // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.openToolStripMenuItem.Text = "Open...";
-            // 
-            // newToolStripMenuItem
-            // 
-            this.newToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newWindowToolStripMenuItem,
-            this.currentWindowToolStripMenuItem});
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.newToolStripMenuItem.Text = "New";
-            // 
-            // currentWindowToolStripMenuItem
-            // 
-            this.currentWindowToolStripMenuItem.Name = "currentWindowToolStripMenuItem";
-            this.currentWindowToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.currentWindowToolStripMenuItem.Text = "Existing Window";
-            // 
-            // newWindowToolStripMenuItem
-            // 
-            this.newWindowToolStripMenuItem.Name = "newWindowToolStripMenuItem";
-            this.newWindowToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.newWindowToolStripMenuItem.Text = "New Window";
-            this.newWindowToolStripMenuItem.Click += new System.EventHandler(this.newWindowToolStripMenuItem_Click);
-            // 
-            // openDesignToolStripMenuItem
-            // 
-            this.openDesignToolStripMenuItem.Name = "openDesignToolStripMenuItem";
-            this.openDesignToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.openDesignToolStripMenuItem.Text = "Import Design...";
-            // 
-            // exportDesignToolStripMenuItem
-            // 
-            this.exportDesignToolStripMenuItem.Name = "exportDesignToolStripMenuItem";
-            this.exportDesignToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.exportDesignToolStripMenuItem.Text = "Export Design...";
-            // 
-            // saveToolStripMenuItem1
-            // 
-            this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(158, 22);
-            this.saveToolStripMenuItem1.Text = "Save As";
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(155, 6);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(155, 6);
             // 
             // MainUI
             // 
@@ -1513,8 +1519,8 @@ namespace SurveyLineWinForm
             this.flowLayoutProperty2.ResumeLayout(false);
             this.flowLayoutPanel6.ResumeLayout(false);
             this.flowLayoutPanel6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupLineWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupMarkerSize)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -1601,8 +1607,8 @@ namespace SurveyLineWinForm
         private Label lblDistance;
         private FlowLayoutPanel flowLayoutPanel6;
         private Button buttonLineColor;
-        private CheckBox checkBox1;
-        private CheckBox checkBox2;
+        private CheckBox checkboxShowLine;
+        private CheckBox checkboxShowMarker;
         private CheckBox checkBox3;
         private ColorDialog lineColorDialog;
         private Button buttonMarkerColor;
@@ -1611,8 +1617,8 @@ namespace SurveyLineWinForm
         private ColorDialog markerColorDialog;
         private Label label21;
         private Label label22;
-        private NumericUpDown numericUpDown1;
-        private NumericUpDown numericUpDown3;
+        private NumericUpDown nupLineWidth;
+        private NumericUpDown nupMarkerSize;
         private ContextMenuStrip cmNumButton;
         private ToolStripMenuItem tsmCopy;
         private ToolStripMenuItem tsmCut;
