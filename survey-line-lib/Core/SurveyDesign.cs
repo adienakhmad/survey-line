@@ -5,7 +5,7 @@ namespace SurveyLine.Core
 {
     public class SurveyDesign
     {
-        public enum DesignType { SingleLine, MultiLine, FixedGrid}
+        public enum DesignType { SingleLine, MultiLine, RectangularGrid, SquareGrid}
         
         #region Field Declaration
 
@@ -43,7 +43,7 @@ namespace SurveyLine.Core
         public SurveyDesign(string name, double xStart, double yStart, double bearing, double interval, int stationCount)
         {
             Type = DesignType.SingleLine;
-            Name = name;
+            Name = name == string.Empty ? "New survey" : name;
             XStart = xStart;
             YStart = yStart;
             Bearing = bearing;
@@ -67,7 +67,7 @@ namespace SurveyLine.Core
         public SurveyDesign(string name, double xStart, double yStart, double bearing, double interval, int stationCount,  double plusBearing, int lineCount, double lineSpacing)
         {
             Type = DesignType.MultiLine;
-            Name = name;
+            Name = name == string.Empty ? "New survey" : name;
             XStart = xStart;
             YStart = yStart;
             Bearing = bearing;
@@ -79,26 +79,50 @@ namespace SurveyLine.Core
         }
 
         /// <summary>
-        /// Constructor for Fixed Grid mode.
+        /// Build a rectangular m x n fixed space grid.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="xStart"></param>
         /// <param name="yStart"></param>
         /// <param name="bearing"></param>
         /// <param name="interval"></param>
-        /// <param name="stationCount"></param>
+        /// <param name="m"></param>
+        /// <param name="n"></param>
         /// <param name="plusBearing"></param>
-        /// <param name="lineCount"></param>
-        public SurveyDesign(string name, double xStart, double yStart, double bearing, double interval, int stationCount, double plusBearing, int lineCount)
+        public SurveyDesign(string name, double xStart, double yStart, double bearing, double interval, int m, int n, double plusBearing)
         {
-            Type = DesignType.FixedGrid;
-            Name = name;
+            Type = DesignType.RectangularGrid;
+            Name = name == string.Empty ? "New survey" : name;
             XStart = xStart;
             YStart = yStart;
             Bearing = bearing;
             Interval = interval;
-            StationCount = stationCount;
-            LineCount = lineCount;
+            StationCount = m;
+            LineCount = n;
+            LineSpacing = Interval;
+            PlusBearing = plusBearing;
+        }
+
+        /// <summary>
+        /// Build an n x n square fixed space grid.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="xStart"></param>
+        /// <param name="yStart"></param>
+        /// <param name="bearing"></param>
+        /// <param name="interval"></param>
+        /// <param name="n"></param>
+        /// <param name="plusBearing"></param>
+        public SurveyDesign(string name, double xStart, double yStart, double bearing, double interval, int n, double plusBearing)
+        {
+            Type = DesignType.SquareGrid;
+            Name = name == string.Empty ? "New survey" : name;
+            XStart = xStart;
+            YStart = yStart;
+            Bearing = bearing;
+            Interval = interval;
+            StationCount = n;
+            LineCount = n;
             LineSpacing = Interval;
             PlusBearing = plusBearing;
         }

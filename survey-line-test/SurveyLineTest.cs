@@ -228,7 +228,7 @@ namespace SurveyLineTest
             int a = 2;
 
             var actual = (SurveyDesign.DesignType)a;
-            var expected = SurveyDesign.DesignType.FixedGrid;
+            var expected = SurveyDesign.DesignType.RectangularGrid;
 
             Assert.AreEqual(expected, actual);
         }

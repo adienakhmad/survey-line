@@ -253,7 +253,7 @@ namespace SurveyLineWinForm
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
             this.splitContainer1.Panel2.Controls.Add(this.groupBox3);
             this.splitContainer1.Size = new System.Drawing.Size(1260, 434);
-            this.splitContainer1.SplitterDistance = 219;
+            this.splitContainer1.SplitterDistance = 229;
             this.splitContainer1.TabIndex = 2;
             // 
             // flowLayoutPanel1
@@ -266,7 +266,7 @@ namespace SurveyLineWinForm
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(10, 10, 0, 0);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(215, 430);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(225, 430);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // groupBox1
@@ -276,7 +276,7 @@ namespace SurveyLineWinForm
             this.groupBox1.Location = new System.Drawing.Point(13, 13);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(5, 5, 5, 10);
-            this.groupBox1.Size = new System.Drawing.Size(191, 223);
+            this.groupBox1.Size = new System.Drawing.Size(201, 223);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Survey Design";
@@ -303,7 +303,7 @@ namespace SurveyLineWinForm
             this.flowLayoutPanel2.Location = new System.Drawing.Point(5, 19);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(181, 194);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(191, 194);
             this.flowLayoutPanel2.TabIndex = 0;
             // 
             // label9
@@ -319,7 +319,7 @@ namespace SurveyLineWinForm
             // 
             this.txtLineName.Location = new System.Drawing.Point(74, 5);
             this.txtLineName.Name = "txtLineName";
-            this.txtLineName.Size = new System.Drawing.Size(102, 21);
+            this.txtLineName.Size = new System.Drawing.Size(114, 21);
             this.txtLineName.TabIndex = 6;
             this.txtLineName.Enter += new System.EventHandler(this.txtLineName_Enter);
             this.txtLineName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtLineName_KeyDown);
@@ -351,7 +351,7 @@ namespace SurveyLineWinForm
             0,
             0});
             this.numEasting.Name = "numEasting";
-            this.numEasting.Size = new System.Drawing.Size(102, 21);
+            this.numEasting.Size = new System.Drawing.Size(114, 21);
             this.numEasting.TabIndex = 7;
             this.numEasting.Enter += new System.EventHandler(this.NumOnFocus);
             this.numEasting.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtLineName_KeyDown);
@@ -435,7 +435,7 @@ namespace SurveyLineWinForm
             0,
             0});
             this.numNorthing.Name = "numNorthing";
-            this.numNorthing.Size = new System.Drawing.Size(101, 21);
+            this.numNorthing.Size = new System.Drawing.Size(114, 21);
             this.numNorthing.TabIndex = 8;
             this.numNorthing.Enter += new System.EventHandler(this.NumOnFocus);
             this.numNorthing.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtLineName_KeyDown);
@@ -534,7 +534,7 @@ namespace SurveyLineWinForm
             0,
             0});
             this.numStation.Minimum = new decimal(new int[] {
-            1,
+            2,
             0,
             0,
             0});
@@ -565,10 +565,11 @@ namespace SurveyLineWinForm
             this.cboxMode.Items.AddRange(new object[] {
             "Single Line",
             "Multiple Line",
-            "Fixed Grid"});
+            "Rectangular Grid",
+            "Square Grid"});
             this.cboxMode.Location = new System.Drawing.Point(74, 167);
             this.cboxMode.Name = "cboxMode";
-            this.cboxMode.Size = new System.Drawing.Size(101, 21);
+            this.cboxMode.Size = new System.Drawing.Size(114, 21);
             this.cboxMode.TabIndex = 17;
             this.cboxMode.SelectedIndexChanged += new System.EventHandler(this.cboxMode_SelectedIndexChanged);
             // 
@@ -579,10 +580,10 @@ namespace SurveyLineWinForm
             this.groupBox2.Location = new System.Drawing.Point(13, 242);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(5);
-            this.groupBox2.Size = new System.Drawing.Size(191, 121);
+            this.groupBox2.Size = new System.Drawing.Size(201, 121);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Multi and Grid Design";
+            this.groupBox2.Text = "Multi Line/ Grid Design";
             // 
             // flowLayoutPanel3
             // 
@@ -597,7 +598,7 @@ namespace SurveyLineWinForm
             this.flowLayoutPanel3.Location = new System.Drawing.Point(5, 19);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
             this.flowLayoutPanel3.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(181, 97);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(191, 97);
             this.flowLayoutPanel3.TabIndex = 0;
             // 
             // label10
@@ -606,7 +607,7 @@ namespace SurveyLineWinForm
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(65, 23);
             this.label10.TabIndex = 1;
-            this.label10.Text = "Lines";
+            this.label10.Text = "x N";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // numMultiLineCount
@@ -688,7 +689,7 @@ namespace SurveyLineWinForm
             "Counter CW"});
             this.dropDownDirection.Location = new System.Drawing.Point(74, 62);
             this.dropDownDirection.Name = "dropDownDirection";
-            this.dropDownDirection.Size = new System.Drawing.Size(101, 21);
+            this.dropDownDirection.Size = new System.Drawing.Size(114, 21);
             this.dropDownDirection.TabIndex = 6;
             this.dropDownDirection.TabStop = false;
             this.dropDownDirection.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtLineName_KeyDown);
@@ -738,7 +739,7 @@ namespace SurveyLineWinForm
             this.tabControl1.Location = new System.Drawing.Point(7, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1019, 336);
+            this.tabControl1.Size = new System.Drawing.Size(1009, 336);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPagePlot
@@ -747,7 +748,7 @@ namespace SurveyLineWinForm
             this.tabPagePlot.Location = new System.Drawing.Point(4, 22);
             this.tabPagePlot.Name = "tabPagePlot";
             this.tabPagePlot.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPagePlot.Size = new System.Drawing.Size(1011, 310);
+            this.tabPagePlot.Size = new System.Drawing.Size(1001, 310);
             this.tabPagePlot.TabIndex = 1;
             this.tabPagePlot.Text = "Survey Plot";
             this.tabPagePlot.UseVisualStyleBackColor = true;
@@ -776,7 +777,7 @@ namespace SurveyLineWinForm
             this.zgcSurveyPlot.ScrollMinX = 0D;
             this.zgcSurveyPlot.ScrollMinY = 0D;
             this.zgcSurveyPlot.ScrollMinY2 = 0D;
-            this.zgcSurveyPlot.Size = new System.Drawing.Size(1005, 304);
+            this.zgcSurveyPlot.Size = new System.Drawing.Size(995, 304);
             this.zgcSurveyPlot.TabIndex = 1;
             this.zgcSurveyPlot.ZoomModifierKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.None)));
             this.zgcSurveyPlot.Resize += new System.EventHandler(this.zgcSurveyPlot_Resize);
@@ -887,7 +888,7 @@ namespace SurveyLineWinForm
             this.groupBox3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox3.Location = new System.Drawing.Point(8, 345);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(1014, 82);
+            this.groupBox3.Size = new System.Drawing.Size(1004, 82);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Design Properties";
@@ -902,7 +903,7 @@ namespace SurveyLineWinForm
             this.flowLayoutDesignProp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutDesignProp.Location = new System.Drawing.Point(3, 17);
             this.flowLayoutDesignProp.Name = "flowLayoutDesignProp";
-            this.flowLayoutDesignProp.Size = new System.Drawing.Size(1008, 62);
+            this.flowLayoutDesignProp.Size = new System.Drawing.Size(998, 62);
             this.flowLayoutDesignProp.TabIndex = 0;
             this.flowLayoutDesignProp.WrapContents = false;
             // 

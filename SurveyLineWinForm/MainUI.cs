@@ -23,7 +23,7 @@ namespace SurveyLineWinForm
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            Size = new Size(630, 530);
+            Size = new Size(640, 530);
             cboxMode.SelectedIndex = 0;
             CueProvider.SetCue(txtLineName, "Enter a name here..");
             DisableButtonOnLoad(true);
@@ -64,7 +64,7 @@ namespace SurveyLineWinForm
 
                     switch (dropDownDirection.SelectedIndex)
                     {
-                        case 1:
+                        case 0:
                             bearing = +90.0;
                             break;
                         default:
@@ -79,9 +79,9 @@ namespace SurveyLineWinForm
 
                     #endregion
 
-                case SurveyDesign.DesignType.FixedGrid:
+                case SurveyDesign.DesignType.RectangularGrid:
 
-                    #region Case Fixed Grid
+                    #region Case RectangularGrid
 
                     switch (dropDownDirection.SelectedIndex)
                     {
@@ -95,8 +95,28 @@ namespace SurveyLineWinForm
 
                     design = new SurveyDesign(txtLineName.Text, Convert.ToDouble(numEasting.Value),
                         Convert.ToDouble(numNorthing.Value), Convert.ToDouble(numBearing.Value),
-                        Convert.ToDouble(numInterval.Value), (int)numStation.Value, bearing,
-                        (int)numMultiLineCount.Value);
+                        Convert.ToDouble(numInterval.Value), (int)numStation.Value,
+                        (int)numMultiLineCount.Value, bearing);
+                    break;
+
+                    #endregion
+
+                case SurveyDesign.DesignType.SquareGrid:
+                    #region Case SquareGrid
+
+                    switch (dropDownDirection.SelectedIndex)
+                    {
+                        case 0:
+                            bearing = +90.0;
+                            break;
+                        default:
+                            bearing = -90.0;
+                            break;
+                    }
+
+                    design = new SurveyDesign(txtLineName.Text, Convert.ToDouble(numEasting.Value),
+                        Convert.ToDouble(numNorthing.Value), Convert.ToDouble(numBearing.Value),
+                        Convert.ToDouble(numInterval.Value), (int)numStation.Value, bearing);
                     break;
 
                     #endregion
@@ -105,8 +125,6 @@ namespace SurveyLineWinForm
                     design = null;
                     break;
             }
-
-            if (design != null && design.Name == string.Empty) design.Name = "Undefined";
             _surveyFactory = new SurveyFactory(design);
         }
 
@@ -437,6 +455,10 @@ namespace SurveyLineWinForm
 
         private void SetLineStatus(SurveyDesign design)
         {
+            double length;
+            double height;
+            string lengthUnit;
+            string heightUnit;
             switch (design.Type)
             {
                 case SurveyDesign.DesignType.SingleLine:
@@ -459,9 +481,8 @@ namespace SurveyLineWinForm
 
                     break;
                 case SurveyDesign.DesignType.MultiLine:
-                case SurveyDesign.DesignType.FixedGrid:
 
-                    #region case multi or grid
+                    #region case multiline
 
                     lblName.Text = design.Name;
                     lblType.Text = string.Format("{0} ({1})", design.Type, design.LineCount);
@@ -474,10 +495,37 @@ namespace SurveyLineWinForm
 
                     lblDistanceName.Text = @"Area";
 
-                    var length = ((design.StationCount - 1)*design.Interval);
-                    var height = ((design.LineCount - 1)*design.LineSpacing);
-                    var lengthUnit = length > 999 ? "Km" : "m";
-                    var heightUnit = height > 999 ? "Km" : "m";
+                    length = ((design.StationCount - 1)*design.Interval);
+                    height = ((design.LineCount - 1)*design.LineSpacing);
+                    lengthUnit = length > 999 ? "Km" : "m";
+                    heightUnit = height > 999 ? "Km" : "m";
+                    length = lengthUnit == "Km" ? length/1000 : length;
+                    height = heightUnit == "Km" ? height/1000 : height;
+
+                    lblDistance.Text = string.Format("{0} {1} x {2} {3}", length, lengthUnit, height, heightUnit);
+                    break;
+
+                    #endregion
+
+                case SurveyDesign.DesignType.RectangularGrid:
+                case SurveyDesign.DesignType.SquareGrid:
+
+                    #region case grid
+
+                    lblName.Text = design.Name;
+                    lblType.Text = string.Format("{0}", design.Type);
+                    lblBearing.Text = string.Format("N {0}° E", design.Bearing);
+                    lblSpacing.Text = string.Format("{0} m", design.Interval);
+                    lblStations.Text = string.Format("{0} points ({1} x {1})", design.StationCount*design.StationCount,
+                        design.StationCount);
+
+
+                    lblDistanceName.Text = @"Area";
+
+                    length = ((design.StationCount - 1)*design.Interval);
+                    height = ((design.LineCount - 1)*design.LineSpacing);
+                    lengthUnit = length > 999 ? "Km" : "m";
+                    heightUnit = height > 999 ? "Km" : "m";
                     length = lengthUnit == "Km" ? length/1000 : length;
                     height = heightUnit == "Km" ? height/1000 : height;
 
@@ -541,9 +589,16 @@ namespace SurveyLineWinForm
                     break;
 
 
-                case SurveyDesign.DesignType.FixedGrid:
+                case SurveyDesign.DesignType.RectangularGrid:
 
                     numMultiLineCount.Enabled = true;
+                    numMultiLineSpacing.Enabled = false;
+                    dropDownDirection.Enabled = true;
+                    break;
+
+                case SurveyDesign.DesignType.SquareGrid:
+
+                    numMultiLineCount.Enabled = false;
                     numMultiLineSpacing.Enabled = false;
                     dropDownDirection.Enabled = true;
                     break;

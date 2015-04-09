@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using SurveyLine.Ex;
 
@@ -36,7 +37,8 @@ namespace SurveyLine.Core
                     pointname = string.Format("{0}{1}{2}", design.Name, nameDesign.PointsSeparator, staindex.ToString(stationLeadingZeroFormat));
                     break;
                 case SurveyDesign.DesignType.MultiLine:
-                case SurveyDesign.DesignType.FixedGrid:
+                case SurveyDesign.DesignType.RectangularGrid:
+                case SurveyDesign.DesignType.SquareGrid:
                     pointname = string.Format("{0}{1}{2}{3}{4}", design.Name, nameDesign.LineSeparator, CreateLineNamebyDesign(nameDesign, lineindex, lineDigitCount), nameDesign.PointsSeparator, staindex.ToString(stationLeadingZeroFormat));
                     break;
                 default:
@@ -163,8 +165,8 @@ namespace SurveyLine.Core
 
                     #endregion
 
-                #region DesignType.FixedGrid
-                case SurveyDesign.DesignType.FixedGrid:
+                #region DesignType.RectangularGrid
+                case SurveyDesign.DesignType.RectangularGrid:
                     lineCollection = new List<StationList>();
                     for (var j = 0; j < design.LineCount; j++)
                     {
@@ -186,8 +188,32 @@ namespace SurveyLine.Core
                     return new StationListContainer(design,lineCollection);
                 #endregion
 
+                #region DesignType.SquareGrid
+                case SurveyDesign.DesignType.SquareGrid:
+                    lineCollection = new List<StationList>();
+                    for (var j = 0; j < design.StationCount; j++)
+                    {
+                        currentLine = new StationList();
+
+                        var lineFirstPoint = ProjectTo(startPoint, design.Bearing + design.PlusBearing,
+                            j * design.Interval);
+
+                        for (var i = 0; i < design.StationCount; i++)
+                        {
+                            var point = ProjectTo(lineFirstPoint, design.Bearing, i * design.Interval);
+                            point.SetName(CreateStationNamebyDesign(design, nameDesign, stationStartingIndex + i, stationStartingIndex + j));
+                            Debug.WriteLine(CreateStationNamebyDesign(design, nameDesign, stationStartingIndex + i, stationStartingIndex + j));
+                            currentLine.Add(point);
+                        }
+
+                        lineCollection.Add(currentLine);
+                    }
+
+                    return new StationListContainer(design, lineCollection);
+                #endregion
+
                 default:
-                    throw new DesignTypeInvalidException("Design Type Unmatched");
+                    throw new DesignTypeInvalidException("Design Type Unrecognized");
             }
             
         }
