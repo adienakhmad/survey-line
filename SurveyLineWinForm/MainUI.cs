@@ -636,12 +636,12 @@ namespace SurveyLineWinForm
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            saveToTxt.ShowDialog();
+            ExportDialog.ShowDialog();
         }
 
         private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
-            saveToTxt.FileName = string.Empty;
+            ExportDialog.FileName = string.Empty;
             SetStatusBarText("\tFile saved successfully.");
         }
 
@@ -896,12 +896,18 @@ namespace SurveyLineWinForm
 
         private void newWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Process.Start("survey-line.exe");
+            var info = new ProcessStartInfo(Application.ExecutablePath);
+            Process.Start(info);
         }
 
         private void PlottingStyleChanged(object sender, EventArgs e)
         {
             UpdatePlottingStyle();
+        }
+
+        private void exportDesignToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SurveyLineUI.FileHandling.Writer.WriteSurveyLineDoc("test.srdoc",_plottingStyle);
         }
 
     }
