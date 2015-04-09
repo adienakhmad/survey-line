@@ -133,7 +133,6 @@ namespace SurveyLineWinForm
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.currentWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -152,7 +151,7 @@ namespace SurveyLineWinForm
             this.shortcutsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.saveToTxt = new System.Windows.Forms.SaveFileDialog();
+            this.ExportDialog = new System.Windows.Forms.SaveFileDialog();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.lineColorDialog = new System.Windows.Forms.ColorDialog();
             this.markerColorDialog = new System.Windows.Forms.ColorDialog();
@@ -1299,8 +1298,7 @@ namespace SurveyLineWinForm
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newWindowToolStripMenuItem,
-            this.currentWindowToolStripMenuItem});
+            this.newWindowToolStripMenuItem});
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.newToolStripMenuItem.Text = "New";
@@ -1308,15 +1306,9 @@ namespace SurveyLineWinForm
             // newWindowToolStripMenuItem
             // 
             this.newWindowToolStripMenuItem.Name = "newWindowToolStripMenuItem";
-            this.newWindowToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.newWindowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.newWindowToolStripMenuItem.Text = "New Window";
             this.newWindowToolStripMenuItem.Click += new System.EventHandler(this.newWindowToolStripMenuItem_Click);
-            // 
-            // currentWindowToolStripMenuItem
-            // 
-            this.currentWindowToolStripMenuItem.Name = "currentWindowToolStripMenuItem";
-            this.currentWindowToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.currentWindowToolStripMenuItem.Text = "Existing Window";
             // 
             // openToolStripMenuItem
             // 
@@ -1355,6 +1347,7 @@ namespace SurveyLineWinForm
             this.exportDesignToolStripMenuItem.Name = "exportDesignToolStripMenuItem";
             this.exportDesignToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.exportDesignToolStripMenuItem.Text = "Export Design...";
+            this.exportDesignToolStripMenuItem.Click += new System.EventHandler(this.exportDesignToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
@@ -1444,12 +1437,12 @@ namespace SurveyLineWinForm
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // saveToTxt
+            // ExportDialog
             // 
-            this.saveToTxt.Filter = "Text files (*.txt)|*.txt|DAT Files (*.dat)|*.dat|All files (*.*)|*.*";
-            this.saveToTxt.RestoreDirectory = true;
-            this.saveToTxt.Title = "Save Coordinates Table As";
-            this.saveToTxt.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
+            this.ExportDialog.Filter = "Text files (*.txt)|*.txt|DAT Files (*.dat)|*.dat|All files (*.*)|*.*";
+            this.ExportDialog.RestoreDirectory = true;
+            this.ExportDialog.Title = "Save Coordinates Table As";
+            this.ExportDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
             // 
             // backgroundWorker1
             // 
@@ -1569,7 +1562,7 @@ namespace SurveyLineWinForm
 		private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.Label label12;
         private NumericUpDown numMultiLineSpacing;
-        private SaveFileDialog saveToTxt;
+        private SaveFileDialog ExportDialog;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private Label label16;
         private ToolStripMenuItem shortcutsToolStripMenuItem;
@@ -1627,7 +1620,6 @@ namespace SurveyLineWinForm
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripMenuItem tsmDelete;
         private ToolStripMenuItem newToolStripMenuItem;
-        private ToolStripMenuItem currentWindowToolStripMenuItem;
         private ToolStripMenuItem newWindowToolStripMenuItem;
         private ToolStripMenuItem openToolStripMenuItem;
         private ToolStripMenuItem saveToolStripMenuItem1;

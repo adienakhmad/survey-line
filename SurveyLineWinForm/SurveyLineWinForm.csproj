@@ -7,7 +7,7 @@
     <ProjectGuid>{5DDC6622-7657-4BAB-91E3-8F423E60FF07}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SurveyLineWinForm</RootNamespace>
+    <RootNamespace>SurveyLineUI</RootNamespace>
     <AssemblyName>survey-line</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -46,6 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileHandling\Reader.cs" />
+    <Compile Include="FileHandling\Writer.cs" />
     <Compile Include="Forms\BetterDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +96,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
